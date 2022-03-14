@@ -1,0 +1,77 @@
+{% extends craft.app.request.isAjax and not craft.app.request.isLivePreview ? "_ajax" : "_layout" %}
+
+{% block content %}
+{% set image = entry.image.one() %}
+{# {% set rootCategory = entry.nieuwsCategories
+.level('1')
+.one() %} #}
+{% set backgroundImageMedium = image.getUrl('bannerBackgroundImageLandscapeMedium1280w') %}
+<div class="col d-flex hpBanner" style="background-image: url('{{ backgroundImageMedium }}');background-position: center;">
+	<div class="container banner-content align-self-end">
+
+		{# <small>{{ entry.postDate|datetime }}</small> #}
+		{# <div class="row mb-3">
+			<div class="col">
+				{% import "_macros/_ui" as cat %}
+				{{ cat.setRootCategory(rootCategory, 0) }}
+			</div>
+		</div> #}
+		
+		<div class="row">
+			<div class="col">
+				<h1><span>{{ entry.title }}</span></h1>
+			</div>
+		</div>
+	</div>
+	</div>
+</div>
+
+<div role="main" class="main container">
+
+
+	<div class="row">
+		<div class="col">
+			<section>
+				<p><strong>{{ entry.intro }}</strong></p>
+
+				{% for block in entry.nieuwsInhoud.all() %}
+					{% switch block.type %}
+
+						{% case "tekst" %}
+							{{ block.tekst }}
+
+						{% case "fotoreeks" %}
+							<div class="row">
+								{% for foto in block.fotoreeks.all() %}
+
+									{% set img = {
+                  					  mode:'crop',
+                  					  width: 525,
+                  					  height: 300,
+                  					  quality: 90
+                  					} %}
+
+									<div class="img-fluid m-1">
+										<img src="{{ foto.getUrl(img) }}" alt="{{ foto.title }}"/>
+									</div>
+								{% endfor %}
+							</div>
+
+						{% case "embeddedmedia" %}
+							<div class="row">
+								{{ block.embeddedmedia.render({
+              					    attributes: {
+              					    width: 640,
+              					    height: 480,
+              					    }
+              					  })
+              					}}
+							</div>
+
+					{% endswitch %}
+				{% endfor %}
+			</section>
+		</div>
+	</div>
+</div>
+{% endblock %}

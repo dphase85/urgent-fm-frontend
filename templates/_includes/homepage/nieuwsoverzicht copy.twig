@@ -1,0 +1,104 @@
+{% set laatstNieuwe = nieuws|first %}
+
+
+{% set item = laatstNieuwe.item.one() %}
+
+
+{% set category = item.nieuwsCategories.one() %}
+<div class="row">
+	<article class="col">
+		<div class="tegel p-0">
+			<div class="firstRow">
+
+
+				{% set img = {
+					format: 'jpg',
+                    mode:'crop',
+                    quality: 90,
+					interlace: true,
+                } %}
+
+				{% set image = item.image.one() %}
+
+
+                {# srcSet voor responsive images, werkt (nog) niet: #}
+				{# <picture>
+				    {% set imageSrcsetDefault = image.setTransform('homepageLaatstNieuweImage}
+				    {% set imageSrcsetSmall = image.setTransform('homepageLaatstNieuweImage300w') 				          
+                    {{dd(imageSrcsetSmall)				          
+                    <img
+				        srcset="{{ imageSrcsetSmall.url }} 300w,
+				                {{ imageSrcsetDefault.url }} 525w"
+				        sizes="(max-width: 576px) 300px, 
+				                525px"
+				        src="{{ imageSrcsetDefault.url }}"
+				        alt="{{ image.title }}"
+				    />
+				</picture> #}
+
+
+				{# {% do image.setTransform({ width: '525px', height: '295px' }) %}
+				{{ tag('img', {
+					src: image.url,
+					srcset: image.getSrcset(['1.5x','2x','3x']),
+					alt: image.title,
+				})}} #}
+
+				<a class="nwsItemTitle" href="{{ item.url }}">
+					<img class="img-fluid" src="{{ image.getUrl(img) }}" alt="{{ image.title }}"/>
+				</a>
+
+				<div class="categoryContainer">
+					<a href="{{ category.url }}" class="small">
+						<span>{{ category }}</span>
+					</a>
+				</div>
+
+			</div>
+			<div class="nwsItemCopy">
+				<a class="nwsItemTitle" href="{{ item.url }}">
+				<h3>{{ item.title }}</h3>
+				<p>{{ item.intro }}</p>
+			</a>
+			</div>			
+		</div>
+	</article><!-- /tegel -->
+</div>
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 not-first-row">
+
+	{% for nieuws in nieuws|slice(1,nieuws|length) %}
+
+		{% set item = nieuws.item.one() %}
+
+        {% set category = item.nieuwsCategories.one() %}
+		<article class="col mt-3">
+			<div class="card border-0 p-0 h-100 tegel">
+				{# <div class="nwsimg"> #}
+					{% set ft = {
+                        mode:'crop',
+						width: 636,
+						height: 424,
+                        quality: 90,
+                    } %}
+
+					{% set image = item.image.one() %}
+					<a href="{{ item.url }}"><img class="card-image-top img-fluid" src="{{ image.getUrl(ft) }}" alt="{{ image.title }}"/></a>
+
+					<div class="categoryContainer">
+						<a href="{{ category.url }}" class="small">
+							<span>{{ category }}</span>
+						</a>
+					</div>
+				{# </div> #}
+				<div class="card-body nwsItemCopy">
+					<a class="nwsItemTitle" href="{{ item.url }}">
+						<h3 class="card-title">{{ item.title }}</h3>
+						<p class="card-text">{{ item.intro }}</p>
+					</a>
+				</div>
+			</div>
+		</article><!-- /tegel -->
+
+	{% endfor %}
+</div>

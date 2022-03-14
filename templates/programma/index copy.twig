@@ -1,0 +1,126 @@
+{% extends craft.app.request.isAjax and not craft.app.request.isLivePreview ? "_ajax" : "_layout" %}
+{# {% extends "_layout" %} #}
+
+{% block content %}
+<div class="main container">
+    <div class="row banner-none">
+        <div class="col">
+            <h1>Programmaschema</h1>
+        </div>
+     </div>
+
+    <div class="row progschema-navbar-container">
+        <div class="col d-none d-md-block d-lg-block">
+            <ul class="progSchema-navbar mb-0">
+                <li><button class="tabs-button" data-for-tab="1">Maandag</button></li>
+                <li><button class="tabs-button" data-for-tab="2">Dinsdag</button></li>
+                <li><button class="tabs-button" data-for-tab="3">Woensdag</button></li>
+                <li><button class="tabs-button" data-for-tab="4">Donderdag</button></li>
+                <li><button class="tabs-button" data-for-tab="5">Vrijdag</button></li>
+                <li><button class="tabs-button" data-for-tab="6">Zaterdag</button></li>
+                <li><button class="tabs-button" data-for-tab="0">Zondag</button></li>
+            </ul>
+        </div>
+
+<!-- TEST: dropdown menu op klein scherm -->
+       <div class="col d-lg-none d-md-none dropdown mb-3">
+            <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                id="progSchema-dropdownMenu-buttopn"><span id="weekdag-selected"></span></button>
+            <div id="dropdown-menu-small-screens" class="dropdown-menu" aria-labelledby="progSchema-dropdownMenu-button">
+                <button class="tabs-button dropdown-item" data-for-tab="1">Maandag</button>
+                <button class="tabs-button dropdown-item" data-for-tab="2">Dinsdag</button>
+                <button class="tabs-button dropdown-item" data-for-tab="3">Woensdag</button>
+                <button class="tabs-button dropdown-item" data-for-tab="4">Donderdag</button>
+                <button class="tabs-button dropdown-item" data-for-tab="5">Vrijdag</button>
+                <button class="tabs-button dropdown-item" data-for-tab="6">Zaterdag</button>
+                <button class="tabs-button dropdown-item" data-for-tab="0">Zondag</button>
+            </div>
+       </div>
+
+    </div>
+
+    <div class="row progSchema-tabsContainer">
+        <div class="col">
+            {% set weekdagen = craft.entries()
+               .section('programScheme')
+               .orderBy('title')
+               .all() %}
+
+            {% for i in 0..6 %} 
+            <div class="tab" data-tab="{{ i }}">
+
+                {# <div data-tab="{{ i }}">  #}
+                {% set weekdag = weekdagen[i] %}
+                <h1 class="weekday">{{ weekdag.title|slice(3, weekdag.title|length) }}</h1> 
+                {# De timeslots worden geordend in admin scherm => entries, maar worden bij het processen van de output nogmaals geordend, bij wijze van finale output controle. PROBLEEM: ABC op maandagavond #}
+                {% set timeslots = weekdag.weekdag.all() %}
+
+
+                {% for timeslot in timeslots %}
+                    {% set programma = timeslot.programma.one() %}
+
+                    <div class="row slot pt-2 pb-2">
+                        <div class="col-8">
+                            <div class="row align-items-center">
+                                <div class="col-3">
+                                    <h5 class="m-0">
+                                    {{ timeslot.beginuur|time('short') }}
+                    				-
+                    				{{ timeslot.einduur|time('short') }}
+                                    </h5>
+                                </div>
+                                <div class="slot-inhoud col-9">
+                                    {% import "_macros/_ui" as cat %}
+                    			    {% set rootCategory = programma.programmaStijl
+                    	                                .level('1')
+                    	                                .one() %}
+                                    {% set subCategories = programma.programmaStijl
+                    	                                .level('>1')
+                    	                                .limit(3) %}
+                    			    <h3 class="m-0 d-flex">
+                    			    	{{ programma.title }}
+
+                    			    	{% if rootCategory is not null %}
+                    			    		{{ cat.setRootCategory(rootCategory,4) }}
+                    			    	{% endif %}
+                                        {% if subCategories is not null %}
+                                            {% for subCategory in subCategories %}
+		                                            <span class="category-base category-sub my-auto ms-2">{{ subCategory }}</span>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">
+                                </div>
+                                <div class="slot-intro-active col-8">
+                                    <a href="{{ programma.url }}">
+                    			    	<p>{{ programma.intro }}</p>
+                    			    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            {% if programma.programmaLogo|length %} 
+                    			<div class="slot-logo-active col my-auto d-none d-md-inline-block">
+                    			{# <div class="col my-auto d-none d-md-inline-block"> #}
+                    				{% set logo = programma.programmaLogo.one() %}<a href="{{ programma.url }}"><img src="{{ logo.getUrl({ width: 100, height: 100}) }}" alt="{{ logo.title }}"/></a>
+                    			</div>
+                    		{% endif %}
+                        </div>
+                    </div> 
+                {% endfor %}
+            </div>
+
+        {% endfor %}
+        </div>
+       
+
+    </div>
+</div>
+
+{# {% js "../js/programmaSchema.js" %} #}
+
+{% endblock %}
+

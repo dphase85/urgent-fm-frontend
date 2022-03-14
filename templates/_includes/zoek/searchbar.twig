@@ -1,0 +1,25 @@
+{% if searchQuery is defined %}
+	{% set queryValue = searchQuery %}
+{% else %}
+	{% set queryValue = "" %}
+{% endif %}
+
+<div class="modal-search container">
+	<div class="row">
+		<div class="col">
+			<div class="float-end close me-3">&times;</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col">
+			<form class="formZoek" action="{{ url('zoek/resultaten') }}">
+				<label for="inputSearch" class="form-label">Zoeken op urgent.fm:</label>
+				<div class="input-group zoekveld">
+					<input type="search" id="inputSearch" class="form-control" name="q" aria-label="Search" placeholder="Type hier je zoekterm ..." value="{{ queryValue }}"/>
+					<input type="submit" class="btn btn-dark btnZoek">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<div class="overlay"></div>

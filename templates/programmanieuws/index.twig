@@ -1,0 +1,96 @@
+{% extends craft.app.request.isAjax and not craft.app.request.isLivePreview ? "_ajax" : "_layout" %}
+
+{% block content %}
+    <div role="main" class="main container">
+        <div class="row">
+            <div class="col">
+                <h1>Urgent.fm Programmanieuws</h1>
+            </div>
+        </div>
+
+        {% set nieuwsQuery = craft.entries.section('programmanieuws')
+            .limit(2) %}
+		{# {% set nieuws = nieuwsQuery.all() %} #}
+        {% paginate nieuwsQuery as pageInfo, pageEntries %}
+
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 not-first-row">
+            {% for item in pageEntries %}
+
+		        {% set program = item.programma.one() %}
+                {% set logo = program.programmaLogo.one() %}
+		        <div class="col mt-3">
+		        	<div class="card border-0 p-0 h-100 tegel">
+		        		{# <div class="nwsimg"> #}
+		        		{% set ft = {
+		        		    mode:'crop',
+		        			width: 636,
+		        			height: 424,
+		        		    quality: 90,
+		        		} %}
+
+		        		{% set image = item.image.one() %}
+		        		<a href="{{ item.url }}"><img class="card-image-top img-fluid" src="{{ image.getUrl(ft) }}" alt="{{ image.title }} "/   ></a>
+
+		        		{# <div class="categoryContainer">
+		        			<a href="{{ category.url }}" class="small">
+		        				<span>{{ category }}</span>
+		        			</a>
+		        		</div> #}
+
+		        		<div class="card-body nwsItemCopy">
+		        			<a class="nwsItemTitle" href="{{ item.url }}">
+		        				<h3 class="card-title">{{ item.title }}</h3></a>
+		        				<p class="card-text">
+                                    <span><strong><a href="{{ program.url }}">{{ program.title }}</a> - </strong></span><a href="{{ item.url }}"> {{ item.intro }}
+                                    </a>
+                                </p>
+
+		        		</div>
+		        	</div>
+		        </div>
+		        <!-- /tegel -->
+	        {% endfor %}
+        </div>
+
+        		<div class="row mt-5 text-center">
+			<div class="col">
+				{# <a href="{{ pageInfo.firstUrl }}">First Page</a> #}
+				{% if pageInfo.prevUrl %}<a class="pagination-changePage pagination-prevPage" href="{{ pageInfo.prevUrl }}">&lt;</a>{% endif %}
+				
+				{% for page, url in pageInfo.getPrevUrls(5) %}
+				  <a class="pagination-changePage" href="{{ url }}">{{ page }}</a>
+				{% endfor %}
+				
+				<span class="pagination-changePage pagination-currentPage">{{ pageInfo.currentPage }}</span>
+				
+				{% for page, url in pageInfo.getNextUrls(5) %}
+				  <a class="pagination-changePage" href="{{ url }}">{{ page }}</a>
+				{% endfor %}
+				
+				{% if pageInfo.nextUrl %}<a class="pagination-changePage pagination-nextPage" href="{{ pageInfo.nextUrl }}">&gt;</a>{% endif %}
+				{# <a href="{{ pageInfo.lastUrl }}">Last Page</a> #}
+			</div>
+		</div>
+
+        {# <div class="row mt-5 text-center">
+			<div class="col">
+
+				{% if pageInfo.prevUrl %}<a class="pagination-changePage pagination-prevPage" href="{{ pageInfo.prevUrl }}">&lt;</a>{% endif %}
+				
+				{% for page, url in pageInfo.getPrevUrls(5) %}
+				  <a class="pagination-changePage" href="{{ url }}">{{ page }}</a>
+				{% endfor %}
+				
+				<span class="pagination-changePage pagination-currentPage">{{ pageInfo.currentPage }}</span>
+				
+				{% for page, url in pageInfo.getNextUrls(5) %}
+				  <a class="pagination-changePage" href="{{ url }}">{{ page }}</a>
+				{% endfor %}
+				
+				{% if pageInfo.nextUrl %}<a class="pagination-changePage pagination-nextPage" href="{{ pageInfo.nextUrl }}">&gt;</a>{% endif %}
+
+			</div>
+		</div> #}
+
+    </div>
+{% endblock %}

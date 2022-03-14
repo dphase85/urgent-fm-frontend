@@ -1,0 +1,36 @@
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 not-first-row">
+
+	{% for item in nieuws %}
+
+		{% set category = item.nieuwsCategories.one() %}
+		<div class="col mt-3">
+			<div class="card border-0 p-0 h-100 tegel">
+				{# <div class="nwsimg"> #}
+				{% set ft = {
+					                        mode:'crop',
+											width: 636,
+											height: 424,
+					                        quality: 90,
+					                    } %}
+
+				{% set image = item.image.one() %}
+				<a href="{{ item.url }}"><img class="card-image-top img-fluid" src="{{ image.getUrl(ft) }}" alt="{{ image.title }} "/></a>
+
+				<div class="categoryContainer">
+					<a href="{{ category.url }}" class="small">
+						<span>{{ category }}</span>
+					</a>
+				</div>
+				{# </div> #}
+				<div class="card-body nwsItemCopy">
+					<a class="nwsItemTitle" href="{{ item.url }}">
+						<h3 class="card-title">{{ item.title }}</h3>
+						<p class="card-text">{{ item.intro }}</p>
+					</a>
+				</div>
+			</div>
+		</div>
+		<!-- /tegel -->
+
+	{% endfor %}
+</div>

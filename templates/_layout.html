@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{siteName}}</title>
+
+    {% css "../dist/bootstrap-5.1.0/css/bootstrap.min.css" %}
+    {% css "../css/style.css" %}
+    {% css "../css/urgent.css" %}
+
+    <!-- TEST: Swiffy Slider -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/swiffy-slider@1.1.0/dist/js/swiffy-slider.min.js" crossorigin="anonymous" defer></script> -->
+{# <link href="https://cdn.jsdelivr.net/npm/swiffy-slider@1.1.0/dist/css/swiffy-slider.min.css" rel="stylesheet" crossorigin="anonymous"> #}
+</head>
+<body>
+
+    
+    <header>
+    <nav id="navBar" class="navbar navbar-expand-lg fixed-top navbar-light ">
+
+        <div class="container m-auto" style="background-color: #cc0000">
+            <a class="navbar-brand" href="/" style="background-color: green">
+                <div class="logo d-flex align-items-center justify-content-center">
+                    <img src="../images/logo.svg" alt="Urgent.FM | 105.3FM" width="160" height="160">
+                </div>
+            </a><!-- branding -->
+            <a href="/zoek" class="search toggle-search search-center d-lg-none"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler"
+            aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button><!-- hamburgermenu-->
+            <div class="collapse navbar-collapse" id="navbarToggler">
+                <div class="navbar-nav ms-5">
+                    <a class="nav-item nav-link" href="/programma">programma's</a>
+                    <a class="nav-item nav-link" href="/nieuws">nieuws</a>
+                    <a class="nav-item nav-link" href="/wie-zijn-we">over Urgent.fm</a>
+                    <a class="nav-item nav-link" href="/contact">contact</a>
+                    <a class="nav-item nav-item-reversed nav-link" href="http://tumult.fm">tumult.fm</a>
+                </div><!-- navbar -->
+            </div><!-- collapse -->
+
+            <a href="/zoek" class="search toggle-search search-right"></a>
+
+            
+        </div><!-- navBar container-->
+    </nav>
+</header>
+
+<div class="content">
+    
+{% block content %}
+
+{% endblock %}
+</div>
+<footer class="fixed-bottom">
+    <div class="container h-100">
+        <div class="row h-100">
+            <div class="col col-12 col-md-4 d-inline my-auto">
+                    <div class="row">
+                        <div class="col-3 d-flex justify-content-center my-auto p-0">
+                            <audio class="live-audio" src="http://urgentstream.radiostudio.be:8000/live?fbclid=IwAR0UT-WBLUyWbUAmZbwbPExIyY7IDasgTpHbYFTdEUYBT08ARQ4KhxevaAk" 
+                            preload="none"></audio>
+                            <button type="submit" class="audio-control"></button>
+                        </div>
+                        <div class="col-9 p-0">
+                            <p class="align-top ms-2 d-inline-block m-0">
+                        <span class="accent-green">luister nu:</span><br />
+
+                        {# Zoek programma op in weekdag adhv weeknummer en begintijd #}
+                        {% set weekdagen = craft.entries()
+                                .section('programScheme')
+                                .orderBy('title')
+                                .all() %}
+                        {% set dayOfTheWeek = 'now'|date('w') %}
+                        {% set dag = weekdagen[dayOfTheWeek] %}
+                        {% set timeslots = dag.weekdag.all() %}
+                        {% set break = 0 %}
+                        {% set currentlyPlaying = null %}
+                        {% set programma = null %}
+                        {% set next =  null %}
+                        {# Eerst checken of er een programma van de vorige dag op het huidig uur gespeeld wordt (vb: charged van 10pm tot 6 am) #}
+                        {% set currentTime = 'now'|time('short') %}
+                        {% if currentTime < '07:00' %}
+                        {# Indien dit zo is, haal de programmatie op van de vorige dag #}
+                            {% set dayOfTheWeek = dayOfTheWeek - 1 %}
+                            {% if dayOfTheWeek < 0 %}
+                            {# Indien dag == zondag, dan dagnr veranderen naar zaterdag #}
+                                {% set dayOfTheWeek = 6 %}
+                            {% endif %}
+                            {% set dag = weekdagen[dayOfTheWeek] %}
+                            {% set timeslots = dag.weekdag.all() %}
+                        {% endif %}
+                        {# Huidig programma zoeken, dan volgend programma en vervolgens de loop beëindigen #}
+                        {% for timeslot in timeslots if break <= 1 %}
+                            {% if break == 0 %}
+                                {# {% if timeslot.beginuur|time('short') <= 'now'|time('short') and timeslot.einduur|time('short') > 'now'|time('short') %} #}
+                                {% set beginuur = timeslot.beginuur|time   ('short') %}
+                                {% set einduur = timeslot.einduur|time('short')     %}
+                                {# {% if (currentTime >= beginuur and currentTime < einduur)
+                                            or (currentTime >= beginuur and einduur < currentTime and einduur < beginuur)
+                                            or (currentTime < beginuur and einduur < beginuur)
+                                            or einduur == '07:00' %}
+                                    {% set currentlyPlaying = timeslot.programma.one() %}
+                                    {% set break = break + 1 %}
+                                {% endif %}
+                            {% else  %}
+                                {% set next = timeslot.programma.one() %}
+                                {% set break = break + 1 %}
+                            {% endif %} #}
+                                {% if currentTime >= '07:00' %}
+				                    {% if (currentTime >= beginuur and currentTime < einduur)
+				                					or (currentTime >= beginuur and einduur < currentTime and einduur < beginuur)
+				                					or (currentTime < beginuur and einduur < beginuur) %}
+                                        {% set currentlyPlaying = timeslot.programma.one() %}
+                                        {% set break = break + 1 %}
+				                	{% endif %}
+				                {% elseif currentTime < '07:00' %}
+				                	{% if  beginuur > einduur %}
+                                        {% set currentlyPlaying = timeslot.programma.one() %}
+				                		{% set break = 1 %}
+				                	{% endif %}
+				                {% else %}
+				                	{% if (currentTime >= beginuur and currentTime < einduur) %}
+                                        {% set currentlyPlaying = timeslot.programma.one() %}
+				                		{% set break = 1 %}
+				                	{% endif %}
+				                {% endif %}
+                            {% else  %}
+                                {% set next = timeslot.programma.one() %}
+                                {% set break = break + 1 %}
+                            {% endif %}
+                        {% endfor %}
+                        {# Fallback, indien er een gat in de programmatie valt (zou niet mogen gebeuren, hiervoor moet input controle geschreven worden) #}
+                        {% if currentlyPlaying == null %}
+                            {% set currentlyPlaying = 'Nothing planned for this timeslot.' %}
+                            <a href="#">{{ currentlyPlaying }}</a>
+                        {% else %}
+                            {# indien currently playing laatste programma in array was, dan is next leeg
+                             #}
+                            {% if next == null %}
+                                {% set dayOfTheWeek = dayOfTheWeek + 1 %}
+                                {% if dayOfTheWeek == 7 %}
+                                    {% set dayOfTheWeek = 0 %}
+                                {% endif %}
+                                {% set dag = weekdagen[dayOfTheWeek] %}
+                                {% set timeslot = dag.weekdag.one() %}
+                                {% set next = timeslot.programma.one() %}
+                            {% endif %}
+                            <span class="audioplayer-currently-playing">
+                            <a href="{{ currentlyPlaying.url }}"><strong>{{ currentlyPlaying.title }}</strong></a>
+                            </span><br />
+                            <!--daarna: <span class="audioplayer-playing-next"><a href="{{ next.url }}"><u>{{ next.title }}</u></a></span> / <a href="/programma"><u>alle programma's</u></a> -->
+                        {% endif %}
+
+                        
+                    </p>
+                        </div>
+                    </div><!-- urgent.fm player-->
+            </div>
+
+            <div class="col d-none d-md-inline-block col-md-4 align-self-center">
+                <div class="d-flex justify-content-center">
+
+                </div>
+            </div>
+
+            <div class="col d-none d-md-inline-block col-md-4 align-self-center">
+                <div class="d-flex justify-content-end">
+                    <div class="social-media d-none d-md-inline-block">
+                        <ul>
+                            <li>
+                                <a class="social-media-link" href="facebook">
+                                    <img src="../images/icons/facebook.svg" alt="facebook">
+                                </a>
+                            </li>
+                            <li>
+                                <a class="social-media-link" href="youtube">
+                                    <img src="../images/icons/youtube.svg" alt="youtube">
+                                </a>
+                            </li>
+                            <li>
+                                <a class="social-media-link" href="instagram">
+                                    <img src="../images/icons/instagram.svg" alt="instagram">
+                                </a>
+                            </li>
+                            <li>
+                                <a class="social-media-link" href="facebook">
+                                    <img src="../images/icons/twitter.svg" alt="twitter">
+                                </a>
+                            </li>
+                        </ul>
+                    </div><!-- social media-->
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Modal -->
+{% include "_includes/zoek/searchbar" %}
+
+
+{% js "../dist/bootstrap-5.1.0/js/bootstrap.bundle.min.js" %}
+
+{% js "../js/programmaSchema.js" %}
+{% js "../js/nieuwsoverzicht.js" %}
+
+{% js "../js/script.js" %}
+
+{% do view.registerJsFile("https://cdn.jsdelivr.net/npm/swiffy-slider@1.1.0/dist/js/swiffy-slider.min.js", {"crossorigin":"anonymous", "defer":"defer"}) %}
+
+{% do view.registerCssFile("https://cdn.jsdelivr.net/npm/swiffy-slider@1.1.0/dist/css/swiffy-slider.min.css", {"rel":"stylesheet", "crossorigin":"anonymous"}) %}
+
+</body>
+</html>

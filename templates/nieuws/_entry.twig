@@ -1,0 +1,138 @@
+{% extends craft.app.request.isAjax and not craft.app.request.isLivePreview ? "_ajax" : "_layout" %}
+
+{% block content %}
+	{% set image = entry.image.one() %}
+	{% set rootCategory = entry.nieuwsCategories
+		.level('1')
+		.one() %}
+	{% set backgroundImageSmall = image.getUrl('bannerImageBackgroundPortraitSmall576w') %}
+	{% set backgroundImageMedium = image.getUrl('bannerBackgroundImageLandscapeMedium1280w') %}
+
+	<div class="d-flex hpBanner banner">
+		<picture style="width: 100%; height: 90vh">
+			<source srcset="{{ backgroundImageMedium }}" media="(min-width: 1200px)	" style="height:90vh; object-fit:cover; object-position:center; 	width:100%; position: relative">
+			<img src="{{ backgroundImageSmall }}" style="height:90vh; 	object-fit:cover; object-position:center; width:100%; position: relative"/>
+		</picture>
+		<div
+			class="container banner-content align-self-end" style="position: absolute; left:0; right:0;">
+
+			{# <small>{{ entry.postDate|datetime }}</small> #}
+			<div class="row mb-3">
+				<div class="col">
+					{% import "_macros/_ui" as cat %}
+					{{ cat.setRootCategory(rootCategory, 0) }}
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col">
+					<h1>
+						<span>{{ entry.title }}</span>
+					</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div role="main" class="main container">
+		<div class="row">
+			<div class="col">
+				<section>
+					<p>
+						<strong>{{ entry.intro }}</strong>
+					</p>
+
+					{% for block in entry.nieuwsInhoud.all() %}
+						{% switch block.type %}
+
+							{% case "tekst" %}
+								{{ block.tekst }}
+
+							{% case "fotoreeks" %}
+								<div class="row">
+									{% for foto in block.fotoreeks.all() %}
+
+										{% set img = {
+                  					  mode:'crop',
+                  					  width: 525,
+                  					  height: 300,
+                  					  quality: 90
+                  					} %}
+
+										<div class="img-fluid m-1">
+											<img src="{{ foto.getUrl(img) }}" alt="{{ foto.title }}"/>
+										</div>
+									{% endfor %}
+								</div>
+
+							{% case "embeddedmedia" %}
+								<div class="row">
+									{{ block.embeddedmedia.render({
+              					    attributes: {
+              					    width: 640,
+              					    height: 480,
+              					    }
+              					  })
+              					}}
+								</div>
+
+						{% endswitch %}
+					{% endfor %}
+				</section>
+			</div>
+		</div>
+
+
+		{% set nieuws = craft.entries()
+      .section('nieuws')
+      .relatedTo(entry.nieuwsCategories)
+      .id('not ' ~ entry.id)
+      .orderBy('postDate DESC')
+      .limit(4)
+      .all() %}
+
+		{% if nieuws|length %}
+			<section id="suggestions">
+				<div class="row">
+					<div class="col">
+						<h5>Lees ook dit:</h5>
+					</div>
+				</div>
+				<div class="row row-cols-1 row-cols-md-2 row-cols-lg-2">
+					{% for item in nieuws %}
+						{# Tijdelijke imagetransform oplossing! #}
+						{% set image = item.image.one() %}
+						{% set ft = { 
+						mode:'crop', 
+						width: 440,
+						height: 293,
+						quality: 90 
+					} %}
+						{% set category = item.nieuwsCategories.one() %}
+						<div class="col mt-5">
+							<div class="tegel card border-0 p-0 h-100">
+								<a href="{{ item.url }}">
+									<img class="card-image-top img-fluid" src="{{ image.getUrl(ft) }}" alt="{{ image.title }}"/>
+								</a>
+								<div class="categoryContainer">
+									<a href="{{ category.url }}" class="small">
+										<span>{{ category }}</span>
+									</a>
+								</div>
+								<div class="card-body nwsItemCopy">
+									<a class="nwsItemTitle" href="{{ item.url }}">
+										<h2 class="card-title">{{ item.title }}</h2>
+										<p class="card-text">{{ item.intro }}</p>
+									</a>
+								</div>
+							</div>
+						</div>
+
+					{% endfor %}
+				</div>
+
+			</section>
+		{% endif %}
+	</div>
+{% endblock %}

@@ -1,0 +1,41 @@
+<section class="accordion" id="toon">
+			<div class="accordion-item">
+				<h2 class="accordion-header" id="heading">
+					<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="toon">Toon:</button>
+				</h2>
+				<div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="heading" data-bs-parent="#toon">
+					<div class="accordion-body">
+						{% set categories =  craft.categories
+                    	.group('nieuwsCategories')
+                    	.all()
+                		%}
+						
+						<input  class="rbtnFilter" type="checkbox" name="category" value="all"/>
+						Alle nieuwsberichten
+						<br/>
+						{% for category in categories %}
+							<input  class="rbtnFilter" type="checkbox" name="category" value="{{ category.title }}"/>
+							{{ category.title }}
+							<br/>
+						{% endfor %}
+						
+					</div>
+				</div>
+			</div>
+		</section>
+
+
+
+	<section class="">
+
+		{% set nieuws = craft.entries.section('nieuws')
+                            .relatedTo(craft.categories.slug(['or', 'muziek', '']))
+                            .all() %}
+
+        <p>Aantal items: {{ nieuws|length }}</p>
+
+			{#{% include "_includes/nieuwsoverzicht" with { nieuws: nieuws } only %}#}
+            
+		</section>
+		<!--    Nieuwsoverzicht-->
+

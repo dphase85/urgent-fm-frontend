@@ -1,0 +1,136 @@
+{# {% set default = craft.entries()
+    .section('programma')
+    .programmaDag('7')
+    .one() %} #}
+
+
+{# {% set programmas = craft.entries()
+    .section('programma')
+    .programmaDag('not 7')
+    .orderBy('programmaBeginuur')
+    .all() %} #}
+
+
+{# {% set result = craft.app.fields.getFieldByHandle('programmaDag') %} #}
+{# <pre>
+    {{ dump(week) }}
+</pre>
+{% exit %} #}
+{# {% set sluitProgrammaAan = 0 %} #}
+
+{# {% set schemaQuery = craft.matrixBlocks().type('timeSlot') %} #}
+
+{# Probeer relaties in matrixveld te zoeken (dus: timeslot gekoppeld aan programma, en neem van dit timeslot de uurvelden) #}
+{# 
+    {% set weekdagen = craft.entries.section('programScheme').all() %}
+
+    {% for dag in weekdagen %}
+        {% set slots = dag.weekdag.relatedTo({
+        targetElement: default,
+        field: 'programma'
+    }) %}
+    {% for slot in slots %}
+        <p>{{ dag.title }} {{ slot.beginuur|time('short') }} - {{ slot.einduur|time('short') }}</p>
+    {% endfor %}
+    {% endfor %} #}
+
+
+
+{# 
+{% for block in schemaQuery %}
+    {% set programma = craft.entries().section('programma').relatedTo(block).one() %}
+    <p>{{programma.title}}</p>
+{% endfor %} #}
+
+
+{# Deze code werkt: programma wordt per dag, per uur gesorteerd. Enkel de default(listen up) programma ontbreekt #}
+{# {% for week in result %}
+    {% for dag in week if (dag.label != 'Dagelijks (default)') %}
+        <h5>{{ dag.label }}</h5>
+        {% set vorigProgramma = default %}
+        {% set vorigBeginuur = vorigProgramma.programmaBeginuur|time('H') %}
+        {% set vorigEinduur = vorigProgramma.programmaEinduur|time('H') %}
+        <p>Beginuur: {{vorigBeginuur}}</p>
+        <p>Einduur: {{vorigEinduur}}</p>
+        {% for programma in programmas %}
+            {% for option in programma.programmaDag %}
+                {% if option.label == dag.label %}
+                    <p>{{programma}}: {{ programma.programmaBeginuur|time('short') }} - {{ programma.programmaEinduur|time('short') }}</p>
+                {% endif %}
+                
+            {% endfor %}
+            
+        {% endfor %}
+    {% endfor %}
+{% endfor %} #}
+
+
+{# Andere manier: probeer per programma tijdslot in programscheme te achterhalen #}
+
+{# {% set programmas = craft.entries()
+    .section('programma')
+    .relatedTo()
+    .all() %} #}
+
+{# {% set programScheme = craft.entries()
+                            .section('programScheme')
+                            .field('weekdag')
+                            .all() %}
+s
+<pre>
+    {{ dump(programScheme) }}
+</pre>
+{% exit %} #}
+
+{# {% set relatedPrograms = craft.entries().section('programma').relatedTo(programScheme.weekdag).all() %}
+
+<pre>
+    {{ dump(relatedPrograms) }}
+</pre>
+{% exit %} #}
+
+{# Pagination (working): #}
+{% set pageNumber = craft.app.request.pageNum %}
+				{% if pageInfo is defined %}
+					{% if pageInfo.totalPages > 1 %}
+						{% if pageInfo.prevUrl %}
+							<a class="pagination-changePage pagination-prevPage" href="{{ pageInfo.prevUrl }}">&lt;</a>
+						{% endif %}
+						{% if pageInfo.totalPages <= 3 %}
+							{% if pageNumber == 1 %}
+								<a class="pagination-changePage pagination-currentPage" href="{{ pageInfo.firstUrl }}">1</a>
+							{% else %}
+								<a class="pagination-changePage" href="{{ pageInfo.firstUrl }}">1</a>
+							{% endif %}
+						{% else %}
+							{% for page, url in pageInfo.getRangeUrls(1, 2) %}
+								{% if pageNumber == page %}
+									<a class="pagination-changePage pagination-currentPage" href="{{ url }}">{{ page }}</a>
+								{% else %}
+									<a class="pagination-changePage" href="{{ url }}">{{ page }}</a>
+								{% endif %}
+							{% endfor %}
+						{% endif %}
+						<span>...</span>
+						{% if pageInfo.totalPages <= 3 %}
+							{% if pageNumber == pageInfo.totalPages %}
+								<a class="pagination-changePage pagination-currentPage" href="{{ pageInfo.lastUrl }}">{{ pageInfo.totalPages }}</a>
+							{% else %}
+								<a class="pagination-changePage" href="{{ pageInfo.lastUrl }}">{{ pageInfo.totalPages }}</a>
+							{% endif %}
+
+						{% else %}
+							{% for page, url in pageInfo.getRangeUrls(pageInfo.totalPages - 1, pageInfo.totalPages) %}
+								{% if pageNumber == page %}
+									<a class="pagination-changePage pagination-currentPage" href="{{ url }}">{{ page }}</a>
+								{% else %}
+									<a class="pagination-changePage" href="{{ url }}">{{ page }}</a>
+								{% endif %}
+							{% endfor %}
+						{% endif %}
+						{% if pageInfo.nextUrl %}
+							<a class="pagination-changePage pagination-nextPage" href="{{ pageInfo.nextUrl }}">&gt;</a>
+						{% endif %}
+					{% endif %}
+
+				{% endif %}
