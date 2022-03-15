@@ -2,6 +2,8 @@
 
 
 {% block content %}
+	{# import macro's #}
+	{% import "_macros/_ui" as ui %}
 	{% set image = null %}
 	{# Banner #}
 	{% if entry.programmaBanner.one() is empty %}
@@ -9,13 +11,6 @@
 	{% else %}
 		{% set image = entry.programmaBanner.one() %}	
 	{% endif %}
-	{% set logo = null %}
-	{% if entry.programmaLogo.one() is empty %}
-		{% set logo = generic.programmadefaultlogo.one() %}
-	{% else %}
-		{% set logo = entry.programmaLogo.one() %}
-	{% endif %}
-	
 	{% set rootCategory = entry.programmaStijl
 		.level('1')
 		.one() %}
@@ -23,8 +18,6 @@
 	{% set subCategories = entry.programmaStijl
         .level('>1')
         .all() %}
-
-
 
 {# {% set backgroundImageSmall = image.getUrl('bannerImageBackgroundPortraitSmall576w') %} #}
 {% set backgroundImageSmall = image.getUrl('bannerImageBackgroundPortraitSmall576w') %}
@@ -39,13 +32,13 @@
 
 		<div class="container banner-content align-self-end" style="position: absolute; left:0; right:0;">
 			<div class="row mb-lg-4">
-				{# <div class="col-2">
-					<img class="banner-logo img-fluid" src="{{ logo.url }}" 	alt="">
-				</div> #}
+				<div class="col-2">
+					{# <img class="banner-logo img-fluid" src="{{ logo.url }}" 	alt=""> #}
+					{{ ui.setLogo(entry.programmaLogo.one(), "banner-logo img-fluid") }}
+				</div>
 				{% if rootCategory is not null %}
 					<div class="col-10">
-						{% import "_macros/_ui" as cat %}
-						{{ cat.setRootCategory(rootCategory, 0) }}<br />
+						{{ ui.setRootCategory(rootCategory, 0) }}<br />
 						<h1 class="mt-3"><span>{{ entry.title }}</span></h1>
 					</div>
 				{% endif %}
@@ -120,7 +113,6 @@
 		</section>
 
 		{# Bouw hier de sociale media links met bijhorende iconen op, indien deze velden ingevuld zijn #}
-
 		{% if entry.socialMediaLinks|length %}
         <section class="row">
             <div class="col">
@@ -178,7 +170,6 @@
 
 			<div class="row mt-5 text-center">
 			<div class="col">
-				{# <a href="{{ pageInfo.firstUrl }}">First Page</a> #}
 				{% if pageInfo.prevUrl %}<a class="pagination-changePage pagination-prevPage pagination-focus mx-3" href="{{ pageInfo.prevUrl }}" >&lt;</a>{% endif %}
 				
 				{% for page, url in pageInfo.getPrevUrls(5) %}
@@ -192,14 +183,10 @@
 				{% endfor %}
 				
 				{% if pageInfo.nextUrl %}<a class="pagination-changePage pagination-nextPage pagination-focus mx-3" href="{{ pageInfo.nextUrl }}">&gt;</a>{% endif %}
-				{# <a href="{{ pageInfo.lastUrl }}">Last Page</a> #}
 			</div>
 		</div>
 			
 		{% endif %}
-
-
-
 
 		{# Zoek eerst naar gelateerde stijlen op een hoger categorieniveau dan 2 #}
 		{% set stijlen = entry.programmaStijl
@@ -230,26 +217,24 @@
 					.all() %}	
 				
 				{% for entry in entries %}
+					{{ ui.setLogo(entry.programmaLogo.one(), "") }}
 					<div class="col mt-3">
-						{% set logo = entry.programmaLogo.one() %}
 						<div class="row">
 							<div class="col-sm-4 col-lg-3">
 								<a href="{{ entry.url }}" class="d-md-inline-block">
 									<div class="programma-logo d-inline-block al">
-										<img src="{{ logo.url }}" alt="{{ logo.title }}	">
+										
 									</div>
 								</a>
 							</div>
 							<div class="col-sm-8 col-lg-9">
 								<a href="{{ entry.url }}" class="d-block text-truncate">
-									<h3>{{ entry.title }}</h3>
-									{{ entry.intro }}
-										{# <div class="d-md-inline-block ms-md-4 align-self-start">
-											<h3>{{ entry.title }}</h3>
-											<p class="text-overflow">{{ entry.intro }}</p>
-										</div> #}
+									<div class="d-md-inline-block ms-md-4 align-self-start">
+										<h3>{{ entry.title }}</h3>
+										<p class="text-overflow">{{ entry.intro }}</p>
 									</div>
 								</a>
+							</div>
 						</div>
 					</div>
 				{% endfor %}	
