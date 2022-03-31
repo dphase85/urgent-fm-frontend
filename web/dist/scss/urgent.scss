@@ -536,7 +536,6 @@ text-overflow: ellipsis;
 }
 
 .logo {
-    border: 1px solid black;
     width: 50px;
     height: 50px;
 
@@ -1108,4 +1107,9 @@ a {
 a:hover {
     color: gray;
     text-decoration: none;
+}
+
+// Fix iframe height
+.news-embedded-media iframe {
+	height: auto;
 }
