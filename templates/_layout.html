@@ -10,7 +10,6 @@
     <title>{{siteName}}</title>
 
     {% css "../dist/bootstrap-5.1.0/css/bootstrap.min.css" %}
-    {% css "../css/style.css" %}
     {% css "../css/urgent.css" %}
 
     <!-- TEST: Swiffy Slider -->
@@ -77,6 +76,7 @@
                                 .orderBy('title')
                                 .all() %}
                         {% set dayOfTheWeek = 'now'|date('w') %}
+                        {# {% set dayOfTheWeek = 5 %} #}
                         {% set dag = weekdagen[dayOfTheWeek] %}
                         {% set timeslots = dag.weekdag.all() %}
                         {% set break = 0 %}
@@ -85,6 +85,7 @@
                         {% set next =  null %}
                         {# Eerst checken of er een programma van de vorige dag op het huidig uur gespeeld wordt (vb: charged van 10pm tot 6 am) #}
                         {% set currentTime = 'now'|time('short') %}
+                        {# {% set currentTime = '06:00' %} #}
                         {% if currentTime < '07:00' %}
                         {# Indien dit zo is, haal de programmatie op van de vorige dag #}
                             {% set dayOfTheWeek = dayOfTheWeek - 1 %}
@@ -98,36 +99,27 @@
                         {# Huidig programma zoeken, dan volgend programma en vervolgens de loop beëindigen #}
                         {% for timeslot in timeslots if break <= 1 %}
                             {% if break == 0 %}
-                                {# {% if timeslot.beginuur|time('short') <= 'now'|time('short') and timeslot.einduur|time('short') > 'now'|time('short') %} #}
                                 {% set beginuur = timeslot.beginuur|time   ('short') %}
                                 {% set einduur = timeslot.einduur|time('short')     %}
-                                {# {% if (currentTime >= beginuur and currentTime < einduur)
-                                            or (currentTime >= beginuur and einduur < currentTime and einduur < beginuur)
-                                            or (currentTime < beginuur and einduur < beginuur)
-                                            or einduur == '07:00' %}
-                                    {% set currentlyPlaying = timeslot.programma.one() %}
-                                    {% set break = break + 1 %}
-                                {% endif %}
-                            {% else  %}
-                                {% set next = timeslot.programma.one() %}
-                                {% set break = break + 1 %}
-                            {% endif %} #}
                                 {% if currentTime >= '07:00' %}
 				                    {% if (currentTime >= beginuur and currentTime < einduur)
-				                					or (currentTime >= beginuur and einduur < currentTime and einduur < beginuur)
-				                					or (currentTime < beginuur and einduur < beginuur) %}
+									or (currentTime >= beginuur and einduur < currentTime and einduur < beginuur)
+									or (currentTime < beginuur and einduur < beginuur) %}
                                         {% set currentlyPlaying = timeslot.programma.one() %}
                                         {% set break = break + 1 %}
 				                	{% endif %}
 				                {% elseif currentTime < '07:00' %}
-				                	{% if  beginuur > einduur %}
+				                	{% if  beginuur > einduur and currentTime < einduur %}
                                         {% set currentlyPlaying = timeslot.programma.one() %}
-				                		{% set break = 1 %}
+				                		{% set break = break + 1 %}
+                                    {% elseif currentTime >= beginuur and currentTime < einduur %}
+                                    {% set currentlyPlaying = timeslot.programma.one() %}
+						                {% set break = break + 1 %}
 				                	{% endif %}
 				                {% else %}
 				                	{% if (currentTime >= beginuur and currentTime < einduur) %}
                                         {% set currentlyPlaying = timeslot.programma.one() %}
-				                		{% set break = 1 %}
+				                		{% set break = break + 1 %}
 				                	{% endif %}
 				                {% endif %}
                             {% else  %}
@@ -165,7 +157,6 @@
 
             <div class="col d-none d-md-inline-block col-md-4 align-self-center">
                 <div class="d-flex justify-content-center">
-
                 </div>
             </div>
 

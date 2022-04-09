@@ -486,11 +486,11 @@ const getTimetable = () => {
 	  }
 	  `;
 
-	const request = new Request('http://localhost/api', {
+	const request = new Request('https://urgent.johanraes.be/api', {
 		method: 'POST',
 		headers: new Headers({
 			'Content-type': 'application/json',
-			'Accept': 'application/json'
+			'Accept': 'application/json',
 		}),
 		body: JSON.stringify({
 			query})
@@ -514,7 +514,6 @@ const saveTimetable = (data) => {
 	}
 	let ttDay = entries[currentDay];
 	let timeslots = ttDay['weekdag'];
-	console.log(timeslots);
 	for (i=0; i < timeslots.length; i++) {
 		let timeslot = timeslots[i];
 		let beginuurTS = timeslot['beginuur'];
@@ -523,7 +522,6 @@ const saveTimetable = (data) => {
 		let einduur = parseInt(einduurTS.substring(11,13));
 		
 		if ((currentHour >= beginuur && currentHour < einduur) || (currentHour >= beginuur && einduur < beginuur)) {
-			console.log(beginuur);
 			let programma = timeslot['programma'][0];
 
 	
@@ -546,13 +544,13 @@ const saveTimetable = (data) => {
 				nextTimeslot = nextDay[0];
 			}
 			
-			let nextProgramma = nextTimeslot['programma'][0];
-			let next = document.querySelector('.audioplayer-playing-next a');
-			clearParentNode(next);
-			let u = document.createElement('u');
-			next.setAttribute('href', nextProgramma['url']);
-			u.textContent = nextProgramma['title'];
-			next.appendChild(u);
+			// let nextProgramma = nextTimeslot['programma'][0];
+			// let next = document.querySelector('.audioplayer-playing-next a');
+			// clearParentNode(next);
+			// let u = document.createElement('u');
+			// next.setAttribute('href', nextProgramma['url']);
+			// u.textContent = nextProgramma['title'];
+			// next.appendChild(u);
 		}	
 	}
 
@@ -571,6 +569,7 @@ const checkCurrentTime = () => {
 	// if true, then get the timetable data from sessionstorage
 	// and check if new program is on air or not
 	if (m == 0) {
+		console.log("er is een minuut gepasseerd.")
 		getTimetable();
 		setTimeout(checkCurrentTime, 60000);
 	} else {

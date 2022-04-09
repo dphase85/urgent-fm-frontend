@@ -821,7 +821,7 @@ h2.sectionTitle {
 
 .listingCategory {
   display: inline-block;
-  background-color: #ac9b9b;
+  background-color: rgb(172, 155, 155);
   border-radius: 10px;
   padding: 2px 10px;
 }

@@ -26,6 +26,9 @@
 		{% set timeslots = dag.weekdag.all() %}
 		{# Eerst checken of er een programma van de vorige dag op het huidig uur gespeeld wordt (vb: charged van 10pm tot 6 am) #}
 		{% set currentTime = 'now'|time('short') %}
+
+		{# TEST #}
+		{# {% set currentTime = '07:30' %} #}
 		{% if currentTime < '07:00' %}
 			{# Indien dit zo is, haal de programmatie op van de vorige dag #}
 			{% set dayOfTheWeek = dayOfTheWeek - 1 %}
@@ -54,7 +57,11 @@
 						{% set break = 1 %}
 					{% endif %}
 				{% elseif currentTime < '07:00' %}
-					{% if  beginuur > einduur %}
+					{% if  beginuur > einduur and currentTime < einduur %}
+						{% set nowOnair = timeslot %}
+						{% set programOnair = timeslot.programma.one() %}
+						{% set break = 1 %}
+					{% elseif currentTime >= beginuur and currentTime < einduur %}
 						{% set nowOnair = timeslot %}
 						{% set programOnair = timeslot.programma.one() %}
 						{% set break = 1 %}
@@ -141,12 +148,14 @@
 
 											</li>
 											{% set i = i + 1 %}
-											{% if i == 6 %}
-											</ul>
-										</div>
+											{# Wanneer we in de helft zijn van de entries, verplaats naar 2de kolom #}
+											{# In geval van oneven aantal entries, zorg dat de grootste helft de linkerkolom is #}
+											{% if i == ceil(timeslots|length/2) %}
+													</ul>
+												</div>
 
-										<div class="col timeslots">
-											<ul class="ps-0 collapse multi-collapse py-3" id="multiCollapseExample2">
+												<div class="col timeslots">
+													<ul class="ps-0 collapse multi-collapse py-3" id="multiCollapseExample2">
 											{% endif %}
 										{% endfor %}
 									</ul>
