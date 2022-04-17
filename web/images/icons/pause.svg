@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="48px" height="48px" viewBox="0 0 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>pauzeknop</title>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="pauzeknop">
+            <rect id="Rectangle" fill="#3ED8A0" x="0" y="0" width="48" height="48" rx="24"></rect>
+            <path d="M14,12 L14,36 L21.6923077,36 L21.6923077,12 L14,12 Z M26.3076923,12 L26.3076923,36 L34,36 L34,12 L26.3076923,12 Z" id="Shape" fill="#FFFFFF" fill-rule="nonzero"></path>
+        </g>
+    </g>
+</svg>

@@ -637,13 +637,14 @@ const onload = () => {
 			if (!liveAudio.hasAttribute('src')) {
 				liveAudio.setAttribute('src', 'http://urgentstream.radiostudio.be:8000/live?fbclid=IwAR0UT-WBLUyWbUAmZbwbPExIyY7IDasgTpHbYFTdEUYBT08ARQ4KhxevaAk');
 			}
-			audioControl.classList.remove('audio-control-pause');
-			audioControl.classList.add('audio-control-play');
+			audioControl.classList.remove('audio-control-play');
+			audioControl.classList.add('audio-control-pause');
 			liveAudio.play();
 		} else {
 			liveAudio.pause();
-			audioControl.classList.remove('audio-control-play');
-			audioControl.classList.add('audio-control-pause');
+
+			audioControl.classList.remove('audio-control-pause');
+			audioControl.classList.add('audio-control-play');
 			// liveAudio.currentTime = 0;
 			liveAudio.removeAttribute('src');
 			liveAudio.load();

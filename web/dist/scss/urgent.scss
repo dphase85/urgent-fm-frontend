@@ -761,10 +761,17 @@ footer {
 	
 	height: 50px;
 	width: 50px;
-	background: url("../images/icons/playknop.svg") no-repeat;
 	display: inline-block;
 	align-content: center;
 	justify-content: center;
+}
+
+.audio-control-play {
+	background: url("../images/icons/playknop.svg") no-repeat;
+}
+
+.audio-control-pause {
+	background: url("../images/icons/pause.svg") no-repeat;
 }
 
 
