@@ -102,10 +102,36 @@ const router = (url) => {
 		callMixcloud();
 		swiffyslider.init(rootElement = document.body);
 		// setDisplay();
-	} else if (url === '/programma') {
+	} else if (url.includes('/programma')) {
 		setAnchors();
-		populateProgramSchema();
-		setDisplay();
+			// activeer eerste tab bij inladen pagina
+		let tabDay = -1;
+		if (url === '/programma/zondag') {
+			tabDay = 0;
+		} else if (url === '/programma/maandag') {
+			tabDay = 1;
+		} else if (url === '/programma/dinsdag') {
+			tabDay = 2;
+		} else if (url === '/programma/woensdag') {
+			tabDay = 3;
+		} else if (url === '/programma/donderdag') {
+			tabDay = 4;
+		} else if (url === '/programma/vrijdag') {
+			tabDay = 5;
+		} else if (url === '/programma/zaterdag') {
+			tabDay = 6;
+		} else if (url === '/programma') {
+			let date = new Date();
+			// Zondag = 0, maandag 1 enz. Tabday is de 'juiste' dagnummer die door JS gebruikt wordt.
+			tabDay = date.getDay();
+		}
+		if (tabDay >= 0) {
+			populateProgramSchema(tabDay);
+			setDisplay();
+		}
+		// let scrollY = history.state.scrollY;
+		// history.replaceState({ scrollY: scrollY, filters: null }, '', url);
+		
 	} else if (url === '/nieuws' || url.includes('/nieuws?page')) {
 		setAnchors();
 		let filters;
@@ -121,12 +147,12 @@ const router = (url) => {
 				cbFilters[i].checked = filters[i];
 			}
 		}
-	
+
 		let scrollY = history.state.scrollY;
 		let url = location.pathname + location.search;
 		history.replaceState({ scrollY: scrollY, filters: null }, '', url);
 		setDisplay();
-	} else if (url.startsWith('/programma') && url.includes('?page=')) { 
+	} else if (url.startsWith('/programma') && url.includes('?page=')) {
 		console.log('gelukt')
 	} else if (url === '/zoek/resultaten' || url.includes('/zoek/resultaten?page') || url === '/zoek' || url.includes('/zoek')) {
 		closeSearch();
@@ -169,7 +195,6 @@ const navigate = (e) => {
 	}
 
 	let goToLocation = location.pathname + location.search;
-	// if (((e.currentTarget).href.includes('/programma') && )
 	history.replaceState({ scrollY: window.scrollY, filters: filters }, '', goToLocation);
 
 	let nextUrl = null;
@@ -191,7 +216,7 @@ const navigate = (e) => {
 			}
 			form = (e.currentTarget).form;
 			cbFilters = form.querySelectorAll('.cbFilter');
-			
+
 			formAction = `${form.action}?q=`;
 			q = form[0].value;
 
@@ -222,7 +247,7 @@ const navigate = (e) => {
 
 			let scrollY = 0;
 			// Indien focus moet behouden worden op scrollpositie bij pagineren, zie of het a-element de pagination-focus klasnaam bezit:
-			if (e.currentTarget.classList.contains('pagination-focus')){
+			if (e.currentTarget.classList.contains('pagination-focus')) {
 				scrollY = window.scrollY;
 			}
 			history.pushState({ scrollY: scrollY, filters: null }, '', nextUrl);
@@ -285,8 +310,8 @@ const closeSearch = (e) => {
 	let overlay = document.querySelector('.overlay');
 	let searchbar = document.querySelector('.modal-search');
 	let btnClose = document.querySelector('.close');
-		let body = document.querySelector('body');
-		body.style.overflow = 'auto';
+	let body = document.querySelector('body');
+	body.style.overflow = 'auto';
 	overlay.style.display = 'none';
 	searchbar.style.display = 'none';
 };
@@ -346,7 +371,7 @@ const buildFilterURLParam = () => {
 			form = thisForm;
 		}
 	});
-	let formAction= `${form.action}`;
+	let formAction = `${form.action}`;
 	let filterParam = '';
 	let cbFilters = form.querySelectorAll('.cbFilter');
 
@@ -371,7 +396,7 @@ const buildFilterURLParam = () => {
 				}
 			}
 			filterParam = filterParam.trim();
-			filterParam = filterParam.slice(0, filterParam.length-1);
+			filterParam = filterParam.slice(0, filterParam.length - 1);
 		}
 		formAction += q + filterParam;
 	} else {
@@ -386,7 +411,7 @@ const buildFilterURLParam = () => {
 		if (input.checked === true) {
 			filterParam = '';
 		}
-		
+
 		filters[0] = input.checked;
 		for (let i = 1; i < cbFilters.length; i++) {
 			let input = cbFilters[i];
@@ -397,11 +422,11 @@ const buildFilterURLParam = () => {
 			}
 		}
 		filterParam = filterParam.trim();
-		filterParam = filterParam.slice(0, filterParam.length-1);
+		filterParam = filterParam.slice(0, filterParam.length - 1);
 
-		formAction += filterParam;	
+		formAction += filterParam;
 	}
-	
+
 	return formAction;
 };
 
@@ -493,9 +518,10 @@ const getTimetable = () => {
 			'Accept': 'application/json',
 		}),
 		body: JSON.stringify({
-			query})
+			query
+		})
 	});
-	
+
 	getData(request, saveTimetable, printErrorMessage);
 };
 
@@ -514,17 +540,17 @@ const saveTimetable = (data) => {
 	}
 	let ttDay = entries[currentDay];
 	let timeslots = ttDay['weekdag'];
-	for (i=0; i < timeslots.length; i++) {
+	for (i = 0; i < timeslots.length; i++) {
 		let timeslot = timeslots[i];
 		let beginuurTS = timeslot['beginuur'];
-		let beginuur = parseInt(beginuurTS.substring(11,13));
+		let beginuur = parseInt(beginuurTS.substring(11, 13));
 		let einduurTS = timeslot['einduur'];
-		let einduur = parseInt(einduurTS.substring(11,13));
-		
+		let einduur = parseInt(einduurTS.substring(11, 13));
+
 		if ((currentHour >= beginuur && currentHour < einduur) || (currentHour >= beginuur && einduur < beginuur)) {
 			let programma = timeslot['programma'][0];
 
-	
+
 			let currentlyPlaying = document.querySelector('.audioplayer-currently-playing a');
 			clearParentNode(currentlyPlaying);
 			let strong = document.createElement('strong');
@@ -532,7 +558,7 @@ const saveTimetable = (data) => {
 			strong.textContent = programma['title'];
 			currentlyPlaying.appendChild(strong);
 
-			let nextTimeslot = timeslots[i+1];
+			let nextTimeslot = timeslots[i + 1];
 			// if currentlyPlaying is last timeslot, then next falls out of array
 			if (nextTimeslot == timeslots.length) {
 				currentDay = currentDay + 1;
@@ -543,7 +569,7 @@ const saveTimetable = (data) => {
 				let nextDay = ttDay[currentDay];
 				nextTimeslot = nextDay[0];
 			}
-			
+
 			// let nextProgramma = nextTimeslot['programma'][0];
 			// let next = document.querySelector('.audioplayer-playing-next a');
 			// clearParentNode(next);
@@ -551,7 +577,7 @@ const saveTimetable = (data) => {
 			// next.setAttribute('href', nextProgramma['url']);
 			// u.textContent = nextProgramma['title'];
 			// next.appendChild(u);
-		}	
+		}
 	}
 
 	//reload homepage
@@ -577,7 +603,7 @@ const checkCurrentTime = () => {
 		setTimeout(checkCurrentTime, 30000);
 	}
 };
- 
+
 // Window Events
 const onload = () => {
 	lastScrollY = 0;
@@ -587,8 +613,7 @@ const onload = () => {
 	let currentUrl = getURL();
 	let scrollY = 0;
 
-	if (document.location.search)
-	{
+	if (document.location.search) {
 		currentUrl += document.location.search;
 	}
 
@@ -612,10 +637,13 @@ const onload = () => {
 			if (!liveAudio.hasAttribute('src')) {
 				liveAudio.setAttribute('src', 'http://urgentstream.radiostudio.be:8000/live?fbclid=IwAR0UT-WBLUyWbUAmZbwbPExIyY7IDasgTpHbYFTdEUYBT08ARQ4KhxevaAk');
 			}
+			audioControl.classList.remove('audio-control-pause');
+			audioControl.classList.add('audio-control-play');
 			liveAudio.play();
-			// audioControl.textContent = 'play';
 		} else {
 			liveAudio.pause();
+			audioControl.classList.remove('audio-control-play');
+			audioControl.classList.add('audio-control-pause');
 			// liveAudio.currentTime = 0;
 			liveAudio.removeAttribute('src');
 			liveAudio.load();
@@ -647,10 +675,10 @@ const changeNavbarstate = () => {
 const hidePageLoading = () => {
 	if (document.readyState !== 'complete') {
 		let content = document.querySelector('.content');
-	 	content.style.visibility = 'hidden';
+		content.style.visibility = 'hidden';
 	} else {
 		let content = document.querySelector('.content');
-	 	content.style.visibility = 'visible';
+		content.style.visibility = 'visible';
 	}
 };
 

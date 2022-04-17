@@ -4,8 +4,6 @@ const setSchema = (e) => {
 	let tabsContainer = document.querySelector('.progSchema-tabsContainer');
 	let tabNumber = (e.target).dataset.forTab;
 	let tabToActivate = document.querySelector(`.tabs-content[data-tab="${tabNumber}"]`);
-
-
 	// code om tabs in standaardmenu in te stellen
 	navbar.querySelectorAll('.tabs-button').forEach(button => {
 		button.classList.remove('tabs-button-active');
@@ -18,11 +16,12 @@ const setSchema = (e) => {
 	});
 	tabToActivate.classList.add('tabs-content-active');
 
-
 	// code om dropdownmenu in te stellen (enkel zichtbaar op kleine schermen)
 	let txtDay = (e.target).innerHTML;
 	let weekdagSelected = document.getElementById('weekdag-selected');
 	weekdagSelected.innerText = txtDay;
+	let scrollY = history.state.scrollY;
+	history.pushState({ scrollY: scrollY, filters: null }, '', '/programma/'+txtDay.toLowerCase());
 };
 
 const collapseSlot = (e) => {
@@ -30,8 +29,6 @@ const collapseSlot = (e) => {
 	let slotSelect = (e.target).parentElement.parentElement;
 	let slotParent = slotSelect.parentElement;
 	let slotNextRow = slotParent.nextElementSibling;
-	// console.log(slotNextRow);
-
 
 	//check of slot-styles actief zijn, indien niet:
 	if (!slotNextRow.classList.contains('slot-row-active')) {
@@ -42,9 +39,6 @@ const collapseSlot = (e) => {
 		// check voor alle entries of er een slot style actief is
 		// indien er een entrie actief is: sluiten
 		for (let i = 0; i < allSlotIntros.length; i++) {
-
-			console.log(allSlotIntros[i]);
-
 			if (allSlotIntros[i].classList.contains('slot-row-active')) {
 				allSlotIntros[i].classList.remove('slot-row-active');
 			}
@@ -58,7 +52,8 @@ const collapseSlot = (e) => {
 	}
 };
 
-const populateProgramSchema = () => {
+/* populate programmaschema, met dagnummer als parameter. Aan de hand van parameter wordt de gewenste dag actief gemaakt */
+const populateProgramSchema = (tabDay) => {
 
 	let buttons = document.querySelectorAll('.tabs-button');
 	buttons.forEach(button => button.addEventListener('click', setSchema));
@@ -66,14 +61,9 @@ const populateProgramSchema = () => {
 	let slotTitles = document.querySelectorAll('.slot-inhoud h3');
 	slotTitles.forEach(title => title.addEventListener('click', collapseSlot));
 
-	// activeer eerste tab bij inladen pagina
-	let date = new Date();
-
-	// Zondag = 0, maandag 1 enz. Tabday is de 'juiste' dagnummer die door JS gebruikt wordt.
-	let tabDay = date.getDay();
-
+	// // Zondag = 0, maandag 1 enz. Tabday is de 'juiste' dagnummer die door JS gebruikt wordt.
 	let btnDay = tabDay - 1;
-	// Maandag is eerste dag (array[0] in schema), zondag is laatste dag in programmaschema. 
+	// Maandag is eerste dag (array[0] in schema), zondag is laatste dag in programmaschema.
 	// Na aftrek is zondag == -1, zet deze om naar 6 (laatste positie in schema).
 	if (btnDay == -1) {
 		btnDay = 6;
@@ -86,8 +76,6 @@ const populateProgramSchema = () => {
 	// vervolgens classlist aanpassen, ifv JS functionaliteit: eerst .tab classname verwijderen (deze is enkel nuttig wanneer JS uitgeschakeld is), daarna voor alle niet-actieve tabs content verbergen
 	tabs.forEach(tab => {
 		let weekday = document.querySelector('.tab .weekday');
-		
-		
 		tab.removeChild(weekday);
 		tab.classList.remove('tab');
 		tab.classList.add('tabs-content');
@@ -97,12 +85,13 @@ const populateProgramSchema = () => {
 	slotIntros.forEach(slotIntro => {
 		slotIntro.classList.remove('slot-row-active');
 		slotIntro.classList.add('slot-row');
-	});	
+	});
 
 	// toon content van actieve tab
 	tabs[tabDay].classList.add('tabs-content-active');
-
 	let txtDay = buttons[btnDay].innerHTML;
 	let weekdagSelected = document.getElementById('weekdag-selected');
 	weekdagSelected.innerText = txtDay;
+	let scrollY = history.state.scrollY;
+	history.replaceState({ scrollY: scrollY, filters: null }, '', '/programma/'+txtDay.toLowerCase());
 };
