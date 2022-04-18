@@ -215,14 +215,13 @@
 					.limit(4)
 					.all() %}	
 				
-				{% for entry in entries %}
-					{{ ui.setLogo(entry.programmaLogo.one(), "") }}
+				{% for entry in entries %}					
 					<div class="col mt-3">
 						<div class="row">
 							<div class="col-sm-4 col-lg-3">
 								<a href="{{ entry.url }}" class="d-md-inline-block">
 									<div class="programma-logo d-inline-block al">
-										
+										{{ ui.setLogo(entry.programmaLogo.one(), "") }}
 									</div>
 								</a>
 							</div>
