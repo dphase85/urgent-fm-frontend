@@ -1,4 +1,5 @@
 {% extends craft.app.request.isAjax and not craft.app.request.isLivePreview ? "_ajax" : "_layout" %}
+{% set title = entry.title %}
 
 {% block content %}
 {% set image = entry.singlesBannerImage.one() %}
@@ -11,7 +12,7 @@
 		</picture>
         {# <div class="container banner-content align-self-end" style="position: absolute; left:0; right:0;"> #}
         <div class="container banner-window banner-content d-flex align-items-center" style="position: absolute">
-            <h1><span>{{ entry.singlesIntro }}</span></h1>
+            <h1 id="title" data-title="{{ entry.title }}"><span>{{ entry.singlesIntro }}</span></h1>
         </div>
     </div>
     <div class="main container">

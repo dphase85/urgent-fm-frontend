@@ -1,7 +1,8 @@
 {% extends craft.app.request.isAjax and not craft.app.request.isLivePreview ? "_ajax" : "_layout" %}
-
+{% set title = entry.title %}
 
 {% block content %}
+	
 	{# import macro's #}
 	{% import "_macros/_ui" as ui %}
 	{% set image = null %}
@@ -39,7 +40,7 @@
 				{% if rootCategory is not null %}
 					<div class="col-10">
 						{{ ui.setRootCategory(rootCategory, 0) }}<br />
-						<h1 class="mt-3"><span>{{ entry.title }}</span></h1>
+						<h1 id="title" data-title="{{ entry.title }}" id= class="mt-3"><span>{{ entry.title }}</span></h1>
 					</div>
 				{% endif %}
 			</div>
