@@ -1,4 +1,5 @@
 {% extends craft.app.request.isAjax and not craft.app.request.isLivePreview ? "_ajax" : "_layout" %}
+{% set title = entry.title %}
 
 {% block content %}
 	{% set image = entry.image.one() %}
@@ -26,7 +27,7 @@
 
 			<div class="row">
 				<div class="col">
-					<h1>
+					<h1 id="title" data-title="{{ entry.title }}">
 						<span>{{ entry.title }}</span>
 					</h1>
 				</div>

@@ -79,13 +79,6 @@ const pageUpdate = (responseText) => {
 
 		newChildNodes.forEach(n => parentNode.appendChild(n));
 		const url = getURL();
-		// set title
-		let title = 'Urgent.fm 105.3';
-		// if (url !== '/') {
-		// 	let pageTitle = document.querySelector('h1 span').innerHTML;
-		// 	title = pageTitle + ' | Urgent.fm 105.3';
-		// }
-		document.title = title; // TODO titel mag een beetje mooier gepresenteerd worden!
 		router(url);
 	}
 };
@@ -102,9 +95,10 @@ const router = (url) => {
 		callMixcloud();
 		swiffyslider.init(rootElement = document.body);
 		// setDisplay();
+		document.title = 'Urgent.fm 105.3'
 	} else if (url.includes('/programma')) {
 		setAnchors();
-			// activeer eerste tab bij inladen pagina
+		// activeer eerste tab bij inladen pagina
 		let tabDay = -1;
 		if (url === '/programma/zondag') {
 			tabDay = 0;
@@ -128,9 +122,10 @@ const router = (url) => {
 		if (tabDay >= 0) {
 			populateProgramSchema(tabDay);
 			setDisplay();
+			document.title = 'Programma | Urgent.fm 105.3'
 		}
-		// let scrollY = history.state.scrollY;
-		// history.replaceState({ scrollY: scrollY, filters: null }, '', url);
+		const title = document.querySelector('#title');
+		document.title = title.dataset.title + ' | Urgent.fm 105.3';
 		
 	} else if (url === '/nieuws' || url.includes('/nieuws?page')) {
 		setAnchors();
@@ -147,13 +142,11 @@ const router = (url) => {
 				cbFilters[i].checked = filters[i];
 			}
 		}
-
 		let scrollY = history.state.scrollY;
 		let url = location.pathname + location.search;
 		history.replaceState({ scrollY: scrollY, filters: null }, '', url);
+		document.title = 'Nieuws | Urgent.fm 105.3'
 		setDisplay();
-	} else if (url.startsWith('/programma') && url.includes('?page=')) {
-		console.log('gelukt')
 	} else if (url === '/zoek/resultaten' || url.includes('/zoek/resultaten?page') || url === '/zoek' || url.includes('/zoek')) {
 		closeSearch();
 		setAnchors();
@@ -170,11 +163,13 @@ const router = (url) => {
 				cbFilters[i].checked = filters[i];
 			}
 		}
-
-		history.replaceState({ scrollY: scrollY, filters: filters }, '', location.pathname + location.search)
+		history.replaceState({ scrollY: scrollY, filters: filters }, '', location.pathname + location.search);
+		document.title = 'Zoek | Urgent.fm 105.3'
 		setDisplay();
 	} else {
 		setAnchors();
+		const title = document.querySelector('#title');
+		document.title = title.dataset.title + ' | Urgent.fm 105.3';
 		setDisplay();
 	}
 };
