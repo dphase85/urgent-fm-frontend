@@ -89,6 +89,9 @@ const router = (url) => {
 	if (url.endsWith('/') && url.length > 1) {
 		url = url.slice(0, url.length - 1);
 	}
+	// indien link gedeeld wordt op facebook bv, en er wordt een parameter aan de link bijgeplakt, maak een tijdelijke url aan en extraheer pathname
+	let temp = new URL(url, 'http:localhost');
+		url = temp.pathname;
 	// Route the destination url to the right set of webpage-related functions
 	if (url === '/') {
 		setAnchors();
@@ -119,13 +122,16 @@ const router = (url) => {
 			// Zondag = 0, maandag 1 enz. Tabday is de 'juiste' dagnummer die door JS gebruikt wordt.
 			tabDay = date.getDay();
 		}
+		let title;
 		if (tabDay >= 0) {
-			populateProgramSchema(tabDay);
-			setDisplay();
-			document.title = 'Programma | Urgent.fm 105.3'
+			populateProgramSchema(tabDay);			
+			title = 'Programma';
+		} else {
+			let dataTitle = document.querySelector('#title');
+			title = dataTitle.dataset.title;
 		}
-		const title = document.querySelector('#title');
-		document.title = title.dataset.title + ' | Urgent.fm 105.3';
+		setDisplay();
+		document.title = title + ' | Urgent.fm 105.3';
 		
 	} else if (url === '/nieuws' || url.includes('/nieuws?page')) {
 		setAnchors();
@@ -177,7 +183,7 @@ const router = (url) => {
 // Navigate to new page when clicking on anchor link
 const navigate = (e) => {
 	e.preventDefault();
-	// TODO verander fixed url (http. ... ) naar '/zoek' (hoe???)
+	// TODO: verander fixed url (http. ... ) naar '/zoek' (hoe???)
 	if ((e.currentTarget).href === 'http://localhost/zoek'
 	) {
 		return;
