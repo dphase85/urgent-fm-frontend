@@ -13,7 +13,7 @@
         {% endif %}
         {{siteName}}</title>
 
-    {% css "../dist/bootstrap-5.1.0/css/bootstrap.min.css" %}
+    {% css "../dist/bootstrap/css/bootstrap.min.css" %}
     {% css "../css/urgent.css" %}
 
     <!-- TEST: Swiffy Slider -->
@@ -66,7 +66,7 @@
             <div class="col col-12 col-md-4 d-inline my-auto">
                     <div class="row">
                         <div class="col-3 d-flex justify-content-center my-auto p-0">
-                            <audio class="live-audio" src="http://urgentstream.radiostudio.be:8000/live?fbclid=IwAR0UT-WBLUyWbUAmZbwbPExIyY7IDasgTpHbYFTdEUYBT08ARQ4KhxevaAk" 
+                            <audio class="live-audio" src=" https://urgentstream.radiostudio.be/live" 
                             preload="none"></audio>
                             <button type="submit" class="audio-control audio-control-play"></button>
                         </div>
@@ -200,16 +200,16 @@
 {% include "_includes/zoek/searchbar" %}
 
 
-{% js "../dist/bootstrap-5.1.0/js/bootstrap.bundle.min.js" %}
+{% js "../dist/bootstrap/js/bootstrap.bundle.min.js" %}
 
 {% js "../js/programmaSchema.js" %}
 {% js "../js/nieuwsoverzicht.js" %}
 
 {% js "../js/script.js" %}
 
-{% do view.registerJsFile("https://cdn.jsdelivr.net/npm/swiffy-slider@1.1.0/dist/js/swiffy-slider.min.js", {"crossorigin":"anonymous", "defer":"defer"}) %}
+{% do view.registerJsFile("https://cdn.jsdelivr.net/npm/swiffy-slider@1.5.3/dist/js/swiffy-slider.min.js", {"crossorigin":"anonymous", "defer":"defer"}) %}
 
-{% do view.registerCssFile("https://cdn.jsdelivr.net/npm/swiffy-slider@1.1.0/dist/css/swiffy-slider.min.css", {"rel":"stylesheet", "crossorigin":"anonymous"}) %}
+{% do view.registerCssFile("https://cdn.jsdelivr.net/npm/swiffy-slider@1.5.3/dist/css/swiffy-slider.min.css", {"rel":"stylesheet", "crossorigin":"anonymous"}) %}
 
 </body>
 </html>

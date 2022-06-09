@@ -1,10 +1,11 @@
 {% extends craft.app.request.isAjax and not craft.app.request.isLivePreview ? "_ajax" : "_layout" %}
+{% set title = category.title %}
 
 {% block content %}
 	<div role="main" class="main container">
 		<div class="row">
 			<div class="col">
-				<h5>{{ category.title }}</h5>
+				<h5 id="title" data-title="{{ category.title }}">{{ category.title }}</h5>
 			</div>
 		</div>
 		<div class="row">

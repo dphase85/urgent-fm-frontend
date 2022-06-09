@@ -96,6 +96,7 @@ const router = (url) => {
 	if (url === '/') {
 		setAnchors();
 		callMixcloud();
+		// eslint-disable-next-line no-undef
 		swiffyslider.init(rootElement = document.body);
 		// setDisplay();
 		document.title = 'Urgent.fm 105.3'
@@ -124,6 +125,7 @@ const router = (url) => {
 		}
 		let title;
 		if (tabDay >= 0) {
+			// eslint-disable-next-line no-undef
 			populateProgramSchema(tabDay);			
 			title = 'Programma';
 		} else {
@@ -184,8 +186,8 @@ const router = (url) => {
 const navigate = (e) => {
 	e.preventDefault();
 	// TODO: verander fixed url (http. ... ) naar '/zoek' (hoe???)
-	if ((e.currentTarget).href === 'http://localhost/zoek'
-	) {
+	// TODO: Dev mode: add localhost to url
+	if ((e.currentTarget).href === 'http://localhost/zoek' || (e.currentTarget).href === 'https://urgent.johanraes.be/zoek') {
 		return;
 	}
 	// first check for pagination
@@ -207,7 +209,6 @@ const navigate = (e) => {
 			let formAction;
 			let q;
 			let filterQ = '';
-			let cbFilters = null;
 			if (history.state.filters) {
 				filters = history.state.filters;
 				filters[0] = true;
@@ -216,7 +217,6 @@ const navigate = (e) => {
 				}
 			}
 			form = (e.currentTarget).form;
-			cbFilters = form.querySelectorAll('.cbFilter');
 
 			formAction = `${form.action}?q=`;
 			q = form[0].value;
@@ -285,17 +285,6 @@ const setAnchors = () => {
 	anchors.forEach(a => a.addEventListener('click', navigate));
 };
 
-// Livestream player controls
-const switchState = () => {
-	if (liveAudio.stopped === true) {
-		liveAudio.load();
-		liveAudio.play();
-		audioControl.textContent = "play";
-	} else {
-		liveAudio.stop();
-	}
-};
-
 // Search overlay controls
 const openSearch = (e) => {
 	e.preventDefault();
@@ -307,10 +296,9 @@ const openSearch = (e) => {
 	body.style.overflow = 'hidden';
 };
 
-const closeSearch = (e) => {
+const closeSearch = () => {
 	let overlay = document.querySelector('.overlay');
 	let searchbar = document.querySelector('.modal-search');
-	let btnClose = document.querySelector('.close');
 	let body = document.querySelector('body');
 	body.style.overflow = 'auto';
 	overlay.style.display = 'none';
@@ -433,7 +421,7 @@ const buildFilterURLParam = () => {
 
 // Switch off default checkbox on nieuwsindex when selecting other checkboxes
 // or switch on when deselecting them.
-const checkFilter = (e) => {
+const checkFilter = () => {
 	let cbDefaultfilter = document.querySelector('.cbDefaultfilter');
 	let cbFilters = document.querySelectorAll('.cbFilter');
 	let filters = [];
@@ -471,7 +459,7 @@ const populateEditorsPick = (response) => {
 	let pictures;
 	let name;
 
-	data = parsedData['data'];
+	const data = parsedData['data'];
 
 	for (let i = 0; i < data.length; i++) {
 		let entry = data[i];
@@ -541,7 +529,7 @@ const saveTimetable = (data) => {
 	}
 	let ttDay = entries[currentDay];
 	let timeslots = ttDay['weekdag'];
-	for (i = 0; i < timeslots.length; i++) {
+	for (let i = 0; i < timeslots.length; i++) {
 		let timeslot = timeslots[i];
 		let beginuurTS = timeslot['beginuur'];
 		let beginuur = parseInt(beginuurTS.substring(11, 13));
@@ -596,7 +584,6 @@ const checkCurrentTime = () => {
 	// if true, then get the timetable data from sessionstorage
 	// and check if new program is on air or not
 	if (m == 0) {
-		console.log("er is een minuut gepasseerd.")
 		getTimetable();
 		setTimeout(checkCurrentTime, 60000);
 	} else {
@@ -606,6 +593,7 @@ const checkCurrentTime = () => {
 };
 
 // Window Events
+// eslint-disable-next-line no-redeclare
 const onload = () => {
 	lastScrollY = 0;
 
@@ -633,10 +621,10 @@ const onload = () => {
 	close.addEventListener('click', closeSearch);
 	searchModal.addEventListener('click', closeSearch);
 
-	audioControl.addEventListener('click', (e) => {
+	audioControl.addEventListener('click', () => {
 		if (liveAudio.paused === true) {
 			if (!liveAudio.hasAttribute('src')) {
-				liveAudio.setAttribute('src', 'http://urgentstream.radiostudio.be:8000/live?fbclid=IwAR0UT-WBLUyWbUAmZbwbPExIyY7IDasgTpHbYFTdEUYBT08ARQ4KhxevaAk');
+				liveAudio.setAttribute('src', ' https://urgentstream.radiostudio.be/live');
 			}
 			audioControl.classList.remove('audio-control-play');
 			audioControl.classList.add('audio-control-pause');

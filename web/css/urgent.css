@@ -76,6 +76,10 @@ h2 {
     margin-top: 7vh;
   }
 
+  .programmaschema-uur {
+    font-size: 1rem;
+  }
+
   .slot-tags {
     display: block;
   }
@@ -260,6 +264,9 @@ h2 {
 }
 
 .category-base {
+  margin-top: 0.125rem !important;
+  margin-bottom: 0.125rem !important;
+  font-size: 0.75rem;
   display: inline-block;
   padding: 2px 10px;
   border-radius: 5px;
@@ -912,6 +919,10 @@ a p:hover {
   height: 0;
   max-height: 0;
   overflow: hidden;
+}
+
+.category-sub:hover {
+  background-color: gray;
 }
 
 /* programma entry */

@@ -53,6 +53,7 @@ const collapseSlot = (e) => {
 };
 
 /* populate programmaschema, met dagnummer als parameter. Aan de hand van parameter wordt de gewenste dag actief gemaakt */
+// eslint-disable-next-line no-unused-vars
 const populateProgramSchema = (tabDay) => {
 
 	let buttons = document.querySelectorAll('.tabs-button');

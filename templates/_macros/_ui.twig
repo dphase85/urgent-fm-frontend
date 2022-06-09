@@ -4,7 +4,7 @@
 		{% set rootCss = 'cultuur' %}
 	{% endif %}
 
-	<span class="category-base category-root {{ rootCss }} my-2 my-lg-0 me-{{ marginsize }} py-0 px-2">{{ rootCategory }}</span>
+	<a href="{{ rootCategory.url }}"><span class="category-base category-root {{ rootCss }}  py-0 px-2 my-1">{{ rootCategory }}</span></a>
 {% endmacro %}
 
 {% macro setLogo(programmaLogo, classNames) %}
