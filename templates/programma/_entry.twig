@@ -40,7 +40,7 @@
 				{% if rootCategory is not null %}
 					<div class="col-10">
 						{{ ui.setRootCategory(rootCategory, 0) }}<br />
-						<h1 id="title" data-title="{{ entry.title }}" id= class="mt-3"><span>{{ entry.title }}</span></h1>
+						<h1 id="title" data-title="{{ entry.title }}" class="mt-3"><span>{{ entry.title }}</span></h1>
 					</div>
 				{% endif %}
 			</div>
@@ -108,7 +108,7 @@
 
 		<section class="row">
 			<p class=" mt-0 mb-5">
-				<strong>{{ entry.intro }}</strong>
+				<strong>{{ entry.intro|nl2br }}</strong>
 			</p>
 			{{ entry.programmaInhoud }}
 		</section>
