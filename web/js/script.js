@@ -91,7 +91,7 @@ const router = (url) => {
 	}
 	// indien link gedeeld wordt op facebook bv, en er wordt een parameter aan de link bijgeplakt, maak een tijdelijke url aan en extraheer pathname
 	let temp = new URL(url, 'http:localhost');
-		url = temp.pathname;
+	url = temp.pathname;
 	// Route the destination url to the right set of webpage-related functions
 	if (url === '/') {
 		setAnchors();
@@ -126,7 +126,7 @@ const router = (url) => {
 		let title;
 		if (tabDay >= 0) {
 			// eslint-disable-next-line no-undef
-			populateProgramSchema(tabDay);			
+			populateProgramSchema(tabDay);
 			title = 'Programma';
 		} else {
 			let dataTitle = document.querySelector('#title');
@@ -134,7 +134,7 @@ const router = (url) => {
 		}
 		setDisplay();
 		document.title = title + ' | Urgent.fm 105.3';
-		
+
 	} else if (url === '/nieuws' || url.includes('/nieuws?page')) {
 		setAnchors();
 		let filters;
@@ -621,27 +621,88 @@ const onload = () => {
 	close.addEventListener('click', closeSearch);
 	searchModal.addEventListener('click', closeSearch);
 
-	audioControl.addEventListener('click', () => {
-		if (liveAudio.paused === true) {
-			if (!liveAudio.hasAttribute('src')) {
-				liveAudio.setAttribute('src', ' https://urgentstream.radiostudio.be/live');
-			}
-			audioControl.classList.remove('audio-control-play');
-			audioControl.classList.add('audio-control-pause');
-			liveAudio.play();
-		} else {
-			liveAudio.pause();
+	// Initialiseer audio player isPlaying functie (enkel bij initeel laden van de pagina)
+	let isPlaying = false;
 
-			audioControl.classList.remove('audio-control-pause');
-			audioControl.classList.add('audio-control-play');
-			// liveAudio.currentTime = 0;
-			liveAudio.removeAttribute('src');
-			liveAudio.load();
+	// Wanneer audio player state veranderd naar playing, isPlaying is true
+	liveAudio.addEventListener('playing', () => {
+		isPlaying = true;
+	})
+
+	// Wanneer audio player state veranderd naar pause, isPlaying is false
+	liveAudio.addEventListener('pause', () => {
+		isPlaying = false;
+	})
+
+	audioControl.addEventListener('click', () => {
+
+		// Play audio functie
+		const playAudio = async () => {
+			if (liveAudio.paused && !isPlaying) {
+				audioControl.classList.remove('audio-control-play');
+				audioControl.classList.add('audio-control-pause');
+
+				return liveAudio.play();
+			}
+		}
+
+		// Pause audio functie
+		const pauseAudio = () => {
+			if (!liveAudio.paused && isPlaying) {
+				audioControl.classList.remove('audio-control-pause');
+				audioControl.classList.add('audio-control-play');
+
+				liveAudio.pause();
+			}
+		}
+
+		if (liveAudio.paused) {
+
+			// Indien de audio gestopt is, moeten de source elementen opnieuw opgebouwd is, daarna moeten de sourcen reload worden.
+			if (liveAudio.children.length === 0) {
+				// html output: <source id="source-aac" src="https://urgentstream.radiostudio.be/aac" type="audio/mp4" />
+				const sourceAac = document.createElement('source');
+				sourceAac.setAttribute('id', 'source-aac');
+				sourceAac.setAttribute('src', 'https://urgentstream.radiostudio.be/aac');
+				sourceAac.setAttribute('type', 'audio/mp4')
+				liveAudio.appendChild(sourceAac);
+
+				// html output: <source id="source-mp3" src="https://urgentstream.radiostudio.be/live" type="audio/mpeg" /> 
+				const sourceMp3 = document.createElement('source');
+				sourceMp3.setAttribute('id', 'source-mp3');
+				sourceMp3.setAttribute('src', 'https://urgentstream.radiostudio.be/live');
+				sourceMp3.setAttribute('type', 'audio/mpeg')
+				liveAudio.appendChild(sourceMp3);
+
+				liveAudio.load();
+			}
+			playAudio();
+		} else {
+
+			pauseAudio();
+
+			// Indien audio nog aan het laden is, voorkom dat de source elementen verwijderd worden op het moment deze opgebouwd worden.
+			if (liveAudio.children.length > 0) {
+				const sourceAac = document.querySelector('#source-aac');
+				const sourceMp3 = document.querySelector('#source-mp3');
+
+				liveAudio.removeChild(sourceAac);
+				liveAudio.removeChild(sourceMp3);
+			}
 		}
 	});
 
-	// TEST: laad programma op en bekijk om de minuut of het uur voorbij is 
-	// => indien ja: laadt volgende programma
+
+	// TODO: indien gebruik maken van een loading indicator tijdens inladen muziek, maak gebruik van canplay(through event):
+	// https://stackoverflow.com/questions/9337300/html5-audio-load-event
+
+	// liveAudio.addEventListener('canplay', () => {
+	// 	// In audioPlay() functie een loading flag instellen
+
+	// 	// In dit event:
+	// 	// als audio geladen is, zet flag op false
+	// })
+
 	checkCurrentTime();
 
 	router(currentUrl);
