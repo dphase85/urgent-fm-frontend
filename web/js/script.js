@@ -642,7 +642,17 @@ const onload = () => {
 				audioControl.classList.remove('audio-control-play');
 				audioControl.classList.add('audio-control-pause');
 
-				return liveAudio.play();
+				// liveAudio.play() levert een Promise op, steek deze in een variable om te checken of deze resolved of rejected wordt
+				const playPromise = liveAudio.play()
+
+				// zie https://developer.chrome.com/blog/play-request-was-interrupted/ voor meer info over deze fix.
+				if (playPromise !== undefined) {
+					playPromise
+					.catch(() => {
+						audioControl.classList.remove('audio-control-pause');
+						audioControl.classList.add('audio-control-play');
+					})
+				}
 			}
 		}
 
@@ -658,7 +668,7 @@ const onload = () => {
 
 		if (liveAudio.paused) {
 
-			// Indien de audio gestopt is, moeten de source elementen opnieuw opgebouwd is, daarna moeten de sourcen reload worden.
+			// Indien de audio gestopt is, moeten de source elementen opnieuw opgebouwd worden, daarna moeten de sources reload worden.
 			if (liveAudio.children.length === 0) {
 				// html output: <source id="source-aac" src="https://urgentstream.radiostudio.be/aac" type="audio/mp4" />
 				const sourceAac = document.createElement('source');
@@ -683,11 +693,14 @@ const onload = () => {
 
 			// Indien audio nog aan het laden is, voorkom dat de source elementen verwijderd worden op het moment deze opgebouwd worden.
 			if (liveAudio.children.length > 0) {
-				const sourceAac = document.querySelector('#source-aac');
-				const sourceMp3 = document.querySelector('#source-mp3');
+				let sourceAac = document.querySelector('#source-aac');
+				let sourceMp3 = document.querySelector('#source-mp3');
 
 				liveAudio.removeChild(sourceAac);
 				liveAudio.removeChild(sourceMp3);
+
+				// Zet een timeOut op liveAudio.load() om een crash te voorkomen (workaround voor chromium browsers)
+				setTimeout(() => { liveAudio.load(); });
 			}
 		}
 	});
