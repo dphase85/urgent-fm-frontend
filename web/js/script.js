@@ -251,8 +251,13 @@ const navigate = (e) => {
 			if (e.currentTarget.classList.contains('pagination-focus')) {
 				scrollY = window.scrollY;
 			}
-			history.pushState({ scrollY: scrollY, filters: null }, '', nextUrl);
 
+			// Check of link op cookiebanner is aangeklikt, indien nee, zet in de history stack
+			if (nextUrl === 'javascript:void(0);') {
+				return;
+			}
+
+			history.pushState({ scrollY: scrollY, filters: null }, '', nextUrl);
 			pageRequest(nextUrl);
 		}
 	}
@@ -648,10 +653,10 @@ const onload = () => {
 				// zie https://developer.chrome.com/blog/play-request-was-interrupted/ voor meer info over deze fix.
 				if (playPromise !== undefined) {
 					playPromise
-					.catch(() => {
-						audioControl.classList.remove('audio-control-pause');
-						audioControl.classList.add('audio-control-play');
-					})
+						.catch(() => {
+							audioControl.classList.remove('audio-control-pause');
+							audioControl.classList.add('audio-control-play');
+						})
 				}
 			}
 		}
