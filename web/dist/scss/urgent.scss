@@ -190,9 +190,9 @@ text-overflow: ellipsis;
 			
 		}
 
-		.banner-button {
-			padding: 0;
-		}
+		// .banner-button {
+		// 	padding: 0;
+		// }
 
 	}
 
@@ -226,7 +226,7 @@ text-overflow: ellipsis;
 		height: 75vh;
 	}
 
-	.timeslots ul {
+	.timeslots ul, .timeslots .collapse, #multiCollapse3 {
 		display: block !important;
 	}
 
@@ -270,7 +270,7 @@ text-overflow: ellipsis;
 		height: 75vh;
 	}
 
-	.timeslots ul {
+	.timeslots ul, .timeslots .collapse, #multiCollapse3 {
 		display: block !important;
 	}
 
@@ -313,7 +313,7 @@ text-overflow: ellipsis;
 		font-size: $font-size-xxl;
 	}
 
-	.timeslots ul {
+	.timeslots ul, .timeslots .collapse, #multiCollapse3 {
 		display: block !important;
 	}
 	.modal-search {
@@ -347,7 +347,7 @@ text-overflow: ellipsis;
 		height: 75vh;
 	}
 
-	.timeslots ul {
+	.timeslots ul, .timeslots .collapse, #multiCollapse3 {
 		display: block !important;
 	}
 
@@ -542,8 +542,23 @@ text-overflow: ellipsis;
 }
 
 .zoekveld {
-	border: 0.5px solid $color-black;
+	display: flex;
+	flex-direction: row;
 	background-color: $color-white;
+	padding: 0.5rem;
+}
+
+.btnZoek {
+	background-color: $color-accent;
+	border: none;
+}
+
+.inputSearch {
+	flex-grow: 2;
+	border: none;
+	&:focus {
+		outline: none;
+	}
 }
 
 .logo {
@@ -603,10 +618,7 @@ text-overflow: ellipsis;
 		align-content: center;
 	}
 
-	.btnZoek {
-		background-color: $color-accent;
-		border: none;
-	}
+
 
 	.close {
 		cursor: pointer;

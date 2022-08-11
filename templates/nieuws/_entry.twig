@@ -94,43 +94,61 @@
       .all() %}
 
 		{% if nieuws|length %}
-			<section id="suggestions">
+			<section id="suggestions" class="mt-5">
 				<div class="row">
 					<div class="col">
 						<h5>Lees ook dit:</h5>
 					</div>
 				</div>
-				<div class="row row-cols-1 row-cols-md-2 row-cols-lg-2">
+				<div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 g-3 my-3">
 					{% for item in nieuws %}
-						{# Tijdelijke imagetransform oplossing! #}
-						{% set image = item.image.one() %}
-						{% set ft = { 
-						mode:'crop', 
-						width: 440,
-						height: 293,
-						quality: 90 
-					} %}
 						{% set category = item.nieuwsCategories.one() %}
-						<div class="col mt-5">
-							<div class="tegel card border-0 p-0 h-100">
-								<a href="{{ item.url }}">
-									<img class="card-image-top img-fluid" src="{{ image.getUrl(ft) }}" alt="{{ image.title }}"/>
+
+						<div class="col">
+							<div
+								class="card border-0 p-0 h-100 tegel">
+
+								{# Eerst source image laden #}
+								{% set image = item.image.one() %}
+								{# Dan de verschillende imagetransforms #}
+								{% set imageSrcsetSmall = image.getUrl('cardImageSmall390w') %}
+								{% set imageSrcsetDefault = image.getUrl('cardImageMedium440w') %}
+								{% set imageSrcsetLarge = image.getUrl('cardImageLarge556w') %}
+								{# Gebruik srcset om responsive images in te laden (gebaseerd op schermgrootte en pixeldensiteit) #}
+								{# TODO: size nog verder specifieren! #}
+									<a class="nwsItemTitle" href="{{ item.url }}"> <img class="card-image-top img-fluid" src="{{ imageSrcsetDefault }}" srcset="{{ imageSrcsetSmall }} 390w, {{ imageSrcsetDefault }} 440w, {{ imageSrcsetLarge }} 556w" alt="{{ image.title }}"/>
 								</a>
-								<div class="categoryContainer">
+								<div class="category-container">
 									<a href="{{ category.url }}" class="small">
 										<span>{{ category }}</span>
 									</a>
 								</div>
 								<div class="card-body nwsItemCopy">
 									<a class="nwsItemTitle" href="{{ item.url }}">
-										<h2 class="card-title">{{ item.title }}</h2>
-										<p class="card-text">{{ item.intro }}</p>
+										<h3 class="card-title">{{ item.title }}</h3>
+										{% if item.intro is not empty %}
+											<p class="banner-programma-intro">{{ item.intro|nl2br }}</p>
+										{% else %}
+											{% set break = 0 %}
+											{% for block in item.nieuwsInhoud.all() if break == 0 %}
+												{% if block.type == "tekst" %}
+													{% set paragraphs = block.tekst|split("</p>") %}
+													{{ paragraphs|first|striptags|raw }}
+													{% set break = 1 %}
+												{% endif %}
+											{% endfor %}
+										{% endif %}
 									</a>
 								</div>
 							</div>
 						</div>
 
 					{% endfor %}
+				</div>
+				<div class="">
+					<div class="col">
+						<a href="/nieuws" class="button-secondary">Nieuwsoverzicht</a>
+					</div>
 				</div>
 
 			</section>

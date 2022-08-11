@@ -2,7 +2,7 @@
 {# {% extends "_layout" %} #}
 
 {% block content %}
-	<div class="main container">
+	<div class="main container programmaschema">
 		<div class="row banner-none">
 			<div class="col">
 				<h1>Programmaschema</h1>
@@ -80,8 +80,6 @@
 									<div class="col-3 col-md-2">
 										<h5 class="m-0 programmaschema-uur">
 											{{ timeslot.beginuur|time('short') }}
-											-
-											{{ timeslot.einduur|time('short') }}
 										</h5>
 									</div>
 									<div class="slot-inhoud col-9 col-md-10 d-md-flex align-items-center">
@@ -89,9 +87,6 @@
 										{% set rootCategories = programma.programmaStijl
                     	                            .level('1')
                     	                            .all() %}
-										{% set subCategories = programma.programmaStijl
-                    	                            .level('>1')
-                                                    .all() %}
 										<div class="m-0 slot-title me-2">
 											<h3 class="m-0">{{ programma.title }}</h3>
 										</div>
@@ -108,23 +103,17 @@
 								</div>
 								<div class="row slot-row-active">
 									<div class="col-0 col-md-2"></div>
-									<div class="col-8">
+									<div class="col-12 col-md-8 col-lg-7 col-xl-8 order-2 order-md-1">
                                         <div class="pt-2">
                                             <a href="{{ programma.url }}">
 											    <p>{{ programma.intro|nl2br  }}</p>
 										    </a>
                                         </div>
 										<div>
-											{% if subCategories is not null %}
-												{% for subCategory in subCategories %}
-													<a href="{{ subCategory.url }}">
-														<span class="category-base category-sub py-0 px-2 my-1">{{ subCategory }}</span>
-													</a>
-												{% endfor %}
-											{% endif %}
+											<a href="{{ programma.getUrl }}" class="">Over deze show</a>
 										</div>
 									</div>
-									<div class="col-2 d-flex justify-content-end pt-2">
+									<div class="col-12 col-md-2 col-lg-3 col-xl-2 order-1 order-md-2 d-flex justify-content-end pt-2">
 										{% set logo = null %}
 										{% if programma.programmaLogo.one() is empty %}
 											{% set logo = generic.programmadefaultlogo.one() %}

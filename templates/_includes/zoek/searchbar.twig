@@ -7,17 +7,18 @@
 <div class="modal-search container">
 	<div class="row">
 		<div class="col">
-			<div class="float-end close me-3">&times;</div>
+			<div class="float-end close">&times;</div>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col">
 			<form class="formZoek" action="{{ url('zoek/resultaten') }}">
 				<label for="inputSearch" class="form-label">Zoeken op urgent.fm:</label>
-				<div class="input-group zoekveld">
-					<input type="search" id="inputSearch" class="form-control" name="q" aria-label="Search" placeholder="Type hier je zoekterm ..." value="{{ queryValue }}"/>
-					<input type="submit" class="btn btn-dark btnZoek">
+				<div class="zoekveld rounded-3">
+					<input type="search" id="inputSearch" class="inputSearch d-inline-block" name="q" aria-label="Search" placeholder="Type hier je zoekterm ..." value="{{ queryValue }}"/>	
+					<button type="submit" class="btn btn-dark btnZoek d-inline-block"><img src="../images/icons/search.svg" alt="Icon search"></button>			
 				</div>
+				
 			</form>
 		</div>
 	</div>

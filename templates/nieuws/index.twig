@@ -45,7 +45,7 @@
 			{% set nieuwsQuery = craft.entries.section('nieuws')
 				.section('nieuws')
 				.relatedTo(filterCategories)
-				.limit(3) %}
+				.limit(9) %}
 			{% set nieuws = nieuwsQuery.all() %}
 			
 			{% paginate nieuwsQuery as pageInfo, pageEntries %}

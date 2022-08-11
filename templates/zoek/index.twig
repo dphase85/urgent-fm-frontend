@@ -20,7 +20,7 @@
   		.section('nieuws, programmanieuws')
   		.relatedTo(filterCategories)
   		.orderBy('score')
-  		.limit(4) %}
+  		.limit(8) %}
 
 	{# .section('nieuws, programmanieuws') #}
 	{# .section('nieuws') #}
@@ -36,14 +36,10 @@
 				<div class="formBackground">
 					<form class="formZoek" action="{{ url('zoek/resultaten') }}">
 						<label for="inputSearch" class="form-label">Zoeken op urgent.fm:</label>
-						<div class="zoekveld input-group rounded-1">
-
-							<input
-							type="search" id="inputSearch" class="searchbar form-control" name="q" aria-label="Search" placeholder="Typ hier je zoekterm ..." value="{{ queryValue }}"/>
-							{# <input type="submit" class="btn btn-dark btnZoek"> #}
-							<button type="submit" class="search"></button>
+						<div class="zoekveld rounded-3 border">
+							<input type="search" id="inputSearch" class="inputSearch d-inline-block" name="q" aria-label="Search" 		placeholder="Type hier je zoekterm ..." value="{{ queryValue }}"/>	
+							<button type="submit" class="btn btn-dark btnZoek d-inline-block"><img src="../images/icons/search.svg" alt="Icon 		search"></button>	
 						</div>
-						<!-- TEST -->
 
 						<div class="formCategoriefilter">
 							{% set categories =  craft.categories
@@ -72,18 +68,6 @@
 
 
 				{% if results|length %}
-					{# Groepeer resultaten per sectie (zie tutorial voor meer uitleg: https://craftquest.io/lessons/advanced-search-building-blocks en code: https: 1778803) #}
-					{# {% set groupedResults = results|group('section.handle') %} #}
-
-					{# TEST #}
-					{# {% if results|length == 1 %}
-							<p>
-						1 item gevonden:
-						</p>
-					{% else %}
-						<p>{{ results|length }}
-							items gevonden:</p>
-					{% endif %} #}
 					{% set nieuws = results.all() %}
 					{% paginate results as pageInfo, pageEntries %}
 						{# Voorlopig unieke methode voor zoeklisting, later nog globale macro/include maken #}

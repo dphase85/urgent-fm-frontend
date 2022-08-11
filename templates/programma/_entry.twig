@@ -37,12 +37,13 @@
 					{# <img class="banner-logo img-fluid" src="{{ logo.url }}" 	alt=""> #}
 					{{ ui.setLogo(entry.programmaLogo.one(), "banner-logo img-fluid") }}
 				</div>
-				{% if rootCategory is not null %}
-					<div class="col-10">
+				
+				<div class="col-10">
+					{% if rootCategory is not null %}
 						{{ ui.setRootCategory(rootCategory, 0) }}<br />
-						<h1 id="title" data-title="{{ entry.title }}" class="mt-3"><span>{{ entry.title }}</span></h1>
-					</div>
-				{% endif %}
+					{% endif %}
+					<h1 id="title" data-title="{{ entry.title }}" class="mt-3"><span>{{ entry.title }}</span></h1>
+				</div>			
 			</div>
 		</div>
 	</div>
@@ -82,7 +83,7 @@
 					{# Als alle dagen in de dagString geprint zijn, afsluiten met 'van' #}
 					{# {% set dagString = "#{dagString} van " %} #}
 					{# Hier gaan we ervan uit dat een programma, herhalend over meerdere dagen, steeds op het zelfde uur   geprogrammeerd staat #}
-					{% if dag == weekdagen|last %}
+					{% if dag is same as(weekdagen|last) %}
 						{% set timeslot = dag.weekdag.relatedTo({
                                 targetElement: entry,
                                 field: 'programma'
@@ -96,7 +97,7 @@
 				<h5>{{ [dagString, timing]|join(' van ') }}</h5>
 				{% if subCategories is not null %}
                     {% for subCategory in subCategories %}
-		                <span class="category-base category-sub me-2">{{ subCategory }}</span>
+		                <a href="{{ subCategory.url }}"><span class="category-base category-sub me-2">{{ subCategory }}</span></a>
                     {% endfor %}
                 {% endif %}
 			{% endif %}
@@ -208,7 +209,7 @@
 		{% endfor %} #}
 		<section>
 			<h3>Misschien vind je deze programma's ook leuk:</h3>
-			<div class="row row-cols-2">
+			<div class="row row-cols-2 g-3">
 				
 				{% set entries = craft.entries()
 					.relatedTo(stijlen)
@@ -217,7 +218,7 @@
 					.all() %}	
 				
 				{% for entry in entries %}					
-					<div class="col mt-3">
+					<div class="col">
 						<div class="row">
 							<div class="col-sm-4 col-lg-3">
 								<a href="{{ entry.url }}" class="d-md-inline-block">
@@ -227,7 +228,7 @@
 								</a>
 							</div>
 							<div class="col-sm-8 col-lg-9">
-								<a href="{{ entry.url }}" class="d-block text-truncate">
+								<a href="{{ entry.url }}" class="d-block">
 									<div class="d-md-inline-block ms-md-4 align-self-start">
 										<h3>{{ entry.title }}</h3>
 										<p class="text-overflow">{{ entry.intro }}</p>
