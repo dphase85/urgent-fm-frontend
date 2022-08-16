@@ -20,7 +20,6 @@
         .level('>1')
         .all() %}
 
-{# {% set backgroundImageSmall = image.getUrl('bannerImageBackgroundPortraitSmall576w') %} #}
 {% set backgroundImageSmall = image.getUrl('bannerImageBackgroundPortraitSmall576w') %}
 {% set backgroundImageMedium = image.getUrl('bannerBackgroundImageLandscapeMedium1280w') %}
 
@@ -32,10 +31,14 @@
 		</picture>
 
 		<div class="container banner-content align-self-end" style="position: absolute; left:0; right:0;">
-			<div class="row mb-lg-4">
+			<div class="row mb-lg-4 align-items-center">
+			{# <div class="row mb-lg-4"> #}
+				{# <div class="col-2 d-flex"> #}
 				<div class="col-2">
 					{# <img class="banner-logo img-fluid" src="{{ logo.url }}" 	alt=""> #}
+					{# {{ ui.setLogo(entry.programmaLogo.one(), "banner-logo img-fluid m-auto") }} #}
 					{{ ui.setLogo(entry.programmaLogo.one(), "banner-logo img-fluid") }}
+
 				</div>
 				
 				<div class="col-10">
@@ -77,7 +80,6 @@
 					{% if dag == weekdagen|first %}
 						{% set dagString = "#{dagString} #{dagCropped}"  %}
 					{% else %}
-						{# {% set dagString = [dagString, dagCropped]|join(', ') %} #}
 						{% set dagString = "#{dagString}, #{dagCropped}" %}
 					{% endif %}
 					{# Als alle dagen in de dagString geprint zijn, afsluiten met 'van' #}
@@ -204,12 +206,10 @@
 				.level('1')
 				.all() %}
 		{% endif %}
-		{# {% for stijl in stijlen %}
-			<p>{{ stijl.title }}</p>
-		{% endfor %} #}
+
 		<section>
 			<h3>Misschien vind je deze programma's ook leuk:</h3>
-			<div class="row row-cols-2 g-3">
+			<div class="row row-cols-1 row-cols-md-2 g-3">
 				
 				{% set entries = craft.entries()
 					.relatedTo(stijlen)
@@ -220,16 +220,16 @@
 				{% for entry in entries %}					
 					<div class="col">
 						<div class="row">
-							<div class="col-sm-4 col-lg-3">
+							<div class="col-sm-5 col-md-4 col-lg-3">
 								<a href="{{ entry.url }}" class="d-md-inline-block">
 									<div class="programma-logo d-inline-block al">
 										{{ ui.setLogo(entry.programmaLogo.one(), "") }}
 									</div>
 								</a>
 							</div>
-							<div class="col-sm-8 col-lg-9">
+							<div class="col-sm-7 col-md-8 col-lg-9">
 								<a href="{{ entry.url }}" class="d-block">
-									<div class="d-md-inline-block ms-md-4 align-self-start">
+									<div class="d-md-inline-block mt-2 mt-md-0 ms-md-4 align-self-start">
 										<h3>{{ entry.title }}</h3>
 										<p class="text-overflow">{{ entry.intro }}</p>
 									</div>
