@@ -67,14 +67,10 @@
   display: flex;
   flex-wrap: wrap;
   background: rgb(255, 255, 255);
-  background: -moz-linear-gradient(top, rgb(255, 255, 255) 0%, rgb(247, 247, 247) 100%);
-  /* FF3.6-15 */
-  background: -webkit-linear-gradient(top, rgb(255, 255, 255) 0%, rgb(247, 247, 247) 100%);
-  /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to bottom, rgb(255, 255, 255) 0%, rgb(247, 247, 247) 100%);
-  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff", endColorstr="#f7f7f7", GradientType=0);
-  /* IE6-9 */
+  background: -moz-linear-gradient(top, rgb(255, 255, 255) 0%, rgb(247, 247, 247) 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, rgb(255, 255, 255) 0%, rgb(247, 247, 247) 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, rgb(255, 255, 255) 0%, rgb(247, 247, 247) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff", endColorstr="#f7f7f7", GradientType=0); /* IE6-9 */
   border: 1px solid rgba(0, 0, 0, 0.11);
   /* ensure debug toolbar text is displayed ltr even on rtl pages */
   direction: ltr;
@@ -140,16 +136,11 @@
 
 .yii-debug-toolbar__block_active,
 .yii-debug-toolbar__ajax:hover {
-  background: rgb(247, 247, 247);
-  /* Old browsers */
-  background: -moz-linear-gradient(top, rgb(247, 247, 247) 0%, rgb(224, 224, 224) 100%);
-  /* FF3.6-15 */
-  background: -webkit-linear-gradient(top, rgb(247, 247, 247) 0%, rgb(224, 224, 224) 100%);
-  /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to bottom, rgb(247, 247, 247) 0%, rgb(224, 224, 224) 100%);
-  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f7f7f7", endColorstr="#e0e0e0", GradientType=0);
-  /* IE6-9 */
+  background: rgb(247, 247, 247); /* Old browsers */
+  background: -moz-linear-gradient(top, rgb(247, 247, 247) 0%, rgb(224, 224, 224) 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, rgb(247, 247, 247) 0%, rgb(224, 224, 224) 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, rgb(247, 247, 247) 0%, rgb(224, 224, 224) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f7f7f7", endColorstr="#e0e0e0", GradientType=0); /* IE6-9 */
 }
 
 .yii-debug-toolbar__label {
@@ -223,20 +214,14 @@ a.yii-debug-toolbar__label:focus {
 }
 
 .yii-debug-toolbar__title {
-  background: rgb(247, 247, 247);
-  /* Old browsers */
-  background: -moz-linear-gradient(top, rgb(247, 247, 247) 0%, rgb(224, 224, 224) 100%);
-  /* FF3.6-15 */
-  background: -webkit-linear-gradient(top, rgb(247, 247, 247) 0%, rgb(224, 224, 224) 100%);
-  /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to bottom, rgb(247, 247, 247) 0%, rgb(224, 224, 224) 100%);
-  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f7f7f7", endColorstr="#e0e0e0", GradientType=0);
-  /* IE6-9 */
+  background: rgb(247, 247, 247); /* Old browsers */
+  background: -moz-linear-gradient(top, rgb(247, 247, 247) 0%, rgb(224, 224, 224) 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, rgb(247, 247, 247) 0%, rgb(224, 224, 224) 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, rgb(247, 247, 247) 0%, rgb(224, 224, 224) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f7f7f7", endColorstr="#e0e0e0", GradientType=0); /* IE6-9 */
 }
 
-.yii-debug-toolbar__block_last {
-  /* creates space for .yii-debug-toolbar__toggle, .yii-debug-toolbar__external */
+.yii-debug-toolbar__block_last { /* creates space for .yii-debug-toolbar__toggle, .yii-debug-toolbar__external */
   width: 80px;
   height: 40px;
   float: left;

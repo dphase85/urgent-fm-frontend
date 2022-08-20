@@ -53,30 +53,24 @@ h2 {
   h1 {
     font-size: calc(1.5 * 16px);
   }
-
   .hpBanner {
     min-height: 90vh;
   }
-
   .banner-window {
     margin-top: 0;
   }
-
   .banner-programma h1 {
     display: inline-block;
   }
   .banner-programma .button-primary, .banner-programma .button-secondary {
     font-size: calc(0.85 * 16px);
   }
-
   .modal-search {
     margin-top: 7vh;
   }
-
   .programmaschema-uur {
     font-size: 1rem;
   }
-
   .slot-tags {
     display: block;
   }
@@ -85,31 +79,24 @@ h2 {
   .hpBanner {
     height: 90vh;
   }
-
   .banner-programma {
     max-height: 75vh;
   }
-
   .banner-window {
     height: 75vh;
   }
-
   .timeslots ul, .timeslots .collapse, #multiCollapse3 {
     display: block !important;
   }
-
   .container:not(.navbar .container, footer .container, .modal-background .container) {
     width: 90vw;
   }
-
   h1 {
     font-size: calc(2.5 * 16px);
   }
-
   .modal-search {
     margin-top: 7vh;
   }
-
   .slot-tags {
     display: inline-block;
   }
@@ -118,39 +105,30 @@ h2 {
   .hpBanner {
     height: 90vh;
   }
-
   .banner-programma {
     max-height: 75vh;
   }
-
   .hpBanner {
     height: 90vh;
   }
-
   .banner-programma {
     max-height: 75vh;
   }
-
   .banner-window {
     height: 75vh;
   }
-
   .timeslots ul, .timeslots .collapse, #multiCollapse3 {
     display: block !important;
   }
-
   .container:not(.navbar .container, footer .container, .modal-background .container) {
     width: 60vw;
   }
-
   h1 {
     font-size: calc(3.5 * 16px);
   }
-
   .modal-search {
     margin-top: 7vh;
   }
-
   .slot-tags {
     display: inline-block;
   }
@@ -159,31 +137,24 @@ h2 {
   .hpBanner {
     height: 90vh;
   }
-
   .banner-programma {
     max-height: 75vh;
   }
-
   .banner-window {
     height: 75vh;
   }
-
   .container:not(.navbar .container, footer .container, .modal-background .container) {
     width: 60vw;
   }
-
   h1 {
     font-size: calc(3.5 * 16px);
   }
-
   .timeslots ul, .timeslots .collapse, #multiCollapse3 {
     display: block !important;
   }
-
   .modal-search {
     margin-top: 7vh;
   }
-
   .slot-tags {
     display: inline-block;
   }
@@ -192,31 +163,24 @@ h2 {
   .container:not(.navbar .container, footer .container, .modal-background .container) {
     width: 60vw;
   }
-
   h1 {
     font-size: calc(3.5 * 16px);
   }
-
   .hpBanner {
     height: 90vh;
   }
-
   .banner-programma {
     max-height: 75vh;
   }
-
   .banner-window {
     height: 75vh;
   }
-
   .timeslots ul, .timeslots .collapse, #multiCollapse3 {
     display: block !important;
   }
-
   .modal-search {
     margin-top: 7.5vh;
   }
-
   .slot-tags {
     display: inline-block;
   }

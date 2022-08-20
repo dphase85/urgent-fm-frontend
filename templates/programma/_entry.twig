@@ -166,7 +166,7 @@
 
 		{% if entries|length %}
 		{# Geef deze kop een id, zodat bij paginering op deze sectie gefocused blijft #}
-			<h2 class="mt-5">Berichten</h2>
+			<h2 class="mt-5" id="berichten">Berichten</h2>
 			
 			{% paginate entries as pageInfo, pageEntries %}
 			{% include "_includes/programma/programmanieuws" with { prgNieuws: pageEntries } only %}

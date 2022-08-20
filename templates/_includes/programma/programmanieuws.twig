@@ -1,13 +1,11 @@
 {% for item in prgNieuws %}
     {# TODO: Breakpoint nog eens overlopen!! #}
 	<div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 mb-4">
-		{# {% set logo = entry.programmaLogo.one() %} #}
 		<div class="col ms-xl-5 ms-xxl-0">
 			<h3>{{ item.title }}</h3>
-			{% for block in item.nieuwsInhoud.type('tekst').all() %}
-				<p>{{ block.tekst }}</p>
-			{% endfor %}
-			
+			<p>
+				{{ item.programmanieuwsInhoud }}
+			</p>
 		</div>
 	</div>
 {% endfor %}
