@@ -5,18 +5,40 @@
 	<div role="main" class="main container">
 		<div class="row">
 			<div class="col">
-				<h5 id="title" data-title="{{ category.title }}">{{ category.title }}</h5>
+				<h1 id="title" data-title="{{ category.title }}">{{ category.title }}</h1>
 			</div>
 		</div>
 		<div class="row">
-			{% set items = craft.entries.relatedTo(category).all() %}
-			<ul>
-				{% for item in items %}
-					<li>
-						<a href="{{ item.url }}">{{ item.title }}</a>
-					</li>
+			<section class="col nieuws-listing mt-0">
+				{% set nieuwsQuery = craft.entries.section('nieuws')
+				.section('nieuws')
+				.relatedTo(category)
+				.limit(8) %}
+				{% set nieuws = nieuwsQuery.all() %}
+
+				{% paginate nieuwsQuery as pageInfo, pageEntries %}
+				{% include "_includes/zoek/zoeklisting" with { nieuws: pageEntries } only %}
+			</section>
+		</div>	
+
+		<div class="row mt-5 text-center">
+			<div class="col">
+				{# <a href="{{ pageInfo.firstUrl }}">First Page</a> #}
+				{% if pageInfo.prevUrl %}
+					<a class="pagination-changePage pagination-prevPage mx-3" href="{{ pageInfo.prevUrl }}">&lt;</a>
+				{% endif %}
+				{% for page, url in pageInfo.getPrevUrls(5) %}
+					<a class="pagination-changePage mx-3" href="{{ url }}">{{ page }}</a>
 				{% endfor %}
-			</ul>
+				<div class="pagination-changePage pagination-currentPage mx-3">{{ pageInfo.currentPage }}</div>
+				{% for page, url in pageInfo.getNextUrls(5) %}
+					<a class="pagination-changePage mx-3" href="{{ url }}">{{ page }}</a>
+				{% endfor %}
+				{% if pageInfo.nextUrl %}
+					<a class="pagination-changePage pagination-nextPage mx-3" href="{{ pageInfo.nextUrl }}">&gt;</a>
+				{% endif %}
+				{# <a href="{{ pageInfo.lastUrl }}">Last Page</a> #}
+			</div>
 		</div>
 	</div>
 {% endblock %}

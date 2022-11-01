@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="300px" height="300px" viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>btn_Herbeluister</title>
+    <g id="Page-2-Copy" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="btn_Herbeluister">
+            <rect id="Rectangle" fill="#3ED8A0" x="0" y="0" width="300" height="300" rx="4"></rect>
+            <text id="Herbeluister-alle-Ur" font-family="Roboto-Black, Roboto" font-size="30" font-weight="800" fill="#FFFFFF">
+                <tspan x="22.5" y="226">Herbeluister alle </tspan>
+                <tspan x="22.5" y="265">Urgent.fm  shows</tspan>
+            </text>
+            <path d="M167.833333,24 C160.546248,24 154.5,30.046248 154.5,37.3333333 L154.5,130.666667 C154.5,137.953753 160.546248,144 167.833333,144 L261.166667,144 C268.453753,144 274.5,137.953753 274.5,130.666667 L274.5,84 L261.166667,84 L261.166667,130.666667 L167.833333,130.666667 L167.833333,37.3333333 L214.5,37.3333333 L214.5,24 L167.833333,24 Z M227.833333,24 L227.833333,37.3333333 L251.739587,37.3333333 L189.786459,99.28646 L199.213541,108.71354 L261.166667,46.7604167 L261.166667,70.6666667 L274.5,70.6666667 L274.5,24 L227.833333,24 Z" id="Shape" fill="#FFFFFF" fill-rule="nonzero"></path>
+        </g>
+    </g>
+</svg>

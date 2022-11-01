@@ -5,10 +5,10 @@
 ///////////////////////////////////////////////////////////////////////////// */
 
 
-
+ 
 // Font Variables
 
-
+ 
 
 
 @import url(https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Source+Serif+Pro:ital,wght@0,600;0,700;1,600;1,700&display=swap);
@@ -71,8 +71,11 @@ $color-border: #C8BFD5;
 $container-width: 60vw;
 
 $header-height: 15vh;
-$banner-height: 90vh;
+//$banner-height: 90vh;
+$banner-height: 75vh;
 $footer-height:10vh;
+
+$hero-height: 75vh;
 
 $max-width-small: 575.98px;
 $min-width-small: 576px;
@@ -83,7 +86,7 @@ $min-width-medium: 768px;
 $max-width-large: 991.98px;
 $min-width-large: 992px;
 
-
+$programma-logo-size: 7rem;
 /* /////////////////////////////////////////////////////////////////////////////
 	
 	Mixins
@@ -117,6 +120,15 @@ $min-width-large: 992px;
   transition: $args;
 }
 
+@mixin text-overflow($max-height, $line-height) {
+	width: 100%;
+	max-height: calc($max-height);
+	white-space: pre-line;
+	line-height: $line-height;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
 /* /////////////////////////////////////////////////////////////////////////////
 	
 	Functions
@@ -140,6 +152,7 @@ h1, h2, h3 {
 	font-family: $source-serif;	
 }
 
+
 h3 span{
 font-family: $roboto;
 font-size: $space-sm;
@@ -149,17 +162,57 @@ h2 {
 font-size: $font-size-xl;
 }
 
+h5 {
+font-size: $font-size-sm;
+}
+
+p {
+	font-size: $font-size-md;
+	&.date {
+		color: $color-greyscale-3;
+		font-size: $font-size-sm;
+	}
+	
+	&.intro {
+		font-size: $font-size-lg;
+	}
+}
+
+.navbar .nav-active,
+.navbar .nav-link:active {
+	background-color: #09D389!important;
+}
+
+
 .accent-green {
 color: $color-accent;
 }
 
-.text-overflow {
-width: 100%;
-max-height: calc(1.5rem*2);
-white-space: pre-line;
-line-height: 1.5rem;
-overflow: hidden;
-text-overflow: ellipsis;
+.related-show p {
+	@include text-overflow(3rem, 1.5rem)
+}
+
+h2.card-title {
+	color: red;
+	font-size: $font-size-lg;
+}
+
+	.contentcard {
+		width:100%;
+		
+	}
+
+.social-links {
+	margin-left: 0;
+	padding-left: 0;
+	li {
+		display: inline-block;
+		list-style: none;      
+		margin-left: 0;
+		
+
+
+	}
 }
 
 // Viewports
@@ -167,12 +220,41 @@ text-overflow: ellipsis;
 @media(max-width: 767px) {
 
 	h1 {
-		font-size: $font-size-lg;
+		font-size: $font-size-sm;
 	}
 
 	.hpBanner {
 		//TEST:
-		min-height: 90vh;
+		min-height: 75vh; 
+	}
+	
+	.hero {
+		min-height: $hero-height;
+		object-fit:cover;
+		picture {
+			width: 100%; height: $hero-height;
+			
+			img {
+				object-fit:cover;	
+			}
+		}
+	}
+	
+	
+	.backgroundImageSmall {
+		height:$hero-height; 	
+		object-fit:cover; 
+		object-position:center; 
+		width:100%; 
+		position: 	relative
+	}
+	
+	.backgroundImageMedium {
+		height:$hero-height; 
+		object-fit:cover; 
+		object-position:center;
+		width:100%; 
+		position: relative
 	}
 
 	.banner-window {
@@ -213,6 +295,8 @@ text-overflow: ellipsis;
 }
 
 @media(min-width: 768px) {
+
+	
 	// Banner 
 	.hpBanner {
 		height: $banner-height;
@@ -386,6 +470,8 @@ text-overflow: ellipsis;
 }
 
 .banner-content {
+	position: absolute; left:0; right:0;
+	
 	h1 {
 		display: inline-block;
 		color: $color-white;
@@ -403,8 +489,7 @@ text-overflow: ellipsis;
 // Programma-entry 
 .banner-logo {
 	border-radius: 50%;
-    height: 100%;
-    width: 100%;
+	max-height: 100%;
 }
 
 .category-base {
@@ -437,8 +522,8 @@ text-overflow: ellipsis;
 }
 
 .main {
-    margin-top: 10vh;
     margin-bottom: 15vh;
+	margin-top: $space-lg;
 }
 
 // Header
@@ -447,11 +532,11 @@ text-overflow: ellipsis;
 	transition: transform 0.5s;
 }
 
-.header-hidden {
-	// Eerst zo proberen, indien transition niet werkt dan transzform gebruiken
-	// display: none;
-	transform: translateY(-200px);
-}
+// .header-hidden {
+// 	// Eerst zo proberen, indien transition niet werkt dan transzform gebruiken
+// 	// display: none;
+// 	transform: translateY(-200px);
+// }
 
 .navbar {
 	z-index: 7000;
@@ -459,6 +544,15 @@ text-overflow: ellipsis;
 	@include box-shadow(2px, 0, 4px, rgba(0, 0, 0, 0.16));
     background-color: $color-white;
     width: 100vw;
+
+//     .logo {
+// //    background-color: red;
+// 	    img {
+// //		    width: 156px;
+// //		    height: 64px; 
+// //		    border: 1px solid #000;
+// 	    }
+//     }
 
 	a {
 			color: $color-black;
@@ -488,6 +582,11 @@ text-overflow: ellipsis;
 		content: url('../images/icons/link-external.svg');
 	}
 }
+
+
+// .subnav {
+	
+// }
 
 
 // Banner programma
@@ -535,39 +634,22 @@ text-overflow: ellipsis;
 	}
 }
 
-
+// Search
 .searchbar {
 	border: none;
 	font-size: $font-size-lg;
 }
 
 .zoekveld {
-	display: flex;
-	flex-direction: row;
+	border: 0.5px solid $color-black;
 	background-color: $color-white;
+	display: flex;
 	padding: 0.5rem;
 }
 
-.btnZoek {
-	background-color: $color-accent;
-	border: none;
-}
-
 .inputSearch {
-	flex-grow: 2;
+	flex-grow: 1;
 	border: none;
-	&:focus {
-		outline: none;
-	}
-}
-
-.logo {
-    width: 50px;
-    height: 50px;
-
-	p {
-		margin: 0;
-	}
 }
 
 // Search Overlay
@@ -602,6 +684,12 @@ text-overflow: ellipsis;
 	display: none;
 	justify-content: center;
 }
+
+	.btnZoek {
+		background-color: $color-accent;
+		border: none;
+	}
+	
 .modal-search {
 	z-index: 9002;
 	top: 50%;
@@ -759,22 +847,18 @@ footer {
     height: 50px;
 }
 
-
-.tumultfmLogo {
-    width: 50px;
-    height: 50px;
-    background-color: $color-black;
-}
-
 .social-media {
     color: $color-white;
     background-color: $color-white;
 
 	ul {
 		margin: 0!important;
-	}
-	ul li {
-		display: inline-block;
+		li {
+			display: inline-block;
+		}
+		li:not(:last-child) {
+			padding: 16px;
+		}
 	}
 }
 
@@ -794,7 +878,7 @@ footer {
 }
 
 .audio-control-pause {
-	background: url("../images/icons/pause.svg") no-repeat;
+	background: url("../images/icons/stop.svg") no-repeat;
 }
 
 
@@ -802,26 +886,46 @@ footer {
 
 section {
 	margin-top:0;			
-	}
+}
 	
-	section ~ section {
-margin-top:$space-xxl;
-		}
+section ~ section {
+	margin-top:$space-xxl;
+}
 
 h2.sectionTitle {
 	color: $color-greyscale-2;
 	font-size: $font-size-lg;
 }
+
+h2.sectionTitleCentered {
+	color: $color-greyscale-2;
+	font-size: $font-size-lg;
+	text-align: center;
+	font-family: $roboto;
+}
+
 .editorsPick {
 	background-color: $color-white;
-
-	.mixcloud-thumb-image {
-		img {
-			max-width: 100%;
-			max-height: 100%;
-			object-fit: cover;
 	
+	.mixcloud-link {
+		width: 100px;
+		text-decoration: none;
+		color: $color-black;
+		&:hover {
+		text-decoration: underline;
 		}
+			img {
+				max-width: 160px;
+				object-fit: cover;
+		
+			}
+			p {
+				max-width: 160px;
+				font-size: $font-size-xs;
+				padding-top: $space-xs;
+				font-weight: 400;
+				@include text-overflow(3.1rem, 1.2rem)
+			}
 	}
 
 	.herbeluister {
@@ -829,9 +933,9 @@ h2.sectionTitle {
 		background-color: $color-accent;
 		/* fixed responsive square: code gevonden op https://stackoverflow.com/questions/19068070/how-to-style-a-div-to-be-a-responsive-square*/
 		width: 100%;
-		max-width: 300px;
+		max-width: 16px;
 		height: 0;
-		max-height: 300px;
+		max-height: 160px;
 		padding-bottom: 100%;
 		
 	}
@@ -852,19 +956,32 @@ h2.sectionTitle {
 .programma-logo {
 	img {
 		width: 100%;
-		width: 6rem;
-		height: 6rem;
+		width: $programma-logo-size;
+		height: $programma-logo-size;
 		object-fit: cover;
 		object-position: center;
 	}
 }
 
+.related-shows {
+	.col a {
+		max-height: $programma-logo-size;
+		color: $color-black;
+
+		&:hover {
+			color: $color-accent;
+			background-color: $color-white;
+		}
+
+	}
+}
+
 .programma-suggestie {
-	height: 6rem;
+	height: $programma-logo-size;
 }
 
 //Programmanieuws
-.programmaNieuws {
+.programmanieuws {
 	padding: $space-md;
 	background-color: $color-white;
 }
@@ -1048,13 +1165,6 @@ h2.sectionTitle {
     text-decoration: none;
 }
 
-a p {
-    color: black;
-}
-
-a p:hover {
-    color: gray;
-}
 
 /* programmaschema styling */
 .progschema-navbar-container {
@@ -1136,8 +1246,8 @@ a p:hover {
 }
 
 a {
-    text-decoration: none;
-    color: black;
+//    text-decoration: none; 
+    color: $color-accent;
 }
 
 a:hover {
@@ -1149,3 +1259,33 @@ a:hover {
 .news-embedded-media iframe {
 	height: auto;
 }
+
+
+.audioplayer {
+	p {
+		font-size: $font-size-sm;
+		.audioplayer-currently-playing {
+			font-size: $font-size-md;
+			a {
+				color: $color-black;
+				text-decoration: none;
+			}
+		}	
+	}
+}
+
+
+.programmaschema-dag {
+	p {
+		font-size: $font-size-sm;
+	}
+	a {
+	text-decoration: none; 
+    color: $color-black;
+	}
+	&:hover {
+		background-color: $color-white
+	}
+	
+}
+

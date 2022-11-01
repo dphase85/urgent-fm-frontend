@@ -1,0 +1,21 @@
+{% import "_macros/_ui" as ui %}
+
+<div class="row row-cols-1 row-cols-md-2 g-3 related-shows">
+	{% for entry in entries %}					
+		<div class="col">
+			<div class="d-flex flex-row related-show">
+					<a href="{{ entry.url }}" class="d-md-inline-block">
+						<div class="programma-logo">
+							{{ ui.setLogo(entry.programmaLogo.one(), "") }}
+						</div>
+					</a>
+					<a href="{{ entry.url }}" class="d-md-inline-block">
+						<div class="ms-2 p-2">
+							<h3>{{ entry.title }}</h3>
+							<p>{{ entry.intro }}</p>
+						</div>
+					</a>
+			</div>
+		</div>
+	{% endfor %}	
+</div>

@@ -51,16 +51,11 @@ p.intro {
   font-size: calc(1.5 * 16px);
 }
 
-.navbar .nav-active,
-.navbar .nav-link:active {
-  background-color: #09D389 !important;
-}
-
 .accent-green {
   color: #3ED8A0;
 }
 
-.related-show p {
+.text-overflow {
   width: 100%;
   max-height: 3rem;
   white-space: pre-line;
@@ -86,6 +81,16 @@ h2.card-title {
   display: inline-block;
   list-style: none;
   margin-left: 0;
+}
+
+.related-shows .col .row:hover {
+  background-color: #FFFFFF;
+}
+.related-shows a {
+  color: #242424;
+}
+.related-shows a:hover {
+  color: #3ED8A0;
 }
 
 @media (max-width: 767px) {
@@ -289,7 +294,8 @@ h2.card-title {
 
 .banner-logo {
   border-radius: 50%;
-  max-height: 100%;
+  height: 100%;
+  width: 100%;
 }
 
 .category-base {
@@ -328,6 +334,10 @@ h2.card-title {
   transition: transform 0.5s;
 }
 
+.header-hidden {
+  transform: translateY(-200px);
+}
+
 .navbar {
   z-index: 7000;
   border-bottom-width: 0;
@@ -336,6 +346,10 @@ h2.card-title {
   box-shadow: 2px 0 4px rgba(0, 0, 0, 0.16);
   background-color: #FFFFFF;
   width: 100vw;
+}
+.navbar .logo img {
+  width: 90px;
+  height: 90px;
 }
 .navbar a {
   color: #242424;
@@ -410,13 +424,6 @@ h2.card-title {
 .zoekveld {
   border: 0.5px solid #242424;
   background-color: #FFFFFF;
-  display: flex;
-  padding: 0.5rem;
-}
-
-.inputSearch {
-  flex-grow: 1;
-  border: none;
 }
 
 .search:hover {
@@ -451,11 +458,6 @@ h2.card-title {
   justify-content: center;
 }
 
-.btnZoek {
-  background-color: #3ED8A0;
-  border: none;
-}
-
 .modal-search {
   z-index: 9002;
   top: 50%;
@@ -472,6 +474,10 @@ h2.card-title {
 }
 .modal-search .formZoek {
   align-content: center;
+}
+.modal-search .btnZoek {
+  background-color: #3ED8A0;
+  border: none;
 }
 .modal-search .close {
   cursor: pointer;
@@ -611,6 +617,12 @@ footer {
   height: 50px;
 }
 
+.tumultfmLogo {
+  width: 50px;
+  height: 50px;
+  background-color: #242424;
+}
+
 .social-media {
   color: #FFFFFF;
   background-color: #FFFFFF;
@@ -666,28 +678,26 @@ h2.sectionTitleCentered {
   background-color: #FFFFFF;
 }
 .editorsPick .mixcloud-link {
+  background-color: red;
   width: 100px;
-  text-decoration: none;
-  color: #242424;
-}
-.editorsPick .mixcloud-link:hover {
-  text-decoration: underline;
+  /*
+  	.mixcloud-thumb-image {
+  		img {
+  		max-width: 100%;
+  			max-height: 100%;
+  			width: 160px;
+  			object-fit: cover;
+
+  		}
+  	}*/
 }
 .editorsPick .mixcloud-link img {
-  max-width: 160px;
+  max-width: 75%;
   object-fit: cover;
 }
 .editorsPick .mixcloud-link p {
-  max-width: 160px;
-  font-size: calc(0.85 * 16px);
-  padding-top: calc( 16px / 2);
-  font-weight: 400;
-  width: 100%;
-  max-height: 3.1rem;
-  white-space: pre-line;
-  line-height: 1.2rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  max-width: 75%;
+  font-size: calc(1 * 16px);
 }
 .editorsPick .herbeluister {
   display: inline-block;
@@ -716,26 +726,17 @@ h2.sectionTitleCentered {
 
 .programma-logo img {
   width: 100%;
-  width: 7rem;
-  height: 7rem;
+  width: 6rem;
+  height: 6rem;
   object-fit: cover;
   object-position: center;
 }
 
-.related-shows .col a {
-  max-height: 7rem;
-  color: #242424;
-}
-.related-shows .col a:hover {
-  color: #3ED8A0;
-  background-color: #FFFFFF;
-}
-
 .programma-suggestie {
-  height: 7rem;
+  height: 6rem;
 }
 
-.programmanieuws {
+.programmaNieuws {
   padding: calc(1.5 * 16px);
   background-color: #FFFFFF;
 }

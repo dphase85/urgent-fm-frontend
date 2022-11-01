@@ -1,6 +1,9 @@
 /** IMPORTANT! Gebruik deze global variable(s) enkel tijdens testen en ontwikkelen! */
 let lastScrollY;
 
+// const hostname = 'https://urgent.johanraes.be';
+const hostname = 'http://localhost';
+
 const callMixcloud = () => {
 	const request = new Request('https://api.mixcloud.com/urgentfm/cloudcasts/?limit=15');
 	getData(request, populateEditorsPick, printErrorMessage);
@@ -90,7 +93,7 @@ const router = (url) => {
 		url = url.slice(0, url.length - 1);
 	}
 	// indien link gedeeld wordt op facebook bv, en er wordt een parameter aan de link bijgeplakt, maak een tijdelijke url aan en extraheer pathname
-	let temp = new URL(url, 'http:localhost');
+	let temp = new URL(url, hostname);
 	url = temp.pathname;
 	// Route the destination url to the right set of webpage-related functions
 	if (url === '/') {
@@ -98,7 +101,6 @@ const router = (url) => {
 		callMixcloud();
 		// eslint-disable-next-line no-undef
 		swiffyslider.init(rootElement = document.body);
-		// setDisplay();
 		document.title = 'Urgent.fm 105.3'
 	} else if (url.includes('/programma')) {
 		setAnchors();
@@ -133,25 +135,13 @@ const router = (url) => {
 			title = dataTitle.dataset.title;
 		}
 		setDisplay();
-		document.title = title + ' | Urgent.fm 105.3';
+		document.title = `${title} | Urgent.fm 105.3`;
 
 	} else if (url === '/nieuws' || url.includes('/nieuws?page')) {
+		console.log(url)
 		setAnchors();
-		let filters;
-		if (!history.state.filters) {
-			// filters = initFilter();
-		} else {
-			filters = history.state.filters;
-			let cbFilters = document.querySelectorAll('.cbFilter');
-			cbFilters[0].addEventListener('change', checkDefaultfilter);
-			cbFilters[0].checked = filters[0];
-			for (let i = 1; i < cbFilters.length; i++) {
-				cbFilters[i].addEventListener('change', checkFilter);
-				cbFilters[i].checked = filters[i];
-			}
-		}
 		let scrollY = history.state.scrollY;
-		let url = location.pathname + location.search;
+		url = location.pathname + location.search;
 		history.replaceState({ scrollY: scrollY, filters: null }, '', url);
 		document.title = 'Nieuws | Urgent.fm 105.3'
 		setDisplay();
@@ -172,15 +162,41 @@ const router = (url) => {
 			}
 		}
 		history.replaceState({ scrollY: scrollY, filters: filters }, '', location.pathname + location.search);
-		document.title = 'Zoek | Urgent.fm 105.3'
+		document.title = 'Zoek | Urgent.fm 105.3';
 		setDisplay();
 	} else {
 		setAnchors();
 		const title = document.querySelector('#title');
-		document.title = title.dataset.title + ' | Urgent.fm 105.3';
+		document.title = `${title.dataset.title} | Urgent.fm 105.3`;
 		setDisplay();
 	}
+	setActiveNavItem(url);
 };
+
+/** Clear the active nav items before selecting the new active nav item */
+const setActiveNavItem = (url) => {
+	// First clear all possible active nav items
+	const navItems = document.querySelectorAll('.navbar .navbar-nav .nav-item');
+	navItems.forEach(navItem => {
+		navItem.classList.remove('nav-active');
+	})
+
+	// make go to nav item active
+	let navItem;
+	if (url.startsWith('/programma')){
+		navItem = document.querySelector('#programma');
+		navItem.classList.add('nav-active');
+	} else if (url.startsWith('/nieuws')) {
+		navItem = document.querySelector('#nieuws');
+		navItem.classList.add('nav-active');
+	} else if (url.startsWith('/wie-zijn-we') || url.startsWith('/workshops')) {
+		navItem = document.querySelector('#over-urgent-fm');
+		navItem.classList.add('nav-active');
+	} else if (url === '/contact') {
+		navItem = document.querySelector('#contact');
+		navItem.classList.add('nav-active');
+	}
+}
 
 // Navigate to new page when clicking on anchor link
 const navigate = (e) => {
@@ -242,8 +258,14 @@ const navigate = (e) => {
 		forms.forEach(form => {
 			form.value = '';
 		})
-		let href = (e.currentTarget).getAttribute('href');
-		if (href !== getURL()) {
+		let href = (e.currentTarget).getAttribute('href').toString();
+		const url = getURL();
+		if (href !== url) {
+			// TODO: tijdelijke oplossing, er moet een duurzame oplossing zijn, kijk ook naar TODO bij setAnchors()
+			if (!href.startsWith(hostname) && (href.startsWith('http://') || href.startsWith('https://'))) {
+				window.open(href, '_blank')
+				return;
+			}
 			nextUrl = href;
 
 			let scrollY = 0;
@@ -460,7 +482,7 @@ const populateEditorsPick = (response) => {
 	let pick;
 	let a;
 	let img;
-	let strong;
+	let p;
 	let pictures;
 	let name;
 
@@ -471,13 +493,13 @@ const populateEditorsPick = (response) => {
 		pick = `#pick-${i}`;
 		a = document.querySelector(`${pick} a`);
 		img = document.querySelector(`${pick} img`);
-		strong = document.querySelector(`${pick} strong`);
+		p = document.querySelector(`${pick} p`);
 		pictures = entry['pictures'];
 		name = entry['name'];
 		a.href = `https://mixcloud.com${entry['key']}`;
 		img.src = pictures['large'];
 		img.alt = `Thumbnail of ${name}`;
-		strong.textContent = name;
+		p.textContent = name;
 	}
 
 	// !!! Scrolback positie klopt enkel indien hier scrollback uitgevoerd!!!
@@ -485,7 +507,7 @@ const populateEditorsPick = (response) => {
 };
 
 const getTimetable = () => {
-	//TODO Kan searchquery nog verder gespecifieerd worden?
+	//TODO: Kan searchquery nog verder gespecifieerd worden?
 	const query = `{
 		entries(section: "programScheme" orderBy: "title") {
 		  title

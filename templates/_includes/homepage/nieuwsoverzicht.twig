@@ -14,9 +14,9 @@
 				{# Eerst source image laden #}
 				{% set image = item.image.one() %}
 				{# Dan de verschillende imagetransforms #}
-				{% set imageSrcsetSmall = image.getUrl('homepageLaatstNieuweImage300w') %}
-				{% set imageSrcsetDefault = image.getUrl('homepageLaatstNieuweImage525w') %}
-				{% set imageSrcsetLarge = image.getUrl('homepageLaatstNieuweAfbeelding898w') %}
+				{% set imageSrcsetSmall = image.getUrl('homepageLatestS') %}
+				{% set imageSrcsetDefault = image.getUrl('homepageLatestM') %}
+				{% set imageSrcsetLarge = image.getUrl('homepageLatestL') %}
 				{# Gebruik srcset om responsive images in te laden (gebaseerd op schermgrootte en pixeldensiteit) #}
 				{# TODO: size nog verder specifieren! #}
 					<a class="nwsItemTitle" href="{{ item.url }}"> <img class="img-fluid" src="{{ imageSrcsetDefault }}" srcset="{{ imageSrcsetSmall }} 300w, {{ imageSrcsetDefault }} 525w, {{ imageSrcsetLarge }} 898w" sizes="(min-width: 768px) 75vw, (min-width: 992) 75vw, 100vw" alt="{{ image.title }}"/>

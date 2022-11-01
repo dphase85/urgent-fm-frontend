@@ -59,8 +59,9 @@ const populateProgramSchema = (tabDay) => {
 	let buttons = document.querySelectorAll('.tabs-button');
 	buttons.forEach(button => button.addEventListener('click', setSchema));
 
-	let slotTitles = document.querySelectorAll('.slot-inhoud h3');
-	slotTitles.forEach(title => title.addEventListener('click', collapseSlot));
+	//TODO: indien slots permanent opengeklapt blijven, deze code verwijderen!
+	// let slotTitles = document.querySelectorAll('.slot-inhoud h3');
+	// slotTitles.forEach(title => title.addEventListener('click', collapseSlot));
 
 	// // Zondag = 0, maandag 1 enz. Tabday is de 'juiste' dagnummer die door JS gebruikt wordt.
 	let btnDay = tabDay - 1;

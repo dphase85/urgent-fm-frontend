@@ -23,7 +23,9 @@ body {
   background-color: #F2F2F2;
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   font-family: "Source Serif Pro", serif;
 }
 
@@ -49,11 +51,6 @@ p.date {
 }
 p.intro {
   font-size: calc(1.5 * 16px);
-}
-
-.navbar .nav-active,
-.navbar .nav-link:active {
-  background-color: #09D389 !important;
 }
 
 .accent-green {
@@ -126,7 +123,8 @@ h2.card-title {
   .banner-programma h1 {
     display: inline-block;
   }
-  .banner-programma .button-primary, .banner-programma .button-secondary {
+  .banner-programma .button-primary,
+.banner-programma .button-secondary {
     font-size: calc(0.85 * 16px);
   }
   .modal-search {
@@ -149,7 +147,9 @@ h2.card-title {
   .banner-window {
     height: 75vh;
   }
-  .timeslots ul, .timeslots .collapse, #multiCollapse3 {
+  .timeslots ul,
+.timeslots .collapse,
+#multiCollapse3 {
     display: block !important;
   }
   .container:not(.navbar .container, footer .container, .modal-background .container) {
@@ -181,7 +181,9 @@ h2.card-title {
   .banner-window {
     height: 75vh;
   }
-  .timeslots ul, .timeslots .collapse, #multiCollapse3 {
+  .timeslots ul,
+.timeslots .collapse,
+#multiCollapse3 {
     display: block !important;
   }
   .container:not(.navbar .container, footer .container, .modal-background .container) {
@@ -213,7 +215,9 @@ h2.card-title {
   h1 {
     font-size: calc(3.5 * 16px);
   }
-  .timeslots ul, .timeslots .collapse, #multiCollapse3 {
+  .timeslots ul,
+.timeslots .collapse,
+#multiCollapse3 {
     display: block !important;
   }
   .modal-search {
@@ -239,7 +243,9 @@ h2.card-title {
   .banner-window {
     height: 75vh;
   }
-  .timeslots ul, .timeslots .collapse, #multiCollapse3 {
+  .timeslots ul,
+.timeslots .collapse,
+#multiCollapse3 {
     display: block !important;
   }
   .modal-search {
@@ -337,6 +343,10 @@ h2.card-title {
   background-color: #FFFFFF;
   width: 100vw;
 }
+.navbar .logo img {
+  width: 90px;
+  height: 90px;
+}
 .navbar a {
   color: #242424;
   font-weight: bold;
@@ -366,7 +376,8 @@ h2.card-title {
   overflow: auto;
 }
 
-.banner-programma .first-row p, .banner-programma .timeslots i {
+.banner-programma .first-row p,
+.banner-programma .timeslots i {
   color: #919191;
 }
 
@@ -486,12 +497,13 @@ h2.card-title {
   border-radius: 50%;
 }
 
-.button-primary, .button-secondary {
+.button-primary,
+.button-secondary {
   background-position-y: center;
-  background-position-x: calc( 16px / 2);
+  background-position-x: calc(16px / 2);
   background-repeat: no-repeat;
   display: inline-block;
-  padding: calc( 16px / 2) calc(1 * 16px) calc( 16px / 2) calc(2.5 * 16px);
+  padding: calc(16px / 2) calc(1 * 16px) calc(16px / 2) calc(2.5 * 16px);
 }
 
 .button-primary {
@@ -680,7 +692,7 @@ h2.sectionTitleCentered {
 .editorsPick .mixcloud-link p {
   max-width: 160px;
   font-size: calc(0.85 * 16px);
-  padding-top: calc( 16px / 2);
+  padding-top: calc(16px / 2);
   font-weight: 400;
   width: 100%;
   max-height: 3.1rem;
@@ -700,7 +712,8 @@ h2.sectionTitleCentered {
   padding-bottom: 100%;
 }
 
-.tegel, .programmaNieuws {
+.tegel,
+.programmaNieuws {
   background-color: #FFFFFF;
   -webkit-box-shadow: 2px 0 4px rgba(0, 0, 0, 0.16);
   -moz-box-shadow: 2px 0 4px rgba(0, 0, 0, 0.16);
@@ -731,10 +744,6 @@ h2.sectionTitleCentered {
   background-color: #FFFFFF;
 }
 
-.programma-suggestie {
-  height: 7rem;
-}
-
 .programmanieuws {
   padding: calc(1.5 * 16px);
   background-color: #FFFFFF;
@@ -756,7 +765,8 @@ h2.sectionTitleCentered {
   font-size: calc(1 * 16px);
   color: #242424;
 }
-.tegel .nwsItemCopy p:hover, .tegel .nwsItemCopy h3:hover {
+.tegel .nwsItemCopy p:hover,
+.tegel .nwsItemCopy h3:hover {
   color: #919191;
 }
 .tegel .nwsItemTitle {
@@ -781,7 +791,8 @@ h2.sectionTitleCentered {
   object-fit: cover;
 }
 
-.categoryContainer, .category-container {
+.categoryContainer,
+.category-container {
   position: absolute;
   right: 0.5rem;
   top: 0.5rem;
@@ -789,13 +800,16 @@ h2.sectionTitleCentered {
   border-radius: 10px;
   padding: 2px 10px;
 }
-.categoryContainer:hover, .category-container:hover {
+.categoryContainer:hover,
+.category-container:hover {
   background-color: gray;
 }
-.categoryContainer a, .category-container a {
+.categoryContainer a,
+.category-container a {
   text-decoration: none;
 }
-.categoryContainer span, .category-container span {
+.categoryContainer span,
+.category-container span {
   color: white;
 }
 
@@ -826,7 +840,8 @@ h2.sectionTitleCentered {
   color: gray;
 }
 
-.pagination-prevPage, .pagination-nextPage {
+.pagination-prevPage,
+.pagination-nextPage {
   font-weight: bold;
 }
 
@@ -940,11 +955,13 @@ h2.sectionTitleCentered {
   display: none;
 }
 
-.tabs-content-active, .tab {
+.tabs-content-active,
+.tab {
   display: block;
 }
 
-.slot-border-bottom, .slot {
+.slot-border-bottom,
+.slot {
   border-bottom: solid black 1px;
 }
 
@@ -953,7 +970,8 @@ h2.sectionTitleCentered {
   color: gray;
 }
 
-.slot-intro-active, .slot-logo-active {
+.slot-intro-active,
+.slot-logo-active {
   max-height: max-content;
 }
 

@@ -5,32 +5,69 @@
 {% set image = entry.singlesBannerImage.one() %}
 {% set backgroundImageSmall = image.getUrl('bannerImageBackgroundPortraitSmall576w') %}
 {% set backgroundImageMedium = image.getUrl('bannerBackgroundImageLandscapeMedium1280w') %}
-    <div class="d-flex align-items-center justify-content-center hpBanner" style="background-image: url('{{ image.url }}');background-position: center;">
-        <picture style="width: 100%; height: 90vh">
-			<source srcset="{{ backgroundImageMedium }}" media="(min-width: 1200px)	" style="height:90vh; object-fit:cover; object-position:center; 	width:100%; position: relative">
-			<img src="{{ backgroundImageSmall }}"  style="height:90vh; 	object-fit:cover; object-position:center; width:100%; position: 	relative"/>
+    <div class="d-flex align-items-center justify-content-center hpBanner" >
+        <picture style="width: 100%; height: 75vh">
+			<source srcset="{{ backgroundImageMedium }}" media="(min-width: 1200px)	" style="height:75vh; object-fit:cover; object-position:center; 	width:100%; position: relative">
+			<img src="{{ backgroundImageSmall }}"  style="height:75vh; 	object-fit:cover; object-position:center; width:100%; position: 	relative"/>
 		</picture>
-        {# <div class="container banner-content align-self-end" style="position: absolute; left:0; right:0;"> #}
-        <div class="container banner-window banner-content d-flex align-items-center" style="position: absolute">
-            <h1 id="title" data-title="{{ entry.title }}"><span>{{ entry.singlesIntro }}</span></h1>
+        <div class="container banner-content align-self-end" style="position: absolute; left:0; right:0;">
+        {# <div class="container banner-window banner-content d-flex align-items-center" style="position: absolute"> #}
+            <h1 id="title" data-title="Wie zijn we"><span>Wie zijn we</span></h1>
         </div>
     </div>
+
     <div class="main container">
         <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-2">
             <div class="col col-md-9 col-lg-9">
-                {{ entry.singlesInhoud }}
+
+                <h2>Urgent.fm biedt workshops aan klassen en groepen tieners. 
+</h2>
+                <p class="intro">
+                
+                
+Deze vinden plaats in de redactie en radiostudio in De Krook.
+
+
+                </p>
+                
+                
+                <p>
+De formule die daarrond ontwikkeld werd, bestaat uit:
+<ul>
+<li>rondleiding en vragenronde</li>
+<li>uitplooien van een kleine redactiestructuur ter voorbereiding van een eigen radioshow</li>
+<li>voorbereiding radioshow</li>
+<li>opname radioshow in de radiostudio</li>
+</ul>
+<p>
+De show wordt niet uitgezonden op urgent.fm maar wordt naderhand doorgestuurd.<br>
+De inhoud van het radioprogramma kan binnen een thematiek naar keuze. De sessie duurt ongeveer 3 uur (9u > 12u of 13u > 16u). De groep bestaat uit maximum 15 leerlingen/jongeren
+</p>
+<p>
+De prijs per sessie is 150€ exclusief btw.
+</p>
+<p>Daarnaast worden er workshopsessies aangeboden binnen de zomerfestivalwerking.</p>
+<h4>
+Meer informatie? </h4>
+<p>
+mail naar <a href="mailto:tania.selleslags@urgent.fm">Tania Selleslags</a>
+</p>
+
+                </p>
+                
             </div>
             <div class="col col-md-3 col-lg-3">
                 {# {% include "_includes/overUrgentfmMenu" %} #}
-                <ul class="nav flex-column">
+                <ul class="nav flex-column subnav">
                     <li class="nav-item">
-                        <a class="nav-link link" href="/wie-zijn-we">Wie zijn we?</a>
+                        <a class="nav-link link" href="/wie-zijn-we"><strong>Wie zijn we?</strong></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled" href="/workshops"><strong>Workshops</strong></a>
+                        <a class="nav-link disabled" href="/workshops">Workshops</a>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
 {% endblock %}
+

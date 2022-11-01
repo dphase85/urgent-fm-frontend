@@ -62,8 +62,7 @@
                .all() %}
 
 				{% for i in 0..6 %}
-					<div
-						class="tab" data-tab="{{ i }}">
+					<div class="tab" data-tab="{{ i }}">
 
 						{# <div data-tab="{{ i }}">  #}
 						{% set weekdag = weekdagen[i] %}
@@ -75,14 +74,19 @@
 						{% for timeslot in timeslots %}
 							{% set programma = timeslot.programma.one() %}
 
-							<div class="slot py-2">
-								<div class="row align-items-center">
-									<div class="col-3 col-md-2">
-										<h5 class="m-0 programmaschema-uur">
+							<div class="slot py-2 programmaschema-dag ">
+								<a href="{{ programma.getUrl }}" class="">
+								<div class="row align-text-top">
+									<div class="col-2 col-md-1">
+										<h5 class="m-2 programmaschema-uur">
 											{{ timeslot.beginuur|time('short') }}
 										</h5>
 									</div>
-									<div class="slot-inhoud col-9 col-md-10 d-md-flex align-items-center">
+									<div class="slot-inhoud col-10 col-md-11 ">
+										
+										<h3 class="m-0">{{ programma.title }}</h3>
+										<p>{{ programma.intro|nl2br  }}</p>
+										<!--
 										{% import "_macros/_ui" as cat %}
 										{% set rootCategories = programma.programmaStijl
                     	                            .level('1')
@@ -97,10 +101,11 @@
 												{% endfor %}
 											{% endif %}
 
-										</div>
+										</div>-->
 									</div>
 									{# slot-inhoud #}
 								</div>
+								</a>
 								<div class="row slot-row-active">
 									<div class="col-0 col-md-2"></div>
 									<div class="col-12 col-md-8 col-lg-7 col-xl-8 order-2 order-md-1">

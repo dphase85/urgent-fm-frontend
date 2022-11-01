@@ -1,0 +1,43 @@
+{% extends craft.app.request.isAjax and not craft.app.request.isLivePreview ? "_ajax" : "_layout" %}
+{% set title = category.title %}
+
+
+{% block content %}
+	{# import macro's #}
+	{% import "_macros/_ui" as ui %}
+
+	<div role="main" class="main container">
+		<div class="row banner-none">
+			<div class="col">
+				<h1 id="title" data-title="{{ category.title }}">{{ category.title }}</h1>
+			</div>
+		</div>
+
+		{% set entries = craft.entries.relatedTo(category).all() %}
+		<div class="row row-cols-2">
+			{% if entries is not null %}
+				{% for entry in entries %}
+					<div class="col mt-3">
+						<div class="row">
+							<div class="col-sm-4 col-lg-3">
+								<a href="{{ entry.url }}" class="d-md-inline-block">
+									<div class="programma-logo d-inline-block al">
+										{{ ui.setLogo(entry.programmaLogo.one(), "") }}
+									</div>
+								</a>
+							</div>
+							<div class="col-sm-8 col-lg-9">
+								<a href="{{ entry.url }}" class="d-blocktext-truncate">
+									<div class="d-md-inline-block ms-md-4align-self-start">
+										<h3>{{ entry.title }}</h3>
+										<p class="text-overflow">{{ entry.intro }}</p>
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			{% endif %}
+		</div>
+	</div>
+{% endblock %}

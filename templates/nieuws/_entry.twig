@@ -1,5 +1,6 @@
 {% extends craft.app.request.isAjax and not craft.app.request.isLivePreview ? "_ajax" : "_layout" %}
 {% set title = entry.title %}
+{% set heroHeight = 75 %}
 
 {% block content %}
 	{% set image = entry.image.one() %}
@@ -10,14 +11,13 @@
 	{% set backgroundImageMedium = image.getUrl('bannerBackgroundImageLandscapeMedium1280w') %}
 
 	<div class="d-flex hpBanner banner">
-		<picture style="width: 100%; height: 90vh">
-			<source srcset="{{ backgroundImageMedium }}" media="(min-width: 1200px)	" style="height:90vh; object-fit:cover; object-position:center; 	width:100%; position: relative">
-			<img src="{{ backgroundImageSmall }}" style="height:90vh; 	object-fit:cover; object-position:center; width:100%; position: relative"/>
+		<picture style="width: 100%; height: {{heroHeight}}vh">
+			<source srcset="{{ backgroundImageMedium }}" media="(min-width: 1200px)	" style="height:{{heroHeight}}vh; object-fit:cover; object-position:center; 	width:100%; position: relative">
+			<img src="{{ backgroundImageSmall }}" style="height:{{heroHeight}}vh; 	object-fit:cover; object-position:center; width:100%; position: relative"/>
 		</picture>
 		<div
 			class="container banner-content align-self-end" style="position: absolute; left:0; right:0;">
 
-			{# <small>{{ entry.postDate|datetime }}</small> #}
 			<div class="row mb-3">
 				<div class="col">
 					{% import "_macros/_ui" as cat %}
@@ -48,36 +48,27 @@
 						{% switch block.type %}
 
 							{% case "tekst" %}
-								{{ block.tekst }}
+								<div class="nieuws-tekst my-3">
+									{{ block.tekst }}
+								</div>
 
 							{% case "fotoreeks" %}
-								<div class="row">
+								<h2>Foto's</h2>
+								<div class="nieuws-fotoreeks my-3">
+								
 									{% for foto in block.fotoreeks.all() %}
 
-										{% set img = {
+									{% set img = {
                   					  mode:'crop',
-                  					  width: 525,
-                  					  height: 300,
+                  					  width: 200,
+                  					  height: 200,
                   					  quality: 90
                   					} %}
 
-										<div class="img-fluid m-1">
-											<img src="{{ foto.getUrl(img) }}" alt="{{ foto.title }}"/>
-										</div>
+									<img src="{{ foto.getUrl(img) }}" alt="{{ foto.title }}"/>
+
 									{% endfor %}
 								</div>
-
-							{% case "embeddedmedia" %}
-								<div class="row news-embedded-media">
-									{{ block.embeddedmedia.render({
-              					    attributes: {
-              					    width: 640,
-              					    height: 480,
-              					    }
-              					  })
-              					}}
-								</div>
-
 						{% endswitch %}
 					{% endfor %}
 				</section>

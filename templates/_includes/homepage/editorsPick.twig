@@ -4,7 +4,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col">
-					<h2 class="sectionTitle">Editor's Pick</h2>
+					<h2 class="sectionTitleCentered">Herbeluister:</h2>
 				</div>
 			</div>
 		</div>
@@ -14,9 +14,10 @@
 				<li class="slide-visible" id="pick-{{ i }}">
 					<div>
 						<a class="mixcloud-link" href="" target="_blank">
-							<div class="mixcloud-thumb-image w-100"><img src="" alt=""></div>
-							<p class="mt-2">
-								<strong></strong>
+{#							<div class="mixcloud-thumb-image"> #}
+							<img src="" alt="">
+{#							</div> #}
+							<p>
 							</p>
 						</a>
 					</div>
@@ -25,18 +26,16 @@
 			{% endfor %}
 
 			<li class="slide-visible">
-				<div>
-					<a class="mixcloud-link" href="https://www.mixcloud.com/urgentfm/" target="_blank">
-						<div class="herbeluister">
-							<div>
-								<p>Herbeluister alle Urgent.fm shows</p>
-							</div>
-						</div>
-						<p class="mt-2">
-							<strong>Urgent.fm op Mixcloud.com</strong>
-						</p>
-					</a>
-				</div>
+					<div>
+						<a class="mixcloud-link" href="https://www.mixcloud.com/urgentfm/" target="_blank">
+{#							<div class="mixcloud-thumb-image"> #}
+							<img src="/images/btn_Herbeluister.svg" alt="Herbeluister alle Urgent.fm shows" />
+{#							</div> #}
+							<p>Urgent.fm op Mixcloud.com</p>
+						</a>
+					</div>
+			
+			
 
 			</li>
 		</ul>

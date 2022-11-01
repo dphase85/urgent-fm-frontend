@@ -1,8 +1,9 @@
 {% extends craft.app.request.isAjax and not craft.app.request.isLivePreview ? "_ajax" : "_layout" %}
 {% set title = entry.title %}
+{% set heroHeight = 75 %}
 
 {% block content %}
-	
+
 	{# import macro's #}
 	{% import "_macros/_ui" as ui %}
 	{% set image = null %}
@@ -10,7 +11,7 @@
 	{% if entry.programmaBanner.one() is empty %}
 		{% set image = generic.programmadefaultbanner.one() %}
 	{% else %}
-		{% set image = entry.programmaBanner.one() %}	
+		{% set image = entry.programmaBanner.one() %}
 	{% endif %}
 	{% set rootCategory = entry.programmaStijl
 		.level('1')
@@ -20,41 +21,39 @@
         .level('>1')
         .all() %}
 
-{% set backgroundImageSmall = image.getUrl('bannerImageBackgroundPortraitSmall576w') %}
-{% set backgroundImageMedium = image.getUrl('bannerBackgroundImageLandscapeMedium1280w') %}
+	{% set backgroundImageSmall = image.getUrl('bannerImageBackgroundPortraitSmall576w') %}
+	{% set backgroundImageMedium = image.getUrl('bannerBackgroundImageLandscapeMedium1280w') %}
 
-{% set urls = [backgroundImageSmall, backgroundImageMedium] %}
-	<div class="hpBanner d-flex banner">
-		<picture style="width: 100%; height: 90vh">
-			<source srcset="{{ backgroundImageMedium }}" media="(min-width: 1200px)	" style="height:90vh; object-fit:cover; object-position:center; 	width:100%; position: relative">
-			<img src="{{ backgroundImageSmall }}"  style="height:90vh; 	object-fit:cover; object-position:center; width:100%; position: 	relative"/>
+	{% set urls = [backgroundImageSmall, backgroundImageMedium] %}
+	<div class="d-flex align-items-center justify-content-center hero">
+		<picture style="width: 100%; height: {{heroHeight}}vh">
+			<source srcset="{{ backgroundImageMedium }}" media="(min-width: 1200px)	" style="height:{{heroHeight}}vh; object-fit:cover; object-position:center; 	width:100%; position: relative">
+			<img src="{{ backgroundImageSmall }}" style="height:{{heroHeight}}vh; 	object-fit:cover; object-position:center; width:100%; position: relative"/>
 		</picture>
 
 		<div class="container banner-content align-self-end" style="position: absolute; left:0; right:0;">
-			<div class="row mb-lg-4 align-items-center">
-			{# <div class="row mb-lg-4"> #}
-				{# <div class="col-2 d-flex"> #}
-				<div class="col-2">
-					{# <img class="banner-logo img-fluid" src="{{ logo.url }}" 	alt=""> #}
-					{# {{ ui.setLogo(entry.programmaLogo.one(), "banner-logo img-fluid m-auto") }} #}
+			<div class="row mb-2">
+				<div class="col-2 col-lg-3 col-xl-2">
 					{{ ui.setLogo(entry.programmaLogo.one(), "banner-logo img-fluid") }}
-
 				</div>
-				
-				<div class="col-10">
-					{% if rootCategory is not null %}
-						{{ ui.setRootCategory(rootCategory, 0) }}<br />
-					{% endif %}
-					<h1 id="title" data-title="{{ entry.title }}" class="mt-3"><span>{{ entry.title }}</span></h1>
-				</div>			
-			</div>
-		</div>
-	</div>
 
-	{# Programmatie #}
-	<section class="container-fluid editorsPick px-5 py-3">
-		<div class="container">
-			{# Haal de programma dag, begin en einduur op uit programScheme matrix (voorlopig ideale workflow) #}
+				<div class="col-10 col-lg-9 col-xl-10">
+					{% if rootCategory is not null %}
+						{{ ui.setRootCategory(rootCategory, 0) }}
+					{% endif %}
+					{% if subCategories is not null %}
+						{% for subCategory in subCategories %}
+							<a href="{{ subCategory.url }}"><span class="category-base category-sub me-2">{{ subCategory }}</span></a>
+						{% endfor %}
+					{% endif %}
+
+					<br />
+
+					<h1 id="title" data-title="{{ entry.title }}" class="mt-3">
+						<span>{{ entry.title }}</span>
+					</h1>
+					<span style="color:#fff;">
+								{# Haal de programma dag, begin en einduur op uit programScheme matrix (voorlopig ideale workflow) #}
 			{# TODO: Deze code is (nog) niet efficient! (zie hiervoor craft docs: eager-loading) #}
 
 
@@ -96,17 +95,28 @@
 					{% endif %}
 				{% endfor %}
 				{# Programmering: De eerder opgebouwde stringvariabelen worden hier samengevoegd #}
-				<h5>{{ [dagString, timing]|join(' van ') }}</h5>
-				{% if subCategories is not null %}
+				<h5 >{{ [dagString, timing]|join(' van ') }}</h5>
+<!--			{% if subCategories is not null %}
                     {% for subCategory in subCategories %}
 		                <a href="{{ subCategory.url }}"><span class="category-base category-sub me-2">{{ subCategory }}</span></a>
                     {% endfor %}
-                {% endif %}
+                {% endif %}-->
 			{% endif %}
+					</span>
+				</div>
+			</div>
 		</div>
-	</section>
+	</div>
 
-	<div role="main" class="main container">
+	{# Programmatie #}
+	{# <section class="container-fluid editorsPick px-5 py-3">
+		<div class="container">
+			
+		</div>
+	</section> #}
+
+	<div
+		role="main" class="main container">
 		{# Programma inhoud #}
 
 		<section class="row">
@@ -118,30 +128,23 @@
 
 		{# Bouw hier de sociale media links met bijhorende iconen op, indien deze velden ingevuld zijn #}
 		{% if entry.socialMediaLinks|length %}
-        <section class="row">
-            <div class="col">
-                <div class="social-media-list">
-                    
-				<ul class="px-4 pt-4 m-0">
-					{% for block in entry.socialMediaLinks.all() %}
-						{% switch block.type %}
-							{% case 'facebook' %}
-								<li class="mb-4">
-									<a href="{{ block.facebookLink }}" target="_blank" class="social-media-link d-flex align-items-center"><img src="../images/icons/facebook-inverse.svg" alt="facebook icon" class="pe-2"/>
-										{{ block.facebookLink.text }}</a>
-								</li>
-							{% case 'instagram' %}
-								<li class="mb-4">
-									<a href="{{ block.instagramLink }}" target="_blank" class="social-media-link d-flex align-items-center"><img src="../images/icons/instagram-inverse.svg" alt="instagram icon" class="pe-2"/>
-										{{ block.instagramLink.text }}</a>
-								</li>
-						{% endswitch %}
-					{% endfor %}
-				</ul>
-                </div>
-            </div>
-		</section>
-        {% endif %}
+			<section class="row">
+				<div class="col">
+					<ul class="social-links">
+						{% for block in entry.socialMediaLinks.all() %}
+							<li>
+								{% switch block.type %}
+									{% case 'facebook' %}
+										<a href="{{ block.facebookLink }}" target="_blank" class="social-media-link d-flex align-items-center"><img src="../images/icons/facebook.svg" alt="facebook icon" class="pe-2"/></a>
+									{% case 'instagram' %}
+										<a href="{{ block.instagramLink }}" target="_blank" class="social-media-link d-flex align-items-center"><img src="../images/icons/instagram.svg" alt="instagram icon" class="pe-2"/></a>
+								{% endswitch %}
+							</li>
+						{% endfor %}
+					</ul>
+				</div>
+			</section>
+		{% endif %}
 
 		{% if entry.cloudmix.embed is not null %}
 			<div class="row mt-5">
@@ -160,90 +163,77 @@
 
 
 		{# Programmanieuws overzicht #}
-			
-		{% set entries = craft.entries.type('programmanieuws').relatedTo(entry).limit(1) %}	
+
+		{% set entries = craft.entries.type('programmanieuws')
+			.relatedTo(entry)
+			.limit(2) %}
 		{% set prgNieuws = entries.all() %}
 
 		{% if entries|length %}
-		{# Geef deze kop een id, zodat bij paginering op deze sectie gefocused blijft #}
-			<h2 class="mt-5" id="berichten">Berichten</h2>
-			
+			{# Geef deze kop een id, zodat bij paginering op deze sectie gefocused blijft #}
+			<h3 class="mt-5">Berichten</h3>
+
 			{% paginate entries as pageInfo, pageEntries %}
-			{% include "_includes/programma/programmanieuws" with { prgNieuws: pageEntries } only %}
+				{% include "_includes/programma/programmanieuws" with { prgNieuws: pageEntries } only %}
 
-			<div class="row mt-5 text-center">
-			<div class="col">
-				{% if pageInfo.prevUrl %}<a class="pagination-changePage pagination-prevPage pagination-focus mx-3" href="{{ pageInfo.prevUrl }}" >&lt;</a>{% endif %}
-				
-				{% for page, url in pageInfo.getPrevUrls(5) %}
-				  <a class="pagination-changePage pagination-focus mx-3" href="{{ url }}">{{ page }}</a>
-				{% endfor %}
-				
-				<div class="pagination-changePage pagination-currentPage pagination-focus mx-3">{{ pageInfo.currentPage }}</div>
-				
-				{% for page, url in pageInfo.getNextUrls(5) %}
-				  <a class="pagination-changePage pagination-focus mx-3" href="{{ url }}">{{ page }}</a>
-				{% endfor %}
-				
-				{% if pageInfo.nextUrl %}<a class="pagination-changePage pagination-nextPage pagination-focus mx-3" href="{{ pageInfo.nextUrl }}">&gt;</a>{% endif %}
-			</div>
-		</div>
-			
-		{% endif %}
+				<div class="row mt-5 text-center">
+					<div class="col">
+						{% if pageInfo.prevUrl %}
+							<a class="pagination-changePage pagination-prevPage pagination-focus mx-3" href="{{ pageInfo.prevUrl }}">&lt;</a>
+						{% endif %}
 
-		{# Zoek eerst naar gelateerde stijlen op een hoger categorieniveau dan 2 #}
-		{% set stijlen = entry.programmaStijl
+						{% for page, url in pageInfo.getPrevUrls(5) %}
+							<a class="pagination-changePage pagination-focus mx-3" href="{{ url }}">{{ page }}</a>
+						{% endfor %}
+
+						<div class="pagination-changePage pagination-currentPage pagination-focus mx-3">{{ pageInfo.currentPage }}</div>
+
+						{% for page, url in pageInfo.getNextUrls(5) %}
+							<a class="pagination-changePage pagination-focus mx-3" href="{{ url }}">{{ page }}</a>
+						{% endfor %}
+
+						{% if pageInfo.nextUrl %}
+							<a class="pagination-changePage pagination-nextPage pagination-focus mx-3" href="{{ pageInfo.nextUrl }}">&gt;</a>
+						{% endif %}
+					</div>
+				</div>
+
+			{% endif %}
+
+			{# Zoek eerst naar gelateerde stijlen op een hoger categorieniveau dan 2 #}
+			{% set stijlen = entry.programmaStijl
 			.level('3')
 			.all() %}
-		{# Indien geen matches, zoek dan op volgende categorieniveaus #}
-		{% if stijlen == null %}
-			{% set stijlen = entry.programmaStijl
+			{# Indien geen matches, zoek dan op volgende categorieniveaus #}
+			{% if stijlen == null %}
+				{% set stijlen = entry.programmaStijl
 				.level('2')
 				.all() %}
-		{% endif %}
-		{% if stijlen == null %}
-			{% set stijlen = entry.programmaStijl
+			{% endif %}
+			{% if stijlen == null %}
+				{% set stijlen = entry.programmaStijl
 				.level('1')
 				.all() %}
-		{% endif %}
+			{% endif %}
 
-		<section>
-			<h3>Misschien vind je deze programma's ook leuk:</h3>
-			<div class="row row-cols-1 row-cols-md-2 g-3">
-				
-				{% set entries = craft.entries()
-					.relatedTo(stijlen)
-					.id('not ' ~ entry.id)
-					.limit(4)
-					.all() %}	
-				
-				{% for entry in entries %}					
+			{% set entries = craft.entries()
+		.relatedTo(stijlen)
+		.id('not ' ~ entry.id)
+		.limit(4)
+		.all() %}
+
+			<section>
+				{% if entries|length %}
+					<h3>Misschien vind je deze programma's ook leuk:</h3>
+
+					{% include "_includes/relatedShows" with { entries: entries} only %}
+
+				{% endif %}
+				<div class="row programma-suggestie">
 					<div class="col">
-						<div class="row">
-							<div class="col-sm-5 col-md-4 col-lg-3">
-								<a href="{{ entry.url }}" class="d-md-inline-block">
-									<div class="programma-logo d-inline-block al">
-										{{ ui.setLogo(entry.programmaLogo.one(), "") }}
-									</div>
-								</a>
-							</div>
-							<div class="col-sm-7 col-md-8 col-lg-9">
-								<a href="{{ entry.url }}" class="d-block">
-									<div class="d-md-inline-block mt-2 mt-md-0 ms-md-4 align-self-start">
-										<h3>{{ entry.title }}</h3>
-										<p class="text-overflow">{{ entry.intro }}</p>
-									</div>
-								</a>
-							</div>
-						</div>
+						<a href="/programma" class="button-secondary mt-4">Ontdek alle programma's</a>
 					</div>
-				{% endfor %}	
-			</div>
-			<div class="row programma-suggestie">
-				<div class="col">
-					<a href="/programma" class="button-secondary mt-4">Ontdek alle programma's</a>	
 				</div>
-			</div>
-		</section>
-	</div>
-{% endblock %}
+			</section>
+		</div>
+	{% endblock %}

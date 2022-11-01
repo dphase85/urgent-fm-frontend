@@ -3,6 +3,8 @@
 <head>
 
 
+
+
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,33 +24,40 @@
 </head>
 <body>
 
+
     
     <header>
     <nav id="navBar" class="navbar navbar-expand-lg fixed-top navbar-light ">
 
         <div class="container m-auto">
-            <a class="navbar-brand" href="/">
-                <div class="logo d-flex align-items-center justify-content-center">
-                    <img src="../images/logo.svg" alt="Urgent.FM | 105.3FM" width="160" height="160">
-                </div>
-            </a><!-- branding -->
-            <a href="/zoek" class="search toggle-search search-center d-lg-none"></a>
+
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler"
             aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button><!-- hamburgermenu-->
+
+                <div class="logo d-flex align-items-center justify-content-center">
+	                
+                    <a class="navbar-brand" href="/">
+                    <img src="../images/logo_baseline.svg" alt="Urgent.FM | 105.3FM" >
+                    </a>
+                </div>
+            <!-- branding -->
+            
+
             <div class="collapse navbar-collapse" id="navbarToggler">
-                <div class="navbar-nav ms-5">
-                    <a class="nav-item nav-link" href="/programma">programma's</a>
-                    <a class="nav-item nav-link" href="/nieuws">nieuws</a>
-                    <a class="nav-item nav-link" href="/wie-zijn-we">over Urgent.fm</a>
-                    <a class="nav-item nav-link" href="/contact">contact</a>
-                    <a class="nav-item nav-item-reversed nav-link" href="http://tumult.fm">tumult.fm</a>
+                <div class="navbar-nav ms-1">
+                    <a id="programma" class="nav-item nav-link" href="/programma">programma's</a>
+                    <a id="nieuws"class="nav-item nav-link" href="/nieuws">nieuws</a>
+                    <a id="over-urgent-fm" class="nav-item nav-link" href="/wie-zijn-we">over Urgent.fm</a>
+                    <a id="contact" class="nav-item nav-link" href="/contact">contact</a>
+                    <a class="nav-item nav-item-reversed nav-link" href="https://tumult.fm" >tumult.fm</a>
                 </div><!-- navbar -->
             </div><!-- collapse -->
 
             <a href="/zoek" class="search toggle-search search-right d-none d-lg-inline"></a>
-
+			<a href="/zoek" class="search toggle-search search-center d-lg-none"></a>
             
         </div><!-- navBar container-->
     </nav>
@@ -64,7 +73,7 @@
     <div class="container h-100">
         <div class="row h-100">
             <div class="col col-12 col-md-4 d-inline my-auto">
-                    <div class="row">
+                    <div class="row audioplayer">
                         <div class="col-3 d-flex justify-content-center my-auto p-0">
                             <audio class="live-audio" preload="none">
                                 <source id="source-aac" src="https://urgentstream.radiostudio.be/aac" type="audio/mp4" />
@@ -72,7 +81,7 @@
                             </audio>
                             <button type="submit" class="audio-control audio-control-play" title="Play/Stop button"></button>
                         </div>
-                        <div class="col-9 p-0">
+                        <div class="col-9 p-0 ">
                             <p class="align-top ms-2 d-inline-block m-0">
                         <span class="accent-green">luister nu:</span><br />
 
@@ -150,7 +159,7 @@
                                 {% set next = timeslot.programma.one() %}
                             {% endif %}
                             <span class="audioplayer-currently-playing">
-                            <a href="{{ currentlyPlaying.url }}"><strong>{{ currentlyPlaying.title }}</strong></a>
+                            <a href="{{ currentlyPlaying.url }}">{{ currentlyPlaying.title }}</a>
                             </span><br />
                             <!--daarna: <span class="audioplayer-playing-next"><a href="{{ next.url }}"><u>{{ next.title }}</u></a></span> / <a href="/programma"><u>alle programma's</u></a> -->
                         {% endif %}
