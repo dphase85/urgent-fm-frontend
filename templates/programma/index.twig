@@ -1,5 +1,4 @@
 {% extends craft.app.request.isAjax and not craft.app.request.isLivePreview ? "_ajax" : "_layout" %}
-{# {% extends "_layout" %} #}
 
 {% block content %}
 	<div class="main container programmaschema">
@@ -36,7 +35,7 @@
 				</ul>
 			</div>
 
-			<!-- TEST: dropdown menu op klein scherm -->
+			<!-- dropdown menu op klein scherm -->
 			<div class="col d-lg-none d-md-none dropdown mb-3">
 				<button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="progSchema-dropdownMenu-buttopn">
 					<span id="weekdag-selected"></span>
@@ -63,77 +62,37 @@
 
 				{% for i in 0..6 %}
 					<div class="tab" data-tab="{{ i }}">
-
-						{# <div data-tab="{{ i }}">  #}
 						{% set weekdag = weekdagen[i] %}
 						<h1 class="weekday">{{ weekdag.title|slice(3, weekdag.title|length) }}</h1>
-						{# De timeslots worden geordend in admin scherm => entries, maar worden bij het processen van de output nogmaals geordend, bij wijze van finale output controle. PROBLEEM: ABC op maandagavond #}
+						{# De timeslots worden geordend in admin scherm => entries, maar worden bij het processen van de output nogmaals geordend, bij wijze van finale output controle. #}
 						{% set timeslots = weekdag.weekdag.all() %}
-
 
 						{% for timeslot in timeslots %}
 							{% set programma = timeslot.programma.one() %}
 
-							<div class="slot py-2 programmaschema-dag ">
-								<a href="{{ programma.getUrl }}" class="">
-								<div class="row align-text-top">
-									<div class="col-2 col-md-1">
-										<h5 class="m-2 programmaschema-uur">
-											{{ timeslot.beginuur|time('short') }}
-										</h5>
-									</div>
-									<div class="slot-inhoud col-10 col-md-11 ">
-										
-										<h3 class="m-0">{{ programma.title }}</h3>
-										<p>{{ programma.intro|nl2br  }}</p>
-										<!--
-										{% import "_macros/_ui" as cat %}
-										{% set rootCategories = programma.programmaStijl
-                    	                            .level('1')
-                    	                            .all() %}
-										<div class="m-0 slot-title me-2">
+							<a class="programmaschema-dag" href="{{ programma.getUrl }}">
+								<div class="slot py-2">
+									<div class="row">
+										<div class="col-2 col-md-1 d-flex align-items-center">
+											<h5 class="ms-2 mb-0 programmaschema-uur">
+												{{ timeslot.beginuur|time('short') }}</h5>
+										</div>
+										<div class="col-10 col-md-11 d-flex align-items-center">
 											<h3 class="m-0">{{ programma.title }}</h3>
 										</div>
-										<div class="m-0 slot-tags">
-											{% if rootCategories is not null %}
-												{% for rootCategory in rootCategories %}
-													{{ cat.setRootCategory(rootCategory,2) }}
-												{% endfor %}
-											{% endif %}
-
-										</div>-->
 									</div>
-									{# slot-inhoud #}
-								</div>
-								</a>
-								<div class="row slot-row-active">
-									<div class="col-0 col-md-2"></div>
-									<div class="col-12 col-md-8 col-lg-7 col-xl-8 order-2 order-md-1">
-                                        <div class="pt-2">
-                                            <a href="{{ programma.url }}">
-											    <p>{{ programma.intro|nl2br  }}</p>
-										    </a>
-                                        </div>
-										<div>
-											<a href="{{ programma.getUrl }}" class="">Over deze show</a>
-										</div>
-									</div>
-									<div class="col-12 col-md-2 col-lg-3 col-xl-2 order-1 order-md-2 d-flex justify-content-end pt-2">
-										{% set logo = null %}
-										{% if programma.programmaLogo.one() is empty %}
-											{% set logo = generic.programmadefaultlogo.one() %}
-										{% else %}
-											{% set logo = programma.programmaLogo.one() %}
-										{% endif %}
-										<a href="{{ programma.url }}"><img src="{{ logo.getUrl({ width: 100, height: 100}) }}" alt="{{ logo.title }}"/></a>
+								</row>
+								<div class="row">
+									<div class="col-2 col-md-1"></div>
+									<div class="col-10 col-md-11 ">
+										<p>{{ programma.intro|nl2br  }}</p>
 									</div>
 								</div>
 							</div>
-						{% endfor %}
-					</div>
-				{% endfor %}
-			</div>
+						</a>
+					{% endfor %}
+				</div>
+			{% endfor %}
 		</div>
 	</div>
-
-{% endblock %}
+</div>{% endblock %}

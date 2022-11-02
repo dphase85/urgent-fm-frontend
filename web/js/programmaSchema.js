@@ -24,34 +24,6 @@ const setSchema = (e) => {
 	history.pushState({ scrollY: scrollY, filters: null }, '', '/programma/'+txtDay.toLowerCase());
 };
 
-const collapseSlot = (e) => {
-	// haal elementen op
-	let slotSelect = (e.target).parentElement.parentElement;
-	let slotParent = slotSelect.parentElement;
-	let slotNextRow = slotParent.nextElementSibling;
-
-	//check of slot-styles actief zijn, indien niet:
-	if (!slotNextRow.classList.contains('slot-row-active')) {
-
-		//eerst checken voor andere actieve entries:
-		// verzamel alle slot entries
-		let allSlotIntros = document.querySelectorAll('.slot-row-active');
-		// check voor alle entries of er een slot style actief is
-		// indien er een entrie actief is: sluiten
-		for (let i = 0; i < allSlotIntros.length; i++) {
-			if (allSlotIntros[i].classList.contains('slot-row-active')) {
-				allSlotIntros[i].classList.remove('slot-row-active');
-			}
-		}
-
-		slotNextRow.classList.add('slot-row-active');
-		slotNextRow.classList.remove('slot-row');
-	} else {
-		slotNextRow.classList.remove('slot-row-active');
-		slotNextRow.classList.add('slot-row');
-	}
-};
-
 /* populate programmaschema, met dagnummer als parameter. Aan de hand van parameter wordt de gewenste dag actief gemaakt */
 // eslint-disable-next-line no-unused-vars
 const populateProgramSchema = (tabDay) => {
@@ -59,9 +31,6 @@ const populateProgramSchema = (tabDay) => {
 	let buttons = document.querySelectorAll('.tabs-button');
 	buttons.forEach(button => button.addEventListener('click', setSchema));
 
-	//TODO: indien slots permanent opengeklapt blijven, deze code verwijderen!
-	// let slotTitles = document.querySelectorAll('.slot-inhoud h3');
-	// slotTitles.forEach(title => title.addEventListener('click', collapseSlot));
 
 	// // Zondag = 0, maandag 1 enz. Tabday is de 'juiste' dagnummer die door JS gebruikt wordt.
 	let btnDay = tabDay - 1;

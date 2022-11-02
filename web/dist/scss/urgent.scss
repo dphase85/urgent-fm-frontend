@@ -219,10 +219,6 @@ h2.card-title {
 //xS
 @media(max-width: 767px) {
 
-	h1 {
-		font-size: $font-size-sm;
-	}
-
 	.hpBanner {
 		//TEST:
 		min-height: 75vh; 
@@ -239,7 +235,7 @@ h2.card-title {
 			}
 		}
 	}
-	
+
 	
 	.backgroundImageSmall {
 		height:$hero-height; 	
@@ -290,8 +286,6 @@ h2.card-title {
 	.slot-tags {
 		display: block;
 	}
-
-
 }
 
 @media(min-width: 768px) {
@@ -1208,30 +1202,22 @@ h2.sectionTitleCentered {
     display: block;
 }
 
-.slot-border-bottom, .slot {
-    border-bottom: solid black 1px;
+.programmaschema-dag {
+	text-decoration: none; 
+    color: $color-black;
+	p {
+		font-size: $font-size-sm;
+	}
+	&:hover {
+		background-color: $color-white;
+	}
 }
 
-.slot-inhoud h3:hover {
-    cursor: grab;
-    color: gray;
-}
-
-.slot-intro-active, .slot-logo-active {
-    max-height: max-content;
-}
-
-.slot-row-active {
-    height: max-content;
-    max-height: 500px;
-    color: black;
-    transition: transform 2s;
-}
-
-.slot-row {
-    height: 0;
-    max-height: 0;
-    overflow: hidden;
+.slot {
+	border-bottom: solid black 1px;
+	&:hover {
+	background-color: inherit;
+	}
 }
 
 .category-sub {
@@ -1273,19 +1259,3 @@ a:hover {
 		}	
 	}
 }
-
-
-.programmaschema-dag {
-	p {
-		font-size: $font-size-sm;
-	}
-	a {
-	text-decoration: none; 
-    color: $color-black;
-	}
-	&:hover {
-		background-color: $color-white
-	}
-	
-}
-

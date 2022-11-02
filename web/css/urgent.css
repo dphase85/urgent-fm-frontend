@@ -89,9 +89,6 @@ h2.card-title {
 }
 
 @media (max-width: 767px) {
-  h1 {
-    font-size: calc(1 * 16px);
-  }
   .hpBanner {
     min-height: 75vh;
   }
@@ -944,30 +941,22 @@ h2.sectionTitleCentered {
   display: block;
 }
 
-.slot-border-bottom, .slot {
+.programmaschema-dag {
+  text-decoration: none;
+  color: #242424;
+}
+.programmaschema-dag p {
+  font-size: calc(1 * 16px);
+}
+.programmaschema-dag:hover {
+  background-color: #FFFFFF;
+}
+
+.slot {
   border-bottom: solid black 1px;
 }
-
-.slot-inhoud h3:hover {
-  cursor: grab;
-  color: gray;
-}
-
-.slot-intro-active, .slot-logo-active {
-  max-height: max-content;
-}
-
-.slot-row-active {
-  height: max-content;
-  max-height: 500px;
-  color: black;
-  transition: transform 2s;
-}
-
-.slot-row {
-  height: 0;
-  max-height: 0;
-  overflow: hidden;
+.slot:hover {
+  background-color: inherit;
 }
 
 .category-sub:hover {
@@ -1001,15 +990,4 @@ a:hover {
 .audioplayer p .audioplayer-currently-playing a {
   color: #242424;
   text-decoration: none;
-}
-
-.programmaschema-dag p {
-  font-size: calc(1 * 16px);
-}
-.programmaschema-dag a {
-  text-decoration: none;
-  color: #242424;
-}
-.programmaschema-dag:hover {
-  background-color: #FFFFFF;
 }
