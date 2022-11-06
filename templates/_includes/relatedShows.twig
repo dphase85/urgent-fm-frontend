@@ -4,15 +4,16 @@
 	{% for entry in entries %}					
 		<div class="col">
 			<div class="d-flex flex-row related-show">
-					<a href="{{ entry.url }}" class="d-md-inline-block">
+					<a href="{{ entry.url }}">
+
 						<div class="programma-logo">
 							{{ ui.setLogo(entry.programmaLogo.one(), "") }}
 						</div>
 					</a>
-					<a href="{{ entry.url }}" class="d-md-inline-block">
+					<a href="{{ entry.url }}" class="d-flex align-items-center">
 						<div class="ms-2 p-2">
 							<h3>{{ entry.title }}</h3>
-							<p>{{ entry.intro }}</p>
+							<p class="mb-0">{{ entry.intro }}</p>
 						</div>
 					</a>
 			</div>

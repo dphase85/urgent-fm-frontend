@@ -4,6 +4,8 @@
 
 ///////////////////////////////////////////////////////////////////////////// */
 @import url(https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Source+Serif+Pro:ital,wght@0,600;0,700;1,600;1,700&display=swap);
+/* Color Variables */
+/* Grey scales */
 /* /////////////////////////////////////////////////////////////////////////////
 
 	Mixins
@@ -23,7 +25,7 @@ body {
   background-color: #F2F2F2;
 }
 
-h1, h2, h3 {
+h1, h2, h3, h4 {
   font-family: "Source Serif Pro", serif;
 }
 
@@ -33,7 +35,11 @@ h3 span {
 }
 
 h2 {
-  font-size: calc(2.5 * 16px);
+  font-size: calc(1.5 * 16px);
+}
+
+h3 {
+  font-size: calc(1.25 * 16px);
 }
 
 h5 {
@@ -58,15 +64,6 @@ p.intro {
 
 .accent-green {
   color: #3ED8A0;
-}
-
-.related-show p {
-  width: 100%;
-  max-height: 3rem;
-  white-space: pre-line;
-  line-height: 1.5rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 h2.card-title {
@@ -272,19 +269,27 @@ h2.card-title {
   left: 0;
   right: 0;
 }
-.banner-content h1 {
-  display: inline-block;
+.banner-content h1,
+.banner-content h1 + div {
   color: #FFFFFF;
 }
-.banner-content h1 span {
+.banner-content h1 span,
+.banner-content h1 div,
+.banner-content h1 + div span,
+.banner-content h1 + div div {
   background-color: #242424;
   border-left: solid #242424 1rem;
   border-right: solid #242424 1rem;
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
 }
+.banner-content h1 + div {
+  line-height: normal;
+}
 
 .banner-logo {
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
   border-radius: 50%;
   max-height: 100%;
 }
@@ -292,26 +297,44 @@ h2.card-title {
 .category-base {
   margin-top: 0.125rem !important;
   margin-bottom: 0.125rem !important;
-  font-size: 0.75rem;
-  display: inline-block;
-  padding: 2px 10px;
-  border-radius: 5px;
-}
-
-.category-root {
   color: #FFFFFF;
-}
-
-.category-sub {
-  color: #f2f2f2;
   background-color: #484848;
+  font-size: 0.75rem;
+  text-decoration: none;
+  display: inline-block;
+  padding: 0.1rem 0.5rem;
+  -webkit-border-radius: 0.25rem;
+  -moz-border-radius: 0.25rem;
+  border-radius: 0.25rem;
+}
+.category-base:hover {
+  color: #FFFFFF;
+  background-color: #919191;
 }
 
 .cultuur {
   background-color: #EBB122;
 }
+.cultuur:hover {
+  background-color: #F0C459;
+}
 
 .muziek {
+  background-color: #009FE3;
+}
+.muziek:hover {
+  background-color: #40B7EA;
+}
+
+.actualiteit {
+  background-color: #166a88;
+}
+.actualiteit:hover {
+  background-color: #508FA6;
+}
+
+.nieuws {
+  color: #FFFFFF;
   background-color: #009FE3;
 }
 
@@ -320,9 +343,14 @@ h2.card-title {
   margin-top: calc(2 * 16px);
 }
 
+header {
+  height: 10vh;
+}
+
 #navBar {
   z-index: 8000;
   transition: transform 0.5s;
+  height: 10vh;
 }
 
 .navbar {
@@ -680,11 +708,10 @@ h2.sectionTitleCentered {
   padding-top: calc( 16px / 2);
   font-weight: 400;
   width: 100%;
-  max-height: 3.1rem;
-  white-space: pre-line;
-  line-height: 1.2rem;
   overflow: hidden;
-  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 .editorsPick .herbeluister {
   display: inline-block;
@@ -697,7 +724,7 @@ h2.sectionTitleCentered {
   padding-bottom: 100%;
 }
 
-.tegel, .programmaNieuws {
+.tegel {
   background-color: #FFFFFF;
   -webkit-box-shadow: 2px 0 4px rgba(0, 0, 0, 0.16);
   -moz-box-shadow: 2px 0 4px rgba(0, 0, 0, 0.16);
@@ -712,15 +739,14 @@ h2.sectionTitleCentered {
 }
 
 .programma-logo img {
-  width: 100%;
-  width: 7rem;
-  height: 7rem;
+  width: 6rem;
+  height: 6rem;
   object-fit: cover;
   object-position: center;
 }
 
 .related-shows .col a {
-  max-height: 7rem;
+  max-height: 6rem;
   color: #242424;
 }
 .related-shows .col a:hover {
@@ -728,12 +754,30 @@ h2.sectionTitleCentered {
   background-color: #FFFFFF;
 }
 
+.related-show p {
+  width: 100%;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  font-size: medium;
+}
+
+.related-show h3 {
+  width: 100%;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  font-size: larger;
+}
+
 .programma-suggestie {
-  height: 7rem;
+  height: 6rem;
 }
 
 .programmanieuws {
-  padding: calc(1.5 * 16px);
+  padding: calc(1 * 16px);
   background-color: #FFFFFF;
 }
 
@@ -823,11 +867,11 @@ h2.sectionTitleCentered {
   color: gray;
 }
 
-.pagination-prevPage, .pagination-nextPage {
-  font-weight: bold;
+.pagination-prev-page, .pagination-next-page, .pagination-change-page {
+  text-decoration: none;
 }
 
-.pagination-currentPage {
+.pagination-current-page {
   pointer-events: none;
   border-radius: 50%;
   background-color: #3ED8A0;
@@ -957,10 +1001,6 @@ h2.sectionTitleCentered {
 }
 .slot:hover {
   background-color: inherit;
-}
-
-.category-sub:hover {
-  background-color: gray;
 }
 
 /* programma entry */

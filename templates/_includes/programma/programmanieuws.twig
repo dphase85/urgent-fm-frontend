@@ -1,11 +1,12 @@
 {% for item in prgNieuws %}
-    {# TODO: Breakpoint nog eens overlopen!! #}
-	<div class="row mb-4 programmanieuws">
-		<div class="col ms-xl-5 ms-xxl-0">
-			<h3>{{ item.title }}</h3>
-			<p class="mb-0">
-				{{ item.programmanieuwsInhoud }}
-			</p>
+	<div class="row mt-2">
+		<div class="col">
+			<div class="programmanieuws">
+				<h3>{{ item.title }}</h3>
+				<p class="mb-0">
+					{{ item.programmanieuwsInhoud }}
+				</p>
+			</div>
 		</div>
 	</div>
 {% endfor %}

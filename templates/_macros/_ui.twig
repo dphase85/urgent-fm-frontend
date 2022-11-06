@@ -1,10 +1,19 @@
-{% macro setRootCategory(rootCategory, marginsize) %}
-	{% set rootCss = 'muziek' %}
-	{% if rootCategory.title == 'Cultuur' %}
-		{% set rootCss = 'cultuur' %}
-	{% endif %}
+{% macro setCategory(category) %}
+	{% switch category.title %}
 
-	<a href="{{ rootCategory.url }}"><span class="category-base category-root {{ rootCss }}  py-0 px-2 my-1 me-2">{{ rootCategory }}</span></a>
+		{% case "Muziek" %}
+			{% set colorCode = 'muziek' %}
+		{% case "Cultuur" %}
+			{% set colorCode = 'cultuur' %}
+		{% case "Actualiteit" %}
+			{% set colorCode = 'actualiteit' %}
+		{% default %}
+			{% set colorCode = '' %}
+	{% endswitch %}
+
+	<a href="{{ category.url }}" class="category-base {{ colorCode }} me-2">
+		<span>{{ category }}</span>
+	</a>
 {% endmacro %}
 
 {% macro setLogo(programmaLogo, classNames) %}
@@ -14,4 +23,36 @@
 		{% set logo = programmaLogo %}
 	{% endif %}
 	<img class="{{ classNames }}" src="{{ logo.url }}" alt="{{ logo.title }}">
+{% endmacro %}
+
+{% macro setPagination(pageInfo) %}
+	<div class="row mt-5 text-center">
+		<div class="col">
+			{% if pageInfo.prevUrl %}
+				<a class="pagination-changePage pagination-prev-page pagination-focus mx-3" href="{{ pageInfo.prevUrl }}">
+					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-chevron-left" viewbox="0 0 16 16">
+						<path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+					</svg>
+				</a>
+			{% endif %}
+
+			{% for page, url in pageInfo.getPrevUrls(5) %}
+				<a class="pagination-change-page pagination-focus mx-3" href="{{ url }}">{{ page }}</a>
+			{% endfor %}
+
+			<div class="pagination-change-page pagination-current-page pagination-focus mx-3">{{ pageInfo.currentPage }}</div>
+
+			{% for page, url in pageInfo.getNextUrls(5) %}
+				<a class="pagination-change-page pagination-focus mx-3" href="{{ url }}">{{ page }}</a>
+			{% endfor %}
+
+			{% if pageInfo.nextUrl %}
+				<a class="pagination-change-page pagination-next-page pagination-focus mx-3" href="{{ pageInfo.nextUrl }}">
+					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-chevron-right" viewbox="0 0 16 16">
+						<path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+					</svg>
+				</a>
+			{% endif %}
+		</div>
+	</div>
 {% endmacro %}

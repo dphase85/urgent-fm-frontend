@@ -2,6 +2,8 @@
 
 
 {% block content %}
+	{# import macro's #}
+	{% import "_macros/_ui" as ui %}
 
 	{% set filtersQuery = craft.app.request.getParam('categorie') %}
 	{% set filterCategories = craft.categories.title(filtersQuery) %}
@@ -14,33 +16,6 @@
 			</div>
 		</div>
 
-		{# <section class="accordion mb-0" id="toon">
-			<div class="accordion-item">
-				<h2 class="accordion-header" id="heading">
-					<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="toon">Toon:</button>
-				</h2>
-				<div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="heading" data-bs-parent="#toon">
-					<div class="accordion-body">
-						{% set categories =  craft.categories
-                    	.group('nieuwsCategories')
-                    	.all()
-                		%}
-						<form>
-							<input class="cbFilter cbDefaultfilter" type="checkbox" name="category" value=""/>
-							Alle nieuwsberichten
-							<br/>
-							{% for category in categories %}
-								<input class="cbFilter" type="checkbox" name="category" value="{{ category.title }}"/>
-								{{ category.title }}
-								<br/>
-							{% endfor %}
-						</form>
-
-					</div>
-				</div>
-			</div>
-		</section> #}
-
 		<section class="nieuws-listing mt-0">
 			{% set nieuwsQuery = craft.entries.section('nieuws')
 				.section('nieuws')
@@ -52,25 +27,7 @@
 			{% include "_includes/nieuwsoverzicht" with { nieuws: pageEntries } only %}
 		</section>
 
-		<div class="row mt-5 text-center">
-			<div class="col">
-				{# <a href="{{ pageInfo.firstUrl }}">First Page</a> #}
-				{% if pageInfo.prevUrl %}<a class="pagination-changePage pagination-prevPage mx-3" href="{{ pageInfo.prevUrl }}">&lt;</a>{% endif %}
-				
-				{% for page, url in pageInfo.getPrevUrls(5) %}
-				  <a class="pagination-changePage mx-3" href="{{ url }}">{{ page }}</a>
-				{% endfor %}
-				
-				<div class="pagination-changePage pagination-currentPage mx-3">{{ pageInfo.currentPage }}</div>
-				
-				{% for page, url in pageInfo.getNextUrls(5) %}
-				  <a class="pagination-changePage mx-3" href="{{ url }}">{{ page }}</a>
-				{% endfor %}
-				
-				{% if pageInfo.nextUrl %}<a class="pagination-changePage pagination-nextPage mx-3" href="{{ pageInfo.nextUrl }}">&gt;</a>{% endif %}
-				{# <a href="{{ pageInfo.lastUrl }}">Last Page</a> #}
-			</div>
-		</div>
+		{{ ui.setPagination(pageInfo) }}
 	</div>
 
 

@@ -46,7 +46,7 @@ $font-size-lg:   calc(1.5 * #{$space-unit});
 $font-size-xl:   calc(2.5 * #{$space-unit});
 $font-size-xxl:   calc(3.5 * #{$space-unit});
 
-// Color Variables
+/* Color Variables */
 $color-primary: #009FE3;
 $color-secondary: #220059;
 $color-accent: #3ED8A0;
@@ -54,8 +54,25 @@ $color-accent-hover: #09D389;
 
 $color-message-error: #E81739;
 $color-message-warning: #EBB122;
+
 $color-message-success: #5E8821;
 
+// Nieuws categorieën
+$color-category-nieuws-1: #009FE3;
+$color-category-nieuws-2: #40B7EA;
+
+// Programma categorieën
+$color-category-actualiteit-1: #166a88;
+$color-category-actualiteit-2: #508FA6;
+
+$color-category-muziek-1: #009FE3;
+$color-category-muziek-2: #40B7EA;
+
+$color-category-cultuur-1: #EBB122;
+$color-category-cultuur-2: #F0C459;
+
+
+/* Grey scales */
 $color-greyscale-1: #242424;
 $color-greyscale-2: #484848;
 $color-greyscale-3:	#919191;
@@ -70,8 +87,7 @@ $color-border: #C8BFD5;
 
 $container-width: 60vw;
 
-$header-height: 15vh;
-//$banner-height: 90vh;
+$header-height: 10vh;
 $banner-height: 75vh;
 $footer-height:10vh;
 
@@ -86,7 +102,7 @@ $min-width-medium: 768px;
 $max-width-large: 991.98px;
 $min-width-large: 992px;
 
-$programma-logo-size: 7rem;
+$programma-logo-size: 6rem;
 /* /////////////////////////////////////////////////////////////////////////////
 	
 	Mixins
@@ -120,14 +136,17 @@ $programma-logo-size: 7rem;
   transition: $args;
 }
 
-@mixin text-overflow($max-height, $line-height) {
+@mixin text-overflow($numberOfLines) {
 	width: 100%;
-	max-height: calc($max-height);
-	white-space: pre-line;
-	line-height: $line-height;
+	// white-space: nowrap;
 	overflow: hidden;
-	text-overflow: ellipsis;
+
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: $numberOfLines;
 }
+
+
 
 /* /////////////////////////////////////////////////////////////////////////////
 	
@@ -148,7 +167,7 @@ body {
 }
 
 // Typography
-h1, h2, h3 {
+h1, h2, h3, h4 {
 	font-family: $source-serif;	
 }
 
@@ -159,7 +178,11 @@ font-size: $space-sm;
 }
 
 h2 {
-font-size: $font-size-xl;
+font-size: $font-size-lg;
+}
+
+h3 {
+	font-size: $font-size-md;
 }
 
 h5 {
@@ -188,9 +211,6 @@ p {
 color: $color-accent;
 }
 
-.related-show p {
-	@include text-overflow(3rem, 1.5rem)
-}
 
 h2.card-title {
 	color: red;
@@ -219,6 +239,10 @@ h2.card-title {
 //xS
 @media(max-width: 767px) {
 
+	// h1 {
+	// 	font-size: $font-size-md;
+	// }
+
 	.hpBanner {
 		//TEST:
 		min-height: 75vh; 
@@ -235,7 +259,6 @@ h2.card-title {
 			}
 		}
 	}
-
 	
 	.backgroundImageSmall {
 		height:$hero-height; 	
@@ -466,23 +489,28 @@ h2.card-title {
 .banner-content {
 	position: absolute; left:0; right:0;
 	
-	h1 {
-		display: inline-block;
+	h1,
+	h1 + div {
+		// display: inline-block;
 		color: $color-white;
-		span {
+		span,
+		div {
 			background-color: $color-black;
 			border-left: solid $color-black 1rem;
 			border-right: solid $color-black 1rem;
 			box-decoration-break: clone;
 			-webkit-box-decoration-break:clone;
-			// padding: 0 1rem;
 		}
+	}
+
+	h1 + div {
+		line-height: normal;
 	}
 }
 
 // Programma-entry 
 .banner-logo {
-	border-radius: 50%;
+	@include rounded_all(50%);
 	max-height: 100%;
 }
 
@@ -491,27 +519,44 @@ h2.card-title {
 	margin-top: 0.125rem!important;
 	margin-bottom: 0.125rem!important;
 
-
-	font-size: 0.75rem;
-	display: inline-block;
-	padding: 2px 10px;
-	border-radius: 5px;
-}
-
-.category-root {
 	color: $color-white;
-}
-
-.category-sub {
-	color: $color-greyscale-4;
 	background-color: $color-greyscale-2;
+	font-size: 0.75rem;
+	text-decoration: none;
+	display: inline-block;
+	padding: 0.1rem 0.5rem;
+	@include rounded_all(0.25rem);
+
+	&:hover{
+		color: $color-white;
+		background-color: $color-greyscale-3;
+	}
 }
 
 .cultuur {
-	background-color: $color-message-warning;
+	background-color: $color-category-cultuur-1;
+	&:hover {
+		background-color: $color-category-cultuur-2;
+	}
 }
 
 .muziek {
+	background-color: $color-category-muziek-1;
+	&:hover {
+		background-color: $color-category-muziek-2;
+	}
+}
+
+.actualiteit {
+	background-color: $color-category-actualiteit-1;
+	&:hover {
+		background-color: $color-category-actualiteit-2;
+	}
+}
+
+//TODO: shape newscategory like programma categories
+.nieuws {
+	color: $color-white;
 	background-color: $color-primary;
 }
 
@@ -521,9 +566,13 @@ h2.card-title {
 }
 
 // Header
+header {
+	height: $header-height;
+}
 #navBar {
 	z-index: 8000;
 	transition: transform 0.5s;
+	height: $header-height;
 }
 
 // .header-hidden {
@@ -918,7 +967,9 @@ h2.sectionTitleCentered {
 				font-size: $font-size-xs;
 				padding-top: $space-xs;
 				font-weight: 400;
-				@include text-overflow(3.1rem, 1.2rem)
+				// @include text-overflow(3.1rem, 1.2rem)
+				@include text-overflow(2)
+
 			}
 	}
 
@@ -935,7 +986,7 @@ h2.sectionTitleCentered {
 	}
 }
 
-.tegel, .programmaNieuws {
+.tegel {
 	background-color: $color-white;
 	@include box-shadow(2px, 0, 4px, rgba(0, 0, 0, 0.16));
 	@include rounded_all();
@@ -949,7 +1000,6 @@ h2.sectionTitleCentered {
 
 .programma-logo {
 	img {
-		width: 100%;
 		width: $programma-logo-size;
 		height: $programma-logo-size;
 		object-fit: cover;
@@ -970,13 +1020,23 @@ h2.sectionTitleCentered {
 	}
 }
 
+.related-show p {
+	@include text-overflow(2);
+	font-size: medium
+}
+
+.related-show h3 {
+	@include text-overflow(1);
+	font-size: larger;
+}
+
 .programma-suggestie {
 	height: $programma-logo-size;
 }
 
 //Programmanieuws
 .programmanieuws {
-	padding: $space-md;
+	padding: $space-sm;
 	background-color: $color-white;
 }
 
@@ -1077,11 +1137,11 @@ h2.sectionTitleCentered {
 }
 
 // Pagination Styling
-.pagination-prevPage, .pagination-nextPage {
-	font-weight: bold;
+.pagination-prev-page, .pagination-next-page, .pagination-change-page {
+	text-decoration: none;
 }
 
-.pagination-currentPage {
+.pagination-current-page {
 	pointer-events: none;
 	border-radius: 50%;
 	background-color: $color-accent;
@@ -1220,11 +1280,6 @@ h2.sectionTitleCentered {
 	}
 }
 
-.category-sub {
-	&:hover {
-		background-color: gray;
-	}
-}
 
 /* programma entry */
 .social-media-link{
