@@ -1,3 +1,5 @@
+{% import "_macros/_ui" as ui %}
+
 {% set item = nieuws|first %}
 
 
@@ -44,10 +46,8 @@
 					<a class="nwsItemTitle" href="{{ item.url }}"> <img class="img-fluid" src="{{ image.getUrl(img) }}" alt="{{ image.title }}"/>
 				</a>
 
-				<div class="categoryContainer">
-					<a href="{{ category.url }}" class="small">
-						<span>{{ category }}</span>
-					</a>
+				<div class="category-container">
+					{{ ui.setCategory(category) }}
 				</div>
 
 			</div>
@@ -92,10 +92,8 @@
 				{% set image = item.image.one() %}
 				<a href="{{ item.url }}"><img class="card-image-top img-fluid" src="{{ image.getUrl(ft) }}" alt="{{ image.title }}"/></a>
 
-				<div class="categoryContainer">
-					<a href="{{ category.url }}" class="small">
-						<span>{{ category }}</span>
-					</a>
+				<div class="category-container">
+					{{ ui.setCategory(category) }}
 				</div>
 				{# </div> #}
 				<div class="card-body nwsItemCopy">
@@ -108,7 +106,7 @@
 							{% for block in item.nieuwsInhoud.all() if break == 0 %}
 								{% if block.type == "tekst" %}
 									{% set paragraphs = block.tekst|split("</p>") %}
-									{{ paragraphs|first|striptags|raw }}
+									<p>{{ paragraphs|first|striptags|raw }}</p>
 									{% set break = 1 %}
 								{% endif %}
 							{% endfor %}

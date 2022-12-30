@@ -28,12 +28,19 @@
 	{% set backgroundImageExtraLarge = image.getUrl('bannerImageXl1920w') %}
 
 	<div class="d-flex align-items-center justify-content-center hero">
-		<picture style="width: 100%; height: {{heroHeight}}vh">
+		{# <picture style="width: 100%; height: {{heroHeight}}vh">
 			<source srcset="{{ backgroundImageExtraSmall }}" media="(max-width: 639px)">
 			<source srcset="{{ backgroundImageExtraLarge }}" media="(min-width: 1920px)">
 			<source srcset="{{ backgroundImageLarge }}" media="(min-width: 1600px)">
 			<source srcset="{{ backgroundImageMedium }}" media="(min-width: 1280px)">
 			<source srcset="{{ backgroundImageSmall }}" media="(min-width: 640px)">
+			<img src="{{ backgroundImageMedium }}" alt="picture of {{title}}" style="height:{{heroHeight}}vh; object-fit:cover; object-position:center; width:100%; position: relative"/>
+		</picture> #}
+		<picture style="width: 100%; height: {{heroHeight}}vh">
+			<source srcset="{{ backgroundImageExtraLarge }}" media="(min-width: 1920px)">
+			<source srcset="{{ backgroundImageLarge }}" media="(min-width: 1600px)">
+			<source srcset="{{ backgroundImageMedium }}" media="(min-width: 1280px)">
+			<source srcset="{{ backgroundImageSmall }}" media="(max-width: 1279px)">
 			<img src="{{ backgroundImageMedium }}" alt="picture of {{title}}" style="height:{{heroHeight}}vh; object-fit:cover; object-position:center; width:100%; position: relative"/>
 		</picture>
 

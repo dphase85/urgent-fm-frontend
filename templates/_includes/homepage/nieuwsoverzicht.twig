@@ -1,3 +1,5 @@
+{% import "_macros/_ui" as ui %}
+
 {% set laatstNieuwe = nieuws|first %}
 
 
@@ -19,15 +21,11 @@
 				{% set imageSrcsetLarge = image.getUrl('homepageLatestL') %}
 				{# Gebruik srcset om responsive images in te laden (gebaseerd op schermgrootte en pixeldensiteit) #}
 				{# TODO: size nog verder specifieren! #}
-					<a class="nwsItemTitle" href="{{ item.url }}"> <img class="img-fluid" src="{{ imageSrcsetDefault }}" srcset="{{ imageSrcsetSmall }} 300w, {{ imageSrcsetDefault }} 525w, {{ imageSrcsetLarge }} 898w" sizes="(min-width: 768px) 75vw, (min-width: 992) 75vw, 100vw" alt="{{ image.title }}"/>
+					<a href="{{ item.url }}"> <img class="img-fluid" src="{{ imageSrcsetDefault }}" srcset="{{ imageSrcsetSmall }} 300w, {{ imageSrcsetDefault }} 525w, {{ imageSrcsetLarge }} 898w" sizes="(min-width: 768px) 75vw, (min-width: 992) 75vw, 100vw" alt="{{ image.title }}"/>
 				</a>
-
 				<div class="category-container">
-					<a href="{{ category.url }}" class="small">
-						<span>{{ category }}</span>
-					</a>
+					{{ ui.setCategory(category) }}
 				</div>
-
 			</div>
 			<div class="nwsItemCopy">
 				<a class="nwsItemTitle" href="{{ item.url }}">
@@ -39,7 +37,7 @@
 						{% for block in item.nieuwsInhoud.all() if break == 0 %}
 							{% if block.type == "tekst" %}
 								{% set paragraphs = block.tekst|split("</p>") %}
-								{{ paragraphs|first|striptags|raw }}
+								<p>{{ paragraphs|first|striptags|raw }}</p>
 								{% set break = 1 %}
 							{% endif %}
 						{% endfor %}
@@ -73,9 +71,7 @@
 					<a class="nwsItemTitle" href="{{ item.url }}"> <img class="card-image-top img-fluid" src="{{ imageSrcsetDefault }}" srcset="{{ imageSrcsetSmall }} 390w, {{ imageSrcsetDefault }} 440w, {{ imageSrcsetLarge }} 556w" alt="{{ image.title }}"/>
 				</a>
 				<div class="category-container">
-					<a href="{{ category.url }}" class="small">
-						<span>{{ category }}</span>
-					</a>
+					{{ ui.setCategory(category) }}
 				</div>
 				<div class="card-body nwsItemCopy">
 					<a class="nwsItemTitle" href="{{ item.url }}">
@@ -87,7 +83,7 @@
 							{% for block in item.nieuwsInhoud.all() if break == 0 %}
 								{% if block.type == "tekst" %}
 									{% set paragraphs = block.tekst|split("</p>") %}
-									{{ paragraphs|first|striptags|raw }}
+									<p>{{ paragraphs|first|striptags|raw }}</p>
 									{% set break = 1 %}
 								{% endif %}
 							{% endfor %}

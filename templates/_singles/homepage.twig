@@ -14,23 +14,42 @@
 
 	<div class="d-flex align-items-center justify-content-center hpBanner banner">
 
-		{% set backgroundImageSmall = image.getUrl('bannerImageBackgroundPortraitSmall576w') %}
-		{% set backgroundImageMedium = image.getUrl('bannerBackgroundImageLandscapeMedium1280w') %}
-		{#
-		<picture style="width: 100%; height: 90vh">
-			<source srcset="{{ backgroundImageMedium }}" media="(min-width: 1200px)" style="height:90vh; object-fit:cover; object-position:center; width:100%; position: relative">
-			<img src="{{ backgroundImageSmall }}" style="height:90vh; object-fit:cover; object-position:center; width:100%; position: relative"/>
-		</picture>
-		#}
-		
-		<picture style="width: 100%; height: {{heroHeight}}vh">
-			<source srcset="{{ backgroundImageMedium }}" media="(min-width: 1200px)	" style="height:{{heroHeight}}vh; object-fit:cover; object-position:center; 	width:100%; position: relative">
-			<img src="{{ backgroundImageSmall }}" style="height:{{heroHeight}}vh; 	object-fit:cover; object-position:center; width:100%; position: relative"/>
-		</picture>
+		{% set backgroundImageExtraSmall = image.getUrl('bannerImageXs') %}
+		{% set backgroundImageSmall = image.getUrl('bannerImageS640w') %}
+		{% set backgroundImageMedium = image.getUrl('bannerImageM1280w') %}
+		{% set backgroundImageLarge = image.getUrl('bannerImageL1600w') %}
+		{% set backgroundImageExtraLarge = image.getUrl('bannerImageXl1920w') %}
 
+		<style>
+			@media(max-width: 1279px) {
+				.hpBanner {
+					background: url("{{ backgroundImageSmall }}") no-repeat center;
+					background-size: cover;
+					background-color: white;
+				}
+			}
+			@media(min-width: 1280px) {
+					.hpBanner {
+					background: url("{{ backgroundImageMedium }}") no-repeat center;
+					background-size: cover;
+				}
+			}
+			@media(min-width: 1600px) {
+					.hpBanner {
+					background: url("{{ backgroundImageLarge }}") no-repeat center;
+					background-size: cover;
+				}
+			}
+			@media(min-width: 1920px) {
+					.hpBanner {
+					background: url("{{ backgroundImageExtraLarge }}") no-repeat center;
+					background-size: cover;
+				}
+			}
+		</style>
 
 		<div
-			class="banner-window d-flex align-items-center" style="position: absolute;">
+			class="banner-window d-flex align-items-center">
 			{# Zoek de huidige weekdag adhv date format param. 'w' (weekdag) #}
 			{% set dayOfTheWeek = 'now'|date('w') %}
 
@@ -40,7 +59,7 @@
 			{% set currentTime = 'now'|time('short') %}
 
 			{# TEST #}
-			{# {% set currentTime = '07:30' %} #}
+			{# {% set currentTime = '19:30' %} #}
 				{% if currentTime < '07:00' %}
 				{# Indien dit zo is, haal de programmatie op van de vorige dag #}
 				{% set dayOfTheWeek = dayOfTheWeek - 1 %}
@@ -130,7 +149,6 @@
 								{% if timeslots|length < 6 %}
 									<div
 										class="col timeslots">
-										{# <div class="col timeslots collapse multi-collapse py-3 py-md-0" id="multiCollapseExample1"> #}
 										<ul class="ps-0 collapse multi-collapse py-3" id="multiCollapse1">
 											{% for timeslot in timeslots %}
 
@@ -163,10 +181,8 @@
 								<div class="col timeslots">
 									<div
 										class="collapse multi-collapse" id="multiCollapse1">
-										{# <ul class="ps-0 collapse multi-collapse py-3" id="multiCollapseExample1"> #}
 										{% for timeslot in timeslots %}
 											{% set programma = timeslot.programma.one() %}
-											{# <li> #}
 											<div class="row">
 												<div class="col-5 col-sm-3 col-md-5 col-lg-4 col-xxl-4">
 													{{timeslot.beginuur|time('short')}}
@@ -182,23 +198,19 @@
 													{% endif %}
 												</div>
 											</div>
-											{# </li> #}
 											{% set i = i + 1 %}
 											{# Wanneer we in de helft zijn van de entries, verplaats naar 2de kolom #}
 											{# In geval van oneven aantal entries, zorg dat de grootste helft de linkerkolom is #}
 											{% if i == ceil(timeslots|length/2) %}
-												{# </ul> #}
 											</div>
 										</div>
 
 										<div class="col timeslots">
 											<div
 												class="collapse multi-collapse" id="multiCollapse2">
-											{# <ul class="ps-0 collapse multi-collapse py-3" id="multiCollapseExample2"> #}
 											{% endif %}
 										{% endfor %}
 									</div>
-									{# </ul> #}
 								</div>
 							{% endif %}
 						</div>
@@ -209,18 +221,6 @@
 						</div>
 					</div>
 				</div>
-				{# <div class="row">
-													<div class="col-6 banner-button">
-														{% if nowOnair is not null %}
-															<a href="{{ programOnair.getUrl }}" class="button-primary">
-																Over deze show
-															</a>
-														{% endif %}
-													</div>
-													<div class="col-6 banner-button">
-														<a href="/programma" class="button-secondary">Programmaschema</a>
-													</div>
-												</div> #}
 			</div>
 
 		{% endif %}

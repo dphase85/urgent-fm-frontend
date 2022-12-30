@@ -138,7 +138,6 @@ const router = (url) => {
 		document.title = `${title} | Urgent.fm 105.3`;
 
 	} else if (url === '/nieuws' || url.includes('/nieuws?page')) {
-		console.log(url)
 		setAnchors();
 		let scrollY = history.state.scrollY;
 		url = location.pathname + location.search;
