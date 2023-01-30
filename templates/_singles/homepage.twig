@@ -234,9 +234,14 @@
 <div role="main" class="main container" id="homepage">
 	<section class="nieuws-uitgelicht">
 		<h2 class="sectionTitle">Nieuws</h2>
-		{% set nieuws = entry.uitgelicht.type('nieuws').limit(9).all() %}
+		{% set nieuwsQuery = entry.uitgelicht.type('nieuws').limit(9).all() %}
+		 
+		{% set nieuws = [] %}
+		{% for queryItem in nieuwsQuery %}
+			{% set nieuws = nieuws|merge([queryItem.item.one()]) %}
+		{% endfor %}
 
-		{% include "_includes/homepage/nieuwsoverzicht" with { nieuws: nieuws } only %}
+		{% include "_includes/nieuwsoverzicht" with { nieuws: nieuws } only %}
 		<a href="/nieuws" class="button-primary mt-5 mb-5">alle nieuwsberichten</a>
 	</section>
 {#	

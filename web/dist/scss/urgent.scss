@@ -15,7 +15,7 @@ $source-serif: 'Source Serif Pro', serif;
 
 
 // Spacing Variables
-$space-unit: 16px;
+$space-unit: 1rem;
 
 $space-xxs:  calc( #{$space-unit} / 4);
 $space-xs: 	 calc( #{$space-unit} / 2);
@@ -77,7 +77,7 @@ $color-white: #FFFFFF;
 $color-black: #242424;
 $color-background: #F2F2F2;
 
-$color-border: #C8BFD5;
+$color-border: #cdcdcd;
 
 $container-width: 60vw;
 
@@ -616,8 +616,9 @@ h2.card-title {
 }
 
 .main {
-    margin-bottom: 15vh;
+    margin-bottom: calc($space-lg + 10vh);
 	margin-top: $space-lg;
+	
 }
 
 // Header
@@ -701,16 +702,16 @@ header {
 }
 
 // Zoek resultaten page
-.formBackground {
+.form-background {
 	background-color: $color-white;
 	padding: $space-md;
 
-	.cbFilter {
+	.cb-filter {
 		margin-top: $space-sm;
 	}
 
 	.form-label {
-		margin: 0;
+		margin-bottom: 0;
 		color: $color-greyscale-3;
 	}
 }
@@ -740,15 +741,20 @@ header {
 }
 
 .zoekveld {
-	border: 0.5px solid $color-black;
+	border: 1px solid $color-border;
 	background-color: $color-white;
 	display: flex;
 	padding: 0.5rem;
 }
 
-.inputSearch {
+.input-search {
 	flex-grow: 1;
 	border: none;
+}
+
+.form-categoriefilter,
+.form-label {
+	margin-left: 0.5rem;
 }
 
 // Search Overlay
@@ -801,7 +807,7 @@ header {
 		@include rounded_all(24px);
 	}
 
-	.formZoek {
+	.form-zoek {
 		align-content: center;
 	}
 

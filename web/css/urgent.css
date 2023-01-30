@@ -31,30 +31,30 @@ h1, h2, h3, h4 {
 
 h3 span {
   font-family: "Roboto", sans-serif;
-  font-size: calc(1 * 16px);
+  font-size: calc(1 * 1rem);
 }
 
 h2 {
-  font-size: calc(1.5 * 16px);
+  font-size: calc(1.5 * 1rem);
 }
 
 h3 {
-  font-size: calc(1.25 * 16px);
+  font-size: calc(1.25 * 1rem);
 }
 
 h5 {
-  font-size: calc(1 * 16px);
+  font-size: calc(1 * 1rem);
 }
 
 p {
-  font-size: calc(1.25 * 16px);
+  font-size: calc(1.25 * 1rem);
 }
 p.date {
   color: #919191;
-  font-size: calc(1 * 16px);
+  font-size: calc(1 * 1rem);
 }
 p.intro {
-  font-size: calc(1.5 * 16px);
+  font-size: calc(1.5 * 1rem);
 }
 
 a {
@@ -77,7 +77,7 @@ a:hover {
 
 h2.card-title {
   color: red;
-  font-size: calc(1.5 * 16px);
+  font-size: calc(1.5 * 1rem);
 }
 
 .contentcard {
@@ -131,7 +131,7 @@ h2.card-title {
     display: inline-block;
   }
   .banner-programma .button-primary, .banner-programma .button-secondary {
-    font-size: calc(0.85 * 16px);
+    font-size: calc(0.85 * 1rem);
   }
   .modal-search {
     margin-top: 7vh;
@@ -168,7 +168,7 @@ h2.card-title {
     width: 90vw;
   }
   h1 {
-    font-size: calc(2.5 * 16px);
+    font-size: calc(2.5 * 1rem);
   }
   .modal-search {
     margin-top: 7vh;
@@ -203,7 +203,7 @@ h2.card-title {
     width: 60vw;
   }
   h1 {
-    font-size: calc(3.5 * 16px);
+    font-size: calc(3.5 * 1rem);
   }
   .modal-search {
     margin-top: 7vh;
@@ -229,7 +229,7 @@ h2.card-title {
     width: 60vw;
   }
   h1 {
-    font-size: calc(3.5 * 16px);
+    font-size: calc(3.5 * 1rem);
   }
   .timeslots ul, .timeslots .collapse, #multiCollapse3 {
     display: block !important;
@@ -251,7 +251,7 @@ h2.card-title {
     width: 60vw;
   }
   h1 {
-    font-size: calc(3.5 * 16px);
+    font-size: calc(3.5 * 1rem);
   }
   .hpBanner {
     height: 75vh;
@@ -363,8 +363,8 @@ h2.card-title {
 }
 
 .main {
-  margin-bottom: 15vh;
-  margin-top: calc(2 * 16px);
+  margin-bottom: calc((2 * 1rem) + 10vh);
+  margin-top: calc(2 * 1rem);
 }
 
 header {
@@ -393,10 +393,10 @@ header {
 .navbar .nav-item {
   font-family: "Roboto", sans-serif;
   font-weight: 500 !important;
-  font-size: calc(1 * 16px);
+  font-size: calc(1 * 1rem);
   background-color: #242424;
   color: #FFFFFF !important;
-  margin-right: calc(1 * 16px);
+  margin-right: calc(1 * 1rem);
   line-height: 100%;
 }
 .navbar .nav-item:hover, .navbar .nav-itemreversed:hover {
@@ -423,15 +423,15 @@ header {
   z-index: 4000;
 }
 
-.formBackground {
+.form-background {
   background-color: #FFFFFF;
-  padding: calc(1.5 * 16px);
+  padding: calc(1.5 * 1rem);
 }
-.formBackground .cbFilter {
-  margin-top: calc(1 * 16px);
+.form-background .cb-filter {
+  margin-top: calc(1 * 1rem);
 }
-.formBackground .form-label {
-  margin: 0;
+.form-background .form-label {
+  margin-bottom: 0;
   color: #919191;
 }
 
@@ -453,19 +453,24 @@ header {
 
 .searchbar {
   border: none;
-  font-size: calc(1.5 * 16px);
+  font-size: calc(1.5 * 1rem);
 }
 
 .zoekveld {
-  border: 0.5px solid #242424;
+  border: 1px solid #cdcdcd;
   background-color: #FFFFFF;
   display: flex;
   padding: 0.5rem;
 }
 
-.inputSearch {
+.input-search {
   flex-grow: 1;
   border: none;
+}
+
+.form-categoriefilter,
+.form-label {
+  margin-left: 0.5rem;
 }
 
 .search:hover {
@@ -519,7 +524,7 @@ header {
   -moz-border-radius: 24px;
   border-radius: 24px;
 }
-.modal-search .formZoek {
+.modal-search .form-zoek {
   align-content: center;
 }
 .modal-search .close {
@@ -537,10 +542,10 @@ header {
 
 .button-primary, .button-secondary {
   background-position-y: center;
-  background-position-x: calc( 16px / 2);
+  background-position-x: calc( 1rem / 2);
   background-repeat: no-repeat;
   display: inline-block;
-  padding: calc( 16px / 2) calc(1 * 16px) calc( 16px / 2) calc(2.5 * 16px);
+  padding: calc( 1rem / 2) calc(1 * 1rem) calc( 1rem / 2) calc(2.5 * 1rem);
 }
 
 .button-primary {
@@ -696,17 +701,17 @@ section {
 }
 
 section ~ section {
-  margin-top: calc(3.5 * 16px);
+  margin-top: calc(3.5 * 1rem);
 }
 
 h2.sectionTitle {
   color: #484848;
-  font-size: calc(1.5 * 16px);
+  font-size: calc(1.5 * 1rem);
 }
 
 h2.sectionTitleCentered {
   color: #484848;
-  font-size: calc(1.5 * 16px);
+  font-size: calc(1.5 * 1rem);
   text-align: center;
   font-family: "Roboto", sans-serif;
 }
@@ -726,8 +731,8 @@ h2.sectionTitleCentered {
   object-fit: cover;
 }
 .editorsPick .mixcloud-link p {
-  font-size: calc(0.85 * 16px);
-  padding-top: calc( 16px / 2);
+  font-size: calc(0.85 * 1rem);
+  padding-top: calc( 1rem / 2);
   font-weight: 400;
   width: 100%;
   overflow: hidden;
@@ -799,7 +804,7 @@ h2.sectionTitleCentered {
 }
 
 .programmanieuws {
-  padding: calc(1 * 16px);
+  padding: calc(1 * 1rem);
   background-color: #FFFFFF;
 }
 
@@ -809,14 +814,14 @@ h2.sectionTitleCentered {
   box-shadow: 2px 0 8px rgba(0, 0, 0, 0.24);
 }
 .tegel .nwsItemCopy {
-  padding: calc(1.5 * 16px);
+  padding: calc(1.5 * 1rem);
 }
 .tegel .nwsItemCopy h3 {
-  font-size: calc(1.5 * 16px);
+  font-size: calc(1.5 * 1rem);
   color: #242424;
 }
 .tegel .nwsItemCopy p {
-  font-size: calc(1 * 16px);
+  font-size: calc(1 * 1rem);
   color: #242424;
   width: 100%;
   overflow: hidden;
@@ -1004,7 +1009,7 @@ h2.sectionTitleCentered {
   color: #242424;
 }
 .programmaschema-dag p {
-  font-size: calc(1 * 16px);
+  font-size: calc(1 * 1rem);
 }
 .programmaschema-dag:hover {
   background-color: #FFFFFF;
@@ -1027,10 +1032,10 @@ h2.sectionTitleCentered {
 }
 
 .audioplayer p {
-  font-size: calc(1 * 16px);
+  font-size: calc(1 * 1rem);
 }
 .audioplayer p .audioplayer-currently-playing {
-  font-size: calc(1.25 * 16px);
+  font-size: calc(1.25 * 1rem);
 }
 .audioplayer p .audioplayer-currently-playing a {
   color: #242424;

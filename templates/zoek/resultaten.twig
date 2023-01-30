@@ -1,12 +1,11 @@
 {% extends craft.app.request.isAjax and not craft.app.request.isLivePreview ? "_ajax" : "_layout" %}
 
 {% block content %}
+	{% import "_macros/_ui" as ui %}
 
 	{% set searchQuery = craft.app.request.getParam('q') %}
-	{# {% set filters = craft.app.request.getQueryParam('filters') %} #}
 	{% set filtersQuery = craft.app.request.getParam('categorie') %}
 	{% set filterCategories = craft.categories.title(filtersQuery) %}
-
 
 	{% if searchQuery is defined %}
 		{% set queryValue = searchQuery %}
@@ -14,7 +13,7 @@
 		{% set queryValue = "" %}
 	{% endif %}
 	{# VOORLOPIGE VERSIE: simpele search, zonder custom filters: er wordt dus automatisch resultaten uit sections
-							gehaald, behalve in programScheme (intern gebruik only) #}
+			gehaald, behalve in programScheme (intern gebruik only) #}
 	{% set results = craft.entries()
   		.search(searchQuery)
   		.section('nieuws, programmanieuws')
@@ -22,83 +21,50 @@
   		.orderBy('score')
   		.limit(8) %}
 
-	{# .section('nieuws, programmanieuws') #}
-	{# .section('nieuws') #}
 	<div class="main container">
-		 <div class="row banner-none">
+		<div class="row banner-none">
 			<div class="col">
 				<h1>Zoek Resultaten voor: "{{ searchQuery }}"</h1>
 			</div>
 		</div>
-
 		<div class="row">
 			<div class="col">
-				<div class="formBackground">
-					<form class="formZoek" action="{{ url('zoek/resultaten') }}">
-						<label for="inputSearch" class="form-label">Zoeken op urgent.fm:</label>
-						<div class="zoekveld rounded-3 border">
-							<input type="search" id="inputSearch" class="inputSearch d-inline-block" name="q" aria-label="Search" 		placeholder="Type hier je zoekterm ..." value="{{ queryValue }}"/>	
-							<button type="submit" class="btn btn-dark btnZoek d-inline-block"><img src="../images/search_white.svg" alt="Icon search"></button>			
-						</div>
+				<div class="form-background">
+					<form class="form-zoek" action="{{ url('zoek/resultaten') }}">
+						{% include "_includes/zoek/searchbar" %}
 
-						<div class="formCategoriefilter">
+						<div class="form-categoriefilter">
 							{% set categories =  craft.categories
                 	    	.group('nieuwsCategories')
                 	    	.all()
                 			%}
 							<p class="form-control-custom">
-								<input class="cbFilter cbDefaultfilter" id="all" type="checkbox" name="category" value=""/>
+								<input class="cb-filter cb-defaultfilter" id="all" type="checkbox" name="category" value=""/>
 								<label for="all">Alle resultaten</label>
 							</p>
-							{% for category in categories %}	
+							{% for category in categories %}
 								<p class="form-control-custom">
-									<input class="cbFilter" id="{{ category.title }}" type="checkbox" name="category" value="{{ category.title }}"/>
+									<input class="cb-filter" id="{{ category.title }}" type="checkbox" name="category" value="{{ category.title }}"/>
 									<label for="{{ category.title }}">{{ category.title }}</label>
 								</p>
 							{% endfor %}
-
 						</div>
 					</form>
 				</div>
 			</div>
 		</div>
-
 		<div class="row">
 			<div class="col">
-
-
 				{% if results|length %}
 					{% set nieuws = results.all() %}
 					{% paginate results as pageInfo, pageEntries %}
-						{# Voorlopig unieke methode voor zoeklisting, later nog globale macro/include maken #}
-						{% include "_includes/zoek/zoeklisting" with { nieuws: pageEntries } only %}
-
-
-					{% else %}
-						<p>Je zoekopdracht voor “{{ searchQuery }}” heeft geen resultaten opgeleverd.</p>
+					{% include "_includes/nieuwsoverzicht" with { nieuws: pageEntries } only %}
+					{{ ui.setPagination(pageInfo) }}
+				{% else %}
+					<p class="text-center mt-4">Je zoekopdracht voor “{{ searchQuery }}” heeft geen resultaten opgeleverd.</p>
 				{% endif %}
+				</div>
 			</div>
+
 		</div>
-		<div class="row mt-5 text-center">
-			<div class="col">
-				{% if pageInfo is defined %}
-					{# <a href="{{ pageInfo.firstUrl }}">First Page</a> #}
-					{% if pageInfo.prevUrl %}<a class="pagination-changePage pagination-prevPage" href="{{ pageInfo.prevUrl }}">&lt;</a>	{% endif %}
-					
-					{% for page, url in pageInfo.getPrevUrls(5) %}
-					  <a class="pagination-changePage" href="{{ url }}">{{ page }}</a>
-					{% endfor %}
-					
-					<span class="pagination-changePage pagination-currentPage">{{ pageInfo.currentPage }}</span>
-					
-					{% for page, url in pageInfo.getNextUrls(5) %}
-					  <a class="pagination-changePage" href="{{ url }}">{{ page }}</a>
-					{% endfor %}
-					
-					{% if pageInfo.nextUrl %}<a class="pagination-changePage pagination-nextPage" href="{{ pageInfo.nextUrl }}">&gt;</a>	{% endif %}
-					{# <a href="{{ pageInfo.lastUrl }}">Last Page</a> #}
-				{% endif %}
-			</div>
-		</div>
-	</div>
-{% endblock %}
+	{% endblock %}

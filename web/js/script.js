@@ -152,7 +152,7 @@ const router = (url) => {
 			filters = initFilter();
 		} else {
 			filters = history.state.filters;
-			let cbFilters = document.querySelectorAll('.cbFilter');
+			let cbFilters = document.querySelectorAll('.cb-filter');
 			cbFilters[0].addEventListener('change', checkDefaultfilter);
 			cbFilters[0].checked = filters[0];
 			for (let i = 1; i < cbFilters.length; i++) {
@@ -182,7 +182,7 @@ const setActiveNavItem = (url) => {
 
 	// make go to nav item active
 	let navItem;
-	if (url.startsWith('/programma')){
+	if (url.startsWith('/programma')) {
 		navItem = document.querySelector('#programma');
 		navItem.classList.add('nav-active');
 	} else if (url.startsWith('/nieuws')) {
@@ -205,82 +205,64 @@ const navigate = (e) => {
 	if ((e.currentTarget).href === 'http://localhost/zoek' || (e.currentTarget).href === 'https://urgent.johanraes.be/zoek') {
 		return;
 	}
-	// first check for pagination
-	let filters = null;
-
-	if (history.state.filters !== null) {
-		filters = history.state.filters;
-	}
-
-	let goToLocation = location.pathname + location.search;
-	history.replaceState({ scrollY: window.scrollY, filters: filters }, '', goToLocation);
-
+	
 	let nextUrl = null;
+	let filters = history.state.filters;
+	// first check for pagination
+	let goToLocation = location.pathname + location.search;
+	history.replaceState({ scrollY: window.scrollY, filters: filters ?? null }, '', goToLocation);
 
-	// let forms = document.querySelectorAll('.formZoek');
+	
+
 	if ((e.currentTarget).classList.contains('btnZoek')) {
-		let form;
-		if ((e.currentTarget).classList.contains('btnZoek')) {
-			let formAction;
-			let q;
-			let filterQ = '';
-			if (history.state.filters) {
-				filters = history.state.filters;
-				filters[0] = true;
-				for (let i = 1; i < filters.length; i++) {
-					filters[i] = false;
-				}
-			}
-			form = (e.currentTarget).form;
-
-			formAction = `${form.action}?q=`;
-			q = form[0].value;
-
-			nextUrl = formAction + q + filterQ;
-		} else {
-			let forms = document.querySelectorAll('form');
-			forms.forEach(thisForm => {
-				console.log(thisForm.length);
-				if (thisForm.length > 2) {
-					form = thisForm;
-				}
-			});
-			nextUrl = (e.currentTarget).href;
+		const form = (e.currentTarget).form;
+		// prevent performing empty search query
+		if (form[0].value.length === 0) {
+			return;
 		}
-		lastScrollY = window.scrollY;
-		history.pushState({ scrollY: window.scrollY, filters: filters }, '', nextUrl);
+
+
+		nextUrl = `${form.action}?q=${form[0].value}`;
+
+		if (filters) {
+			filters[0] = true;
+			for (let i = 1; i < filters.length; i++) {
+				filters[i] = false;
+			}
+		}
+
+		history.pushState({ scrollY: 0, filters: filters }, '', nextUrl);
 		pageRequest(nextUrl);
 
+		return;
+	}
 
-	} else {
-		let forms = document.querySelectorAll('.formZoek');
-		forms.forEach(form => {
-			form.value = '';
-		})
-		let href = (e.currentTarget).getAttribute('href').toString();
-		const url = getURL();
-		if (href !== url) {
-			// TODO: tijdelijke oplossing, er moet een duurzame oplossing zijn, kijk ook naar TODO bij setAnchors()
-			if (!href.startsWith(hostname) && (href.startsWith('http://') || href.startsWith('https://'))) {
-				window.open(href, '_blank')
-				return;
-			}
-			nextUrl = href;
-
-			let scrollY = 0;
-			// Indien focus moet behouden worden op scrollpositie bij pagineren, zie of het a-element de pagination-focus klasnaam bezit:
-			if (e.currentTarget.classList.contains('pagination-focus')) {
-				scrollY = window.scrollY;
-			}
-
-			// Check of link op cookiebanner is aangeklikt, indien nee, zet in de history stack
-			if (nextUrl === 'javascript:void(0);') {
-				return;
-			}
-
-			history.pushState({ scrollY: scrollY, filters: null }, '', nextUrl);
-			pageRequest(nextUrl);
+	let forms = document.querySelectorAll('.formZoek');
+	forms.forEach(form => {
+		form[0].value = '';
+	})
+	let href = (e.currentTarget).getAttribute('href').toString();
+	const url = getURL();
+	if (href !== url) {
+		// TODO: tijdelijke oplossing, er moet een duurzame oplossing zijn, kijk ook naar TODO bij setAnchors()
+		if (!href.startsWith(hostname) && (href.startsWith('http://') || href.startsWith('https://'))) {
+			window.open(href, '_blank')
+			return;
 		}
+		nextUrl = href;
+		// Check of link op cookiebanner is aangeklikt, indien nee, zet in de history stack
+		if (nextUrl === 'javascript:void(0);') {
+			return;
+		}
+
+		let scrollY = 0;
+		// Indien focus moet behouden worden op scrollpositie bij pagineren, zie of het a-element de pagination-focus klasnaam bezit:
+		if (e.currentTarget.classList.contains('pagination-focus')) {
+			scrollY = window.scrollY;
+		}
+
+		history.pushState({ scrollY: scrollY, filters: null }, '', nextUrl);
+		pageRequest(nextUrl);
 	}
 };
 
@@ -333,8 +315,8 @@ const closeSearch = () => {
 
 // Initialize filters when loading paginated pages for the first time, set eventlisteners and return checkbox values
 const initFilter = () => {
-	let cbFilters = document.querySelectorAll('.cbFilter');
-	let cbDefaultfilter = document.querySelector('.cbDefaultfilter');
+	let cbFilters = document.querySelectorAll('.cb-filter');
+	let cbDefaultfilter = document.querySelector('.cb-defaultfilter');
 	let filters = [];
 	// Set defaultfilter and add eventlistener
 	cbDefaultfilter.checked = true;
@@ -351,8 +333,8 @@ const initFilter = () => {
 
 // Defaultfilter control
 const checkDefaultfilter = () => {
-	let cbDefaultfilter = document.querySelector('.cbDefaultfilter');
-	let cbFilters = document.querySelectorAll('.cbFilter');
+	let cbDefaultfilter = document.querySelector('.cb-defaultfilter');
+	let cbFilters = document.querySelectorAll('.cb-filter');
 	let checkCount = 0;
 	// Don't count defaultfilter, so let i = 1
 	for (let i = 1; i < cbFilters.length; i++) {
@@ -381,14 +363,13 @@ const buildFilterURLParam = () => {
 	let form;
 	let forms = document.querySelectorAll('form');
 	forms.forEach(thisForm => {
-		console.log(thisForm.length);
 		if (thisForm.length > 2) {
 			form = thisForm;
 		}
 	});
 	let formAction = `${form.action}`;
 	let filterParam = '';
-	let cbFilters = form.querySelectorAll('.cbFilter');
+	let cbFilters = form.querySelectorAll('.cb-filter');
 
 	if (location.pathname === '/zoek/resultaten' || location.pathname.includes('/zoek/resultaten/p')) {
 		let q = `?q=${form[0].value}`;
@@ -448,8 +429,8 @@ const buildFilterURLParam = () => {
 // Switch off default checkbox on nieuwsindex when selecting other checkboxes
 // or switch on when deselecting them.
 const checkFilter = () => {
-	let cbDefaultfilter = document.querySelector('.cbDefaultfilter');
-	let cbFilters = document.querySelectorAll('.cbFilter');
+	let cbDefaultfilter = document.querySelector('.cb-defaultfilter');
+	let cbFilters = document.querySelectorAll('.cb-filter');
 	let filters = [];
 	let checkCount = 0;
 	// Don't count defaultfilter, so let i = 1

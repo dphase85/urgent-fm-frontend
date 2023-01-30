@@ -1,26 +1,6 @@
-{% if searchQuery is defined %}
-	{% set queryValue = searchQuery %}
-{% else %}
-	{% set queryValue = "" %}
-{% endif %}
-
-<div class="modal-search container">
-	<div class="row">
-		<div class="col">
-			<div class="float-end close">&times;</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col">
-			<form class="formZoek" action="{{ url('zoek/resultaten') }}">
-				<label for="inputSearch" class="form-label">Zoeken op urgent.fm:</label>
-				<div class="zoekveld rounded-3">
-					<input type="search" id="inputSearch" class="inputSearch d-inline-block" name="q" aria-label="Search" placeholder="Type hier je zoekterm ..." value="{{ queryValue }}"/>	
-					<button type="submit" class="btn btn-dark btnZoek d-inline-block"><img src="../images/search_white.svg" alt="Icon search"></button>			
-				</div>
-				
-			</form>
-		</div>
-	</div>
+<label for="input-search" class="form-label">Zoeken op urgent.fm:</label>
+<div class="zoekveld rounded-3 mt-2 mb-4">
+	<input type="search" class="input-search d-inline-block" name="q" aria-label="Search" placeholder="Type hier je zoekterm ..." value="{{ queryValue }}"/>
+	<button type="submit" class="btn btn-dark btnZoek d-inline-block">
+	<img src="../images/search_white.svg" alt="Icon search"></button>
 </div>
-<div class="overlay"></div>

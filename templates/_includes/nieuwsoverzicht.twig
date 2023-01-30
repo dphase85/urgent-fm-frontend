@@ -1,101 +1,79 @@
 {% import "_macros/_ui" as ui %}
 
-{% set item = nieuws|first %}
+{# First check if number of nieuws items is even. If not, display firstRow #}
+{% set numberOfItemsIsEven = false %}
+{% if nieuws|length % 2 == 0 %}
+	{% set numberOfItemsIsEven = true %}
+{% endif %}
+
+{% if numberOfItemsIsEven == false %}
+	{% set item = nieuws|first %}
+	{# If firstRow item is displayed, slice first item from array #}
+	{% set nieuws = nieuws|slice(1,nieuws|length) %}
 
 
-{% set category = item.nieuwsCategories.one() %}
-<div class="row">
-	<article class="col">
-		<div class="tegel p-0">
-			<div class="firstRow">
-
-
-				{% set img = {
-					format: 'jpg',
-                    mode:'crop',
-                    quality: 90,
-					interlace: true,
-                } %}
-
-				{% set image = item.image.one() %}
-
-
-				{# srcSet voor responsive images, werkt (nog) niet: #}
-				{# <picture>
-								    {% set imageSrcsetDefault = image.setTransform('homepageLaatstNieuweImage}
-								    {% set imageSrcsetSmall = image.setTransform('homepageLaatstNieuweImage300w') 				          
-				                    {{dd(imageSrcsetSmall)				          
-				                    <img
-								        srcset="{{ imageSrcsetSmall.url }} 300w,
-								                {{ imageSrcsetDefault.url }} 525w"
-								        sizes="(max-width: 576px) 300px, 
-								                525px"
-								        src="{{ imageSrcsetDefault.url }}"
-								        alt="{{ image.title }}"
-								    />
-								</picture> #}
-
-
-				{# {% do image.setTransform({ width: '525px', height: '295px' }) %}
-								{{ tag('img', {
-									src: image.url,
-									srcset: image.getSrcset(['1.5x','2x','3x']),
-									alt: image.title,
-								})}} #}
-
-					<a class="nwsItemTitle" href="{{ item.url }}"> <img class="img-fluid" src="{{ image.getUrl(img) }}" alt="{{ image.title }}"/>
-				</a>
-
-				<div class="category-container">
-					{{ ui.setCategory(category) }}
+	{% set category = item.nieuwsCategories.one() %}
+	<div class="row">
+		<article class="col">
+			<div class="tegel p-0">
+				<div
+					class="firstRow">
+					{# Eerst source image laden #}
+					{% set image = item.image.one() %}
+					{# Dan de verschillende imagetransforms #}
+					{% set imageSrcsetSmall = image.getUrl('homepageLatestS') %}
+					{% set imageSrcsetDefault = image.getUrl('homepageLatestM') %}
+					{% set imageSrcsetLarge = image.getUrl('homepageLatestL') %}
+					{# Gebruik srcset om responsive images in te laden (gebaseerd op schermgrootte en pixeldensiteit) #}
+					{# TODO: size nog verder specifieren! #}
+						<a href="{{ item.url }}"> <img class="img-fluid" src="{{ imageSrcsetDefault }}" srcset="{{ imageSrcsetSmall }} 300w, {{ imageSrcsetDefault }} 525w, {{ imageSrcsetLarge }} 898w" sizes="(min-width: 768px) 75vw, (min-width: 992) 75vw, 100vw" alt="{{ image.title }}"/>
+					</a>
+					<div class="category-container">
+						{{ ui.setCategory(category) }}
+					</div>
 				</div>
-
+				<div class="nwsItemCopy">
+					<a class="nwsItemTitle" href="{{ item.url }}">
+						<h3>{{ item.title }}</h3>
+						{% if item.intro is not empty %}
+							<p class="banner-programma-intro">{{ item.intro|nl2br }}</p>
+						{% else %}
+							{% set break = 0 %}
+							{% for block in item.nieuwsInhoud.all() if break == 0 %}
+								{% if block.type == "tekst" %}
+									{% set paragraphs = block.tekst|split("</p>") %}
+									<p>{{ paragraphs|first|striptags|raw }}</p>
+									{% set break = 1 %}
+								{% endif %}
+							{% endfor %}
+						{% endif %}
+					</a>
+				</div>
 			</div>
-			<div class="nwsItemCopy">
-				<a class="nwsItemTitle" href="{{ item.url }}">
-					<h3>{{ item.title }}</h3>
-					{% if item.intro is not empty %}
-						<p class="banner-programma-intro">{{ item.intro|nl2br }}</p>
-					{% else %}
-						{% set break = 0 %}
-						{% for block in item.nieuwsInhoud.all() if break == 0 %}
-							{% if block.type == "tekst" %}
-								{% set paragraphs = block.tekst|split("</p>") %}
-								{{ paragraphs|first|striptags|raw }}
-								{% set break = 1 %}
-							{% endif %}
-						{% endfor %}
-					{% endif %}
-				</a>
-			</div>
-		</div>
-	</article>
-	<!-- /tegel -->
-</div>
-
-<div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 not-first-row">
-
-	{% for item in nieuws|slice(1,nieuws|length) %}
-
+		</article>
+		<!-- /tegel -->
+	</div>
+{% endif %}
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 g-3 mt-2 not-first-row">
+	{% for item in nieuws %}
 		{% set category = item.nieuwsCategories.one() %}
-		<div class="col mt-3">
+		<div class="col">
 			<div
 				class="card border-0 p-0 h-100 tegel">
-				{# <div class="nwsimg"> #}
-				{% set ft = {
-                        mode:'crop',
-						width: 636,
-						height: 424,
-                        quality: 90,
-                    } %}
 
+				{# Eerst source image laden #}
 				{% set image = item.image.one() %}
-				<a href="{{ item.url }}"><img class="card-image-top img-fluid" src="{{ image.getUrl(ft) }}" alt="{{ image.title }}"/></a>
-
+				{# Dan de verschillende imagetransforms #}
+				{% set imageSrcsetSmall = image.getUrl('cardImageSmall390w') %}
+				{% set imageSrcsetDefault = image.getUrl('cardImageMedium440w') %}
+				{% set imageSrcsetLarge = image.getUrl('cardImageLarge556w') %}
+				{# Gebruik srcset om responsive images in te laden (gebaseerd op schermgrootte en pixeldensiteit) #}
+				{# TODO: size nog verder specifieren! #}
+					<a class="nwsItemTitle" href="{{ item.url }}"> <img class="card-image-top img-fluid" src="{{ imageSrcsetDefault }}" srcset="{{ imageSrcsetSmall }} 390w, {{ imageSrcsetDefault }} 440w, {{ imageSrcsetLarge }} 556w" alt="{{ image.title }}"/>
+				</a>
 				<div class="category-container">
 					{{ ui.setCategory(category) }}
 				</div>
-				{# </div> #}
 				<div class="card-body nwsItemCopy">
 					<a class="nwsItemTitle" href="{{ item.url }}">
 						<h3 class="card-title">{{ item.title }}</h3>
