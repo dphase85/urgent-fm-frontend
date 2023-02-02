@@ -28,14 +28,6 @@
 	{% set backgroundImageExtraLarge = image.getUrl('bannerImageXl1920w') %}
 
 	<div class="d-flex align-items-center justify-content-center hero">
-		{# <picture style="width: 100%; height: {{heroHeight}}vh">
-			<source srcset="{{ backgroundImageExtraSmall }}" media="(max-width: 639px)">
-			<source srcset="{{ backgroundImageExtraLarge }}" media="(min-width: 1920px)">
-			<source srcset="{{ backgroundImageLarge }}" media="(min-width: 1600px)">
-			<source srcset="{{ backgroundImageMedium }}" media="(min-width: 1280px)">
-			<source srcset="{{ backgroundImageSmall }}" media="(min-width: 640px)">
-			<img src="{{ backgroundImageMedium }}" alt="picture of {{title}}" style="height:{{heroHeight}}vh; object-fit:cover; object-position:center; width:100%; position: relative"/>
-		</picture> #}
 		<picture style="width: 100%; height: {{heroHeight}}vh">
 			<source srcset="{{ backgroundImageExtraLarge }}" media="(min-width: 1920px)">
 			<source srcset="{{ backgroundImageLarge }}" media="(min-width: 1600px)">
@@ -45,75 +37,80 @@
 		</picture>
 
 		<div class="container banner-content align-self-end" style="position: absolute; left:0; right:0;">
-			<div class="row mb-2">
-				<div class="col-2 col-lg-3 col-xl-2">
+			<div class="row flex-column flex-md-row mb-2">
+				<div class="col-3 col-md-auto">
 					{{ ui.setLogo(entry.programmaLogo.one(), "banner-logo img-fluid") }}
 				</div>
 
-				<div class="col-10 col-lg-9 col-xl-10">
-					{% if rootCategory is not null %}
-						{{ ui.setCategory(rootCategory) }}
-					{% endif %}
-					{% if subCategories is not null %}
-						{% for subCategory in subCategories %}
-							{{ ui.setCategory(subCategory) }}
-						{% endfor %}
-					{% endif %}
+				<div class="col col-md-auto d-flex flex-column justify-content-center justify-content-md-end">
 
 					<h1 id="title" data-title="{{ entry.title }}" class="mt-1 mb-0">
 						<span>{{ entry.title }}</span>
 					</h1>
-					
-			{# Haal de programma dag, begin en einduur op uit programScheme matrix (voorlopig ideale workflow) #}
-			{# TODO: Deze code is (nog) niet efficient! (zie hiervoor craft docs: eager-loading) #}
+
+					{# Haal de programma dag, begin en einduur op uit programScheme matrix (voorlopig ideale workflow) #}
+					{# TODO: Deze code is (nog) niet efficient! (zie hiervoor craft docs: eager-loading) #}
 
 
-			{# Eerst checken voor listen up. Indien ja: genereer een unieke uurmelding, anders: zoek per weekdag de timeslots op in het weekdag matrixveld, die gerelateerd zijn aan entry #}
-				{% if entry.title == 'Listen Up' %}
-					<div class="mt-1">
-						<span>Alle niet-live programma-uren.</span>
-					</div>
+					{# Eerst checken voor listen up. Indien ja: genereer een unieke uurmelding, anders: zoek per weekdag de timeslots op in het weekdag matrixveld, die gerelateerd zijn aan entry #}
+					{% if entry.title == 'Listen Up' %}
+						<div class="mt-1 programma-van-tot"> 
+							<span>Alle niet-live programma-uren.</span>
+						</div>
 
-			{% else %}
-				{# Zoek de weekdagen op wanneer het programma (entry) geprogrammeerd staat.  #}
-				{% set weekdagen = craft.entries.section('programScheme')
-					.relatedTo({
-                            targetElement: entry,
-                            field: 'weekdag.programma'
-                        })
-					.orderBy('title')
-					.all() %}
-				{# De string variabelen(dagen waarop wordt uitgezonden, het uur waarop wordt uitgezonden) waarmee de programmering wordt opgebouwd #}
-				{% set dagString = 'Elke ' %}
-				{% set timing = null %}
-				{% for dag in weekdagen %}
-					{% set dagCropped = dag.title|slice(3, dag.title|length)|lcfirst %}
-					{% if dag == weekdagen|first %}
-						{% set dagString = "#{dagString} #{dagCropped}"  %}
 					{% else %}
-						{% set dagString = "#{dagString}, #{dagCropped}" %}
-					{% endif %}
-					{# Als alle dagen in de dagString geprint zijn, afsluiten met 'van' #}
-					{# {% set dagString = "#{dagString} van " %} #}
-					{# Hier gaan we ervan uit dat een programma, herhalend over meerdere dagen, steeds op het zelfde uur   geprogrammeerd staat #}
-					{% if dag is same as(weekdagen|last) %}
-						{% set timeslot = dag.weekdag.relatedTo({
-                                targetElement: entry,
-                                field: 'programma'
-                                }).one() %}
+						{# Zoek de weekdagen op wanneer het programma (entry) geprogrammeerd staat.  #}
+						{% set weekdagen = craft.entries.section('programScheme')
+							.relatedTo({
+                    		        targetElement: entry,
+                    		        field: 'weekdag.programma'
+                    		    })
+							.orderBy('title')
+							.all() %}
+						{# De string variabelen(dagen waarop wordt uitgezonden, het uur waarop wordt uitgezonden) waarmee de programmering wordt opgebouwd #}
+						{% set dagString = 'Elke ' %}
+						{% set timing = null %}
+						{% for dag in weekdagen %}
+							{% set dagCropped = dag.title|slice(3, dag.title|length)|lcfirst %}
+							{% if dag == weekdagen|first %}
+								{% set dagString = "#{dagString} #{dagCropped}"  %}
+							{% else %}
+								{% set dagString = "#{dagString}, #{dagCropped}" %}
+							{% endif %}
+							{# Als alle dagen in de dagString geprint zijn, afsluiten met 'van' #}
+							{# {% set dagString = "#{dagString} van " %} #}
+							{# Hier gaan we ervan uit dat een programma, herhalend over meerdere dagen, steeds op het zelfde uur   geprogrammeerd staat #}
+							{% if dag is same as(weekdagen|last) %}
+								{% set timeslot = dag.weekdag.relatedTo({
+                                	targetElement: entry,
+                                	field: 'programma'
+                                	})
+									.one() 
+								%}
 
-						{% set timing = "#{timeslot.beginuur|time('short')} tot #{timeslot.einduur|time('short')}" %}
+								{% set timing = "#{timeslot.beginuur|time('short')} tot #{timeslot.einduur|time('short')}" %}
+							{% endif %}
+						{% endfor %}
+
+						{# Programmering: De eerder opgebouwde stringvariabelen worden hier samengevoegd #}
+						<div class="mt-1 programma-van-tot"> 
+							<span>{{ [dagString, timing]|join(' van ') }}</span>
+						</div>
 
 					{% endif %}
-				{% endfor %}
-				{# Programmering: De eerder opgebouwde stringvariabelen worden hier samengevoegd #}
-					<div class="mt-1">
-						<span>{{ [dagString, timing]|join(' van ') }}</span>
-					</div>
-			{% endif %}
-					
+						<div class="mt-1">
+							{% if rootCategory is not null %}
+								{{ ui.setCategory(rootCategory) }}
+							{% endif %}
+							{% if subCategories is not null %}
+								{% for subCategory in subCategories %}
+									{{ ui.setCategory(subCategory) }}
+								{% endfor %}
+							{% endif %}
+						</div>
 				</div>
 			</div>
+
 		</div>
 	</div>
 
@@ -130,22 +127,7 @@
 
 		{# Bouw hier de sociale media links met bijhorende iconen op, indien deze velden ingevuld zijn #}
 		{% if entry.socialMediaLinks|length %}
-			<section class="row">
-				<div class="col">
-					<ul class="social-links">
-						{% for block in entry.socialMediaLinks.all() %}
-							<li>
-								{% switch block.type %}
-									{% case 'facebook' %}
-										<a href="{{ block.facebookLink }}" target="_blank" class="social-media-link d-flex align-items-center"><img src="../images/icons/facebook.svg" alt="facebook icon" class="pe-2"/></a>
-									{% case 'instagram' %}
-										<a href="{{ block.instagramLink }}" target="_blank" class="social-media-link d-flex align-items-center"><img src="../images/icons/instagram.svg" alt="instagram icon" class="pe-2"/></a>
-								{% endswitch %}
-							</li>
-						{% endfor %}
-					</ul>
-				</div>
-			</section>
+			{% include "_includes/programma/socialsList"  %}
 		{% endif %}
 
 		{% if entry.cloudmix.embed is not null %}
@@ -176,11 +158,11 @@
 			<h2 class="mt-5 mb-0">Berichten</h2>
 
 			{% paginate entries as pageInfo, pageEntries %}
-			{% include "_includes/programma/programmanieuws" with { prgNieuws: pageEntries } only %}
+				{% include "_includes/programma/programmanieuws" with { prgNieuws: pageEntries } only %}
 
-			{{ ui.setPagination(pageInfo) }}
+				{{ ui.setPagination(pageInfo) }}
 
-		{% endif %}
+			{% endif %}
 
 			{# Zoek eerst naar gelateerde stijlen op een hoger categorieniveau dan 2 #}
 			{% set stijlen = entry.programmaStijl

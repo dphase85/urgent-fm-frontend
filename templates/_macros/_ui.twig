@@ -11,7 +11,7 @@
 			{% set colorCode = '' %}
 	{% endswitch %}
 
-	<a href="{{ category.url }}" class="category-base {{ colorCode }} me-2">
+	<a href="{{ category.url }}" class="category-base {{ colorCode }} me-1">
 		<span>{{ category }}</span>
 	</a>
 {% endmacro %}
@@ -22,7 +22,7 @@
 	{% else %}
 		{% set logo = programmaLogo %}
 	{% endif %}
-	<img class="{{ classNames }}" src="{{ logo.url }}" alt="{{ logo.title }}">
+	<img class="{{ classNames }}" src="{{ logo.getUrl('programmaLogo') }}" alt="{{ logo.title }}">
 {% endmacro %}
 
 {% macro setPagination(pageInfo) %}

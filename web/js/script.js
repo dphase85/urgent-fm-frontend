@@ -106,42 +106,50 @@ const router = (url) => {
 		setAnchors();
 		// activeer eerste tab bij inladen pagina
 		let tabDay = -1;
-		if (url === '/programma/zondag') {
-			tabDay = 0;
-		} else if (url === '/programma/maandag') {
-			tabDay = 1;
-		} else if (url === '/programma/dinsdag') {
-			tabDay = 2;
-		} else if (url === '/programma/woensdag') {
-			tabDay = 3;
-		} else if (url === '/programma/donderdag') {
-			tabDay = 4;
-		} else if (url === '/programma/vrijdag') {
-			tabDay = 5;
-		} else if (url === '/programma/zaterdag') {
-			tabDay = 6;
-		} else if (url === '/programma') {
-			let date = new Date();
-			// Zondag = 0, maandag 1 enz. Tabday is de 'juiste' dagnummer die door JS gebruikt wordt.
-			tabDay = date.getDay();
-		}
 		let title;
+		switch (url) {
+			case '/programma/zondag':
+				tabDay = 0;
+				break;
+			case '/programma/maandag':
+				tabDay = 1;
+				break;
+			case '/programma/dinsdag':
+				tabDay = 2;
+				break;
+			case '/programma/woensdag':
+				tabDay = 3;
+				break;
+			case '/programma/donderdag':
+				tabDay = 4;
+				break;
+			case '/programma/vrijdag':
+				tabDay = 5;
+				break;
+			case '/programma/zaterdag':
+				tabDay = 6;
+				break;
+			case '/programma':
+				// Zondag = 0, maandag 1 enz. Tabday is de 'juiste' dagnummer die door JS gebruikt wordt.
+				tabDay = new Date().getDay();
+				break;
+			default: 
+			title = document.querySelector('#title').dataset.title;
+		}
+
 		if (tabDay >= 0) {
 			// eslint-disable-next-line no-undef
 			populateProgramSchema(tabDay);
 			title = 'Programma';
-		} else {
-			let dataTitle = document.querySelector('#title');
-			title = dataTitle.dataset.title;
 		}
+		
 		setDisplay();
 		document.title = `${title} | Urgent.fm 105.3`;
 
 	} else if (url === '/nieuws' || url.includes('/nieuws?page')) {
 		setAnchors();
-		let scrollY = history.state.scrollY;
 		url = location.pathname + location.search;
-		history.replaceState({ scrollY: scrollY, filters: null }, '', url);
+		history.replaceState({ scrollY: history.state.scrollY, filters: null }, '', url);
 		document.title = 'Nieuws | Urgent.fm 105.3'
 		setDisplay();
 	} else if (url === '/zoek/resultaten' || url.includes('/zoek/resultaten?page') || url === '/zoek' || url.includes('/zoek')) {
@@ -165,8 +173,7 @@ const router = (url) => {
 		setDisplay();
 	} else {
 		setAnchors();
-		const title = document.querySelector('#title');
-		document.title = `${title.dataset.title} | Urgent.fm 105.3`;
+		document.title = `${document.querySelector('#title').dataset.title} | Urgent.fm 105.3`;
 		setDisplay();
 	}
 	setActiveNavItem(url);
@@ -523,7 +530,7 @@ const getTimetable = () => {
 
 const saveTimetable = (data) => {
 	let entries = data['data']['entries'];
-	let d = new Date();
+	const d = new Date();
 	let currentDay = d.getDay();
 	let currentHour = parseInt(d.getHours());
 	//  als h < 7 (== het is nog geen 7 uur AM), neem de vorige dag
@@ -565,14 +572,6 @@ const saveTimetable = (data) => {
 				let nextDay = ttDay[currentDay];
 				nextTimeslot = nextDay[0];
 			}
-
-			// let nextProgramma = nextTimeslot['programma'][0];
-			// let next = document.querySelector('.audioplayer-playing-next a');
-			// clearParentNode(next);
-			// let u = document.createElement('u');
-			// next.setAttribute('href', nextProgramma['url']);
-			// u.textContent = nextProgramma['title'];
-			// next.appendChild(u);
 		}
 	}
 

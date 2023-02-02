@@ -1,0 +1,16 @@
+<section class="row">
+	<div class="col">
+		<ul class="social-links">
+			{% for block in entry.socialMediaLinks.all() %}
+				<li>
+					{% switch block.type %}
+						{% case 'facebook' %}
+							<a href="{{ block.facebookLink }}" target="_blank" class="social-media-link d-flex align-items-center"><img src="../images/icons/facebook.svg" alt="facebook icon" class="pe-2"/></a>
+						{% case 'instagram' %}
+							<a href="{{ block.instagramLink }}" target="_blank" class="social-media-link d-flex align-items-center"><img src="../images/icons/instagram.svg" alt="instagram icon" class="pe-2"/></a>
+					{% endswitch %}
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+</section>

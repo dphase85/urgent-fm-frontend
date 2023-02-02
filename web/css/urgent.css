@@ -200,7 +200,7 @@ h2.card-title {
     display: block !important;
   }
   .container:not(.navbar .container, footer .container, .modal-background .container) {
-    width: 60vw;
+    width: 90vw;
   }
   h1 {
     font-size: calc(3.5 * 1rem);
@@ -294,13 +294,13 @@ h2.card-title {
   right: 0;
 }
 .banner-content h1,
-.banner-content h1 + div {
+.banner-content .programma-van-tot {
   color: #FFFFFF;
 }
 .banner-content h1 span,
 .banner-content h1 div,
-.banner-content h1 + div span,
-.banner-content h1 + div div {
+.banner-content .programma-van-tot span,
+.banner-content .programma-van-tot div {
   background-color: #242424;
   border-left: solid #242424 1rem;
   border-right: solid #242424 1rem;

@@ -79,7 +79,7 @@ $color-background: #F2F2F2;
 
 $color-border: #cdcdcd;
 
-$container-width: 60vw;
+$container-width: 60vw; //TODO: ofwel 67vw om responsive logo te fixen in programma entry 
 
 $header-height: 10vh;
 $banner-height: 75vh;
@@ -413,7 +413,7 @@ h2.card-title {
 	}
 
 	.container:not(.navbar .container, footer .container, .modal-background .container) {
-		width: $container-width;
+		width: 90vw;
 	}
 	
 	h1 {
@@ -545,7 +545,7 @@ h2.card-title {
 	position: absolute; left:0; right:0;
 	
 	h1,
-	h1 + div {
+	.programma-van-tot {
 		// display: inline-block;
 		color: $color-white;
 		span,
