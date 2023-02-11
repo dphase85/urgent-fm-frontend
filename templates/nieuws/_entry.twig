@@ -7,25 +7,30 @@
 	{% set rootCategory = entry.nieuwsCategories
 		.level('1')
 		.one() %}
-	{% set backgroundImageSmall = image.getUrl('bannerImageBackgroundPortraitSmall576w') %}
-	{% set backgroundImageMedium = image.getUrl('bannerBackgroundImageLandscapeMedium1280w') %}
+	{% set backgroundImageExtraSmall = image.getUrl('bannerImageXs') %}
+	{% set backgroundImageSmall = image.getUrl('bannerImageS640w') %}
+	{% set backgroundImageMedium = image.getUrl('bannerImageM1280w') %}
+	{% set backgroundImageLarge = image.getUrl('bannerImageL1600w') %}
+	{% set backgroundImageExtraLarge = image.getUrl('bannerImageXl1920w') %}
 
 	<div class="d-flex hpBanner banner">
 		<picture style="width: 100%; height: {{heroHeight}}vh">
-			<source srcset="{{ backgroundImageMedium }}" media="(min-width: 1200px)	" style="height:{{heroHeight}}vh; object-fit:cover; object-position:center; 	width:100%; position: relative">
-			<img src="{{ backgroundImageSmall }}" style="height:{{heroHeight}}vh; 	object-fit:cover; object-position:center; width:100%; position: relative"/>
+			<source srcset="{{ backgroundImageExtraLarge }}" media="(min-width: 1920px)">
+			<source srcset="{{ backgroundImageLarge }}" media="(min-width: 1600px)">
+			<source srcset="{{ backgroundImageMedium }}" media="(min-width: 1280px)">
+			<source srcset="{{ backgroundImageSmall }}" media="(max-width: 1279px)">
+			<img src="{{ backgroundImageMedium }}" alt="picture of {{title}}" style="height:{{heroHeight}}vh; object-fit:cover; object-position:center; width:100%; position: relative"/>
 		</picture>
-		<div
-			class="container banner-content align-self-end" style="position: absolute; left:0; right:0;">
 
-			<div class="row mb-3">
+		<div class="container banner-content align-self-end" style="position: absolute; left:0; right:0;">
+			<div class="row">
 				<div class="col">
 					{% import "_macros/_ui" as ui %}
 					{{ ui.setCategory(rootCategory, 'nieuws') }}
 				</div>
 			</div>
 
-			<div class="row">
+			<div class="row mt-1">
 				<div class="col">
 					<h1 id="title" data-title="{{ entry.title }}">
 						<span>{{ entry.title }}</span>
@@ -34,7 +39,6 @@
 			</div>
 		</div>
 	</div>
-
 
 	<div role="main" class="main container">
 		<div class="row">
@@ -77,12 +81,12 @@
 
 
 		{% set nieuws = craft.entries()
-      .section('nieuws')
-      .relatedTo(entry.nieuwsCategories)
-      .id('not ' ~ entry.id)
-      .orderBy('postDate DESC')
-      .limit(4)
-      .all() %}
+    	  .section('nieuws')
+    	  .relatedTo(entry.nieuwsCategories)
+    	  .id('not ' ~ entry.id)
+    	  .orderBy('postDate DESC')
+    	  .limit(4)
+    	  .all() %}
 
 		{% if nieuws|length %}
 			<section id="suggestions" class="mt-5">
@@ -91,57 +95,13 @@
 						<h5>Lees ook dit:</h5>
 					</div>
 				</div>
-				<div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 g-3 my-3">
-					{% for item in nieuws %}
-						{% set category = item.nieuwsCategories.one() %}
-
-						<div class="col">
-							<div
-								class="card border-0 p-0 h-100 tegel">
-
-								{# Eerst source image laden #}
-								{% set image = item.image.one() %}
-								{# Dan de verschillende imagetransforms #}
-								{% set imageSrcsetSmall = image.getUrl('cardImageSmall390w') %}
-								{% set imageSrcsetDefault = image.getUrl('cardImageMedium440w') %}
-								{% set imageSrcsetLarge = image.getUrl('cardImageLarge556w') %}
-								{# Gebruik srcset om responsive images in te laden (gebaseerd op schermgrootte en pixeldensiteit) #}
-								{# TODO: size nog verder specifieren! #}
-									<a class="nwsItemTitle" href="{{ item.url }}"> <img class="card-image-top img-fluid" src="{{ imageSrcsetDefault }}" srcset="{{ imageSrcsetSmall }} 390w, {{ imageSrcsetDefault }} 440w, {{ imageSrcsetLarge }} 556w" alt="{{ image.title }}"/>
-								</a>
-								<div class="category-container">
-									<a href="{{ category.url }}" class="small">
-										<span>{{ category }}</span>
-									</a>
-								</div>
-								<div class="card-body nwsItemCopy">
-									<a class="nwsItemTitle" href="{{ item.url }}">
-										<h3 class="card-title">{{ item.title }}</h3>
-										{% if item.intro is not empty %}
-											<p class="banner-programma-intro">{{ item.intro|nl2br }}</p>
-										{% else %}
-											{% set break = 0 %}
-											{% for block in item.nieuwsInhoud.all() if break == 0 %}
-												{% if block.type == "tekst" %}
-													{% set paragraphs = block.tekst|split("</p>") %}
-													{{ paragraphs|first|striptags|raw }}
-													{% set break = 1 %}
-												{% endif %}
-											{% endfor %}
-										{% endif %}
-									</a>
-								</div>
-							</div>
-						</div>
-
-					{% endfor %}
-				</div>
-				<div class="">
+				{% include "_includes/nieuwsoverzicht" with { nieuws: nieuws } only %}
+				
+				<div class="row mt-3">
 					<div class="col">
 						<a href="/nieuws" class="button-secondary">Nieuwsoverzicht</a>
 					</div>
 				</div>
-
 			</section>
 		{% endif %}
 	</div>
