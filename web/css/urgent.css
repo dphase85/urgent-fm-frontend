@@ -143,24 +143,15 @@ h2.card-title {
     display: block;
   }
   .editorsPick .mixcloud-link img, .editorsPick .mixcloud-link p {
-    max-width: 9rem;
+    max-width: 100%;
   }
 }
 @media (min-width: 576px) {
   .editorsPick .mixcloud-link img, .editorsPick .mixcloud-link p {
-    max-width: 14rem;
+    max-width: 100%;
   }
 }
-@media (min-width: 769px) {
-  .hpBanner {
-    height: 75vh;
-  }
-  .banner-programma {
-    max-height: 75vh;
-  }
-  .banner-window {
-    height: 75vh;
-  }
+@media (min-width: 768px) {
   .timeslots ul, .timeslots .collapse, #multiCollapse3 {
     display: block !important;
   }
@@ -177,25 +168,10 @@ h2.card-title {
     display: inline-block;
   }
   .editorsPick .mixcloud-link img, .editorsPick .mixcloud-link p {
-    max-width: 10rem;
+    max-width: 100%;
   }
 }
 @media (min-width: 992px) {
-  .hpBanner {
-    height: 75vh;
-  }
-  .banner-programma {
-    max-height: 75vh;
-  }
-  .hpBanner {
-    height: 75vh;
-  }
-  .banner-programma {
-    max-height: 75vh;
-  }
-  .banner-window {
-    height: 75vh;
-  }
   .timeslots ul, .timeslots .collapse, #multiCollapse3 {
     display: block !important;
   }
@@ -212,19 +188,10 @@ h2.card-title {
     display: inline-block;
   }
   .editorsPick .mixcloud-link img, .editorsPick .mixcloud-link p {
-    max-width: 9rem;
+    max-width: 100%;
   }
 }
 @media (min-width: 1200px) {
-  .hpBanner {
-    height: 75vh;
-  }
-  .banner-programma {
-    max-height: 75vh;
-  }
-  .banner-window {
-    height: 75vh;
-  }
   .container:not(.navbar .container, footer .container, .modal-background .container) {
     width: 60vw;
   }
@@ -243,7 +210,7 @@ h2.card-title {
 }
 @media (min-width: 1350px) {
   .editorsPick .mixcloud-link img, .editorsPick .mixcloud-link p {
-    max-width: 12rem;
+    max-width: 100%;
   }
 }
 @media (min-width: 1900px) {
@@ -252,15 +219,6 @@ h2.card-title {
   }
   h1 {
     font-size: calc(3.5 * 1rem);
-  }
-  .hpBanner {
-    height: 75vh;
-  }
-  .banner-programma {
-    max-height: 75vh;
-  }
-  .banner-window {
-    height: 75vh;
   }
   .timeslots ul, .timeslots .collapse, #multiCollapse3 {
     display: block !important;
@@ -278,6 +236,10 @@ h2.card-title {
 
 .banner-image-container {
   overflow: hidden;
+}
+
+.hpBanner {
+  min-height: 75vh;
 }
 
 .banner-programma {
@@ -538,6 +500,11 @@ header {
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   border-radius: 50%;
+}
+
+.btn-light {
+  background-color: #3ED8A0;
+  color: #FFFFFF;
 }
 
 .button-primary, .button-secondary {
@@ -934,6 +901,15 @@ h2.sectionTitleCentered {
 
 .nav-link.link:hover {
   color: #3ED8A0;
+}
+
+.workshops {
+  margin-top: 3rem;
+  background-color: #FFFFFF;
+  padding: 2rem;
+}
+.workshops > *:last-child {
+  margin-bottom: 0;
 }
 
 /* Nieuwsoverzicht listing */

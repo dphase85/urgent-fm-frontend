@@ -124,7 +124,7 @@ h2.card-title {
     display: inline-block;
   }
   .banner-programma .button-primary,
-.banner-programma .button-secondary {
+  .banner-programma .button-secondary {
     font-size: calc(0.85 * 16px);
   }
   .modal-search {
@@ -148,8 +148,8 @@ h2.card-title {
     height: 75vh;
   }
   .timeslots ul,
-.timeslots .collapse,
-#multiCollapse3 {
+  .timeslots .collapse,
+  #multiCollapse3 {
     display: block !important;
   }
   .container:not(.navbar .container, footer .container, .modal-background .container) {
@@ -182,8 +182,8 @@ h2.card-title {
     height: 75vh;
   }
   .timeslots ul,
-.timeslots .collapse,
-#multiCollapse3 {
+  .timeslots .collapse,
+  #multiCollapse3 {
     display: block !important;
   }
   .container:not(.navbar .container, footer .container, .modal-background .container) {
@@ -216,8 +216,8 @@ h2.card-title {
     font-size: calc(3.5 * 16px);
   }
   .timeslots ul,
-.timeslots .collapse,
-#multiCollapse3 {
+  .timeslots .collapse,
+  #multiCollapse3 {
     display: block !important;
   }
   .modal-search {
@@ -244,8 +244,8 @@ h2.card-title {
     height: 75vh;
   }
   .timeslots ul,
-.timeslots .collapse,
-#multiCollapse3 {
+  .timeslots .collapse,
+  #multiCollapse3 {
     display: block !important;
   }
   .modal-search {

@@ -49,7 +49,7 @@
 		</style>
 
 		<div
-			class="banner-window d-flex align-items-center">
+			class="banner-window d-flex align-items-center m-3">
 			{# Zoek de huidige weekdag adhv date format param. 'w' (weekdag) #}
 			{% set dayOfTheWeek = 'now'|date('w') %}
 
@@ -58,8 +58,6 @@
 			{# Eerst checken of er een programma van de vorige dag op het huidig uur gespeeld wordt (vb: charged van 10pm tot 6 am) #}
 			{% set currentTime = 'now'|time('short') %}
 
-			{# TEST #}
-			{# {% set currentTime = '19:30' %} #}
 				{% if currentTime < '07:00' %}
 				{# Indien dit zo is, haal de programmatie op van de vorige dag #}
 				{% set dayOfTheWeek = dayOfTheWeek - 1 %}
@@ -117,7 +115,7 @@
 								<div class="col">
 									{% if nowOnair is not null %}
 										<h1>
-											<span>{{ programOnair.title }}</span>
+											<span class="text-break">{{ programOnair.title }}</span>
 										</h1>
 										<p class="banner-programma-intro">{{ programOnair.intro|nl2br }}</p>
 									{% endif %}
@@ -144,7 +142,7 @@
 									<button class="btn-vandaag-toggle btn btn-primary d-md-none my-3" type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapse1 multiCollapse2 multiCollapse3">Vandaag</button>
 								</div>
 							</div>
-							<div class="row row-cols-2">
+							<div class="row row-cols-1 row-cols-sm-2">
 								{% set isOnair = false %}
 								{% if timeslots|length < 6 %}
 									<div
@@ -158,7 +156,9 @@
 														<div class="col-5 col-sm-3 col-md-5 col-lg-4 col-xxl-4">
 															{{timeslot.beginuur|time('short')}}
 														</div>
-														<div class="col-7 col-sm-9 col-md-7 col-lg-8 col-xxl-8 ps-0">
+														{# <div class="col-12 col-sm-9 col-md-7 col-lg-8 col-xxl-8 ps-sm-0 text-break"> #}
+														<div class="col-12 col-lg-8 col-xxl-8 ps-lg-0 text-break">
+
 															{% if nowOnair is not null and programma.title == programOnair.title and (timeslot.beginuur|time	('short') == nowOnair.beginuur|	time('short') and timeslot.einduur|time			('short') == 	nowOnair.einduur|time('short')) %}
 																<strong>{{ programma.title }}</strong>
 																{% set isOnair = true %}
@@ -183,11 +183,13 @@
 										class="collapse multi-collapse" id="multiCollapse1">
 										{% for timeslot in timeslots %}
 											{% set programma = timeslot.programma.one() %}
-											<div class="row">
+											{# <div class="row mb-2 mb-sm-0"> #}
+											<div class="row mb-2 mb-lg-0">
 												<div class="col-5 col-sm-3 col-md-5 col-lg-4 col-xxl-4">
 													{{timeslot.beginuur|time('short')}}
 												</div>
-												<div class="col-7 col-sm-9 col-md-7 col-lg-8 col-xxl-8 ps-0">
+													{# <div class="col-12 col-sm-9 col-md-7 col-lg-8 col-xxl-8 ps-sm-0 text-break"> #}
+													<div class="col-12 col-lg-8 col-xxl-8 ps-lg-0 text-break">
 													{% if nowOnair is not null and programma.title == programOnair.title and (timeslot.beginuur|time	('short') == nowOnair.beginuur|	time('short') and timeslot.einduur|time			('short') == 	nowOnair.einduur|time('short')) %}
 														<strong>{{ programma.title }}</strong>
 														{% set isOnair = true %}

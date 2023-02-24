@@ -247,10 +247,6 @@ h2.card-title {
 	// 	font-size: $font-size-md;
 	// }
 
-	.hpBanner {
-		//TEST:
-		min-height: 75vh; 
-	}
 	
 	.hero {
 		min-height: $hero-height;
@@ -320,7 +316,9 @@ h2.card-title {
 		.mixcloud-link {
 
 			img, p {
-				max-width:9rem;
+				// max-width:9rem;
+				max-width:100%;
+
 			}
 		}
 	}
@@ -333,27 +331,29 @@ h2.card-title {
 		.mixcloud-link {
 
 			img, p {
-				max-width:14rem;
+				// max-width:14rem;
+				max-width:100%;
+
 			}
 		}
 	}
 }
 
-@media(min-width: 769px) {
+@media(min-width: 768px) {
 
 	
 	// Banner 
-	.hpBanner {
-		height: $banner-height;
-	}
+	// .hpBanner {
+	// 	height: $banner-height;
+	// }
 
-	.banner-programma {
-		max-height: 75vh;
-	}
+	// .banner-programma {
+	// 	max-height: 75vh;
+	// }
 
-	.banner-window {
-		height: 75vh;
-	}
+	// .banner-window {
+	// 	height: 75vh;
+	// }
 
 	.timeslots ul, .timeslots .collapse, #multiCollapse3 {
 		display: block !important;
@@ -380,33 +380,28 @@ h2.card-title {
 		.mixcloud-link {
 
 			img, p {
-				max-width:10rem;
+				// max-width:10rem;
+				max-width:100%;
+
 			}
 		}
 	}
 }
 
 @media(min-width: 992px) {
-	// Banner 
-	.hpBanner {
-		height: $banner-height;
-	}
 
-	.banner-programma {
-		max-height: 75vh;
-	}
 		// Banner 
-	.hpBanner {
-	    height: $banner-height;
-	}
+	// .hpBanner {
+	//     height: $banner-height;
+	// }
 
-	.banner-programma {
-		max-height: 75vh;
-	}
+	// .banner-programma {
+	// 	max-height: 75vh;
+	// }
 
-	.banner-window {
-		height: 75vh;
-	}
+	// .banner-window {
+	// 	height: 75vh;
+	// }
 
 	.timeslots ul, .timeslots .collapse, #multiCollapse3 {
 		display: block !important;
@@ -435,7 +430,9 @@ h2.card-title {
 		.mixcloud-link {
 
 			img, p {
-				max-width:9rem;
+				// max-width:9rem;
+				max-width:100%;
+
 			}
 		}
 	}
@@ -444,17 +441,17 @@ h2.card-title {
 
 @media(min-width: 1200px) {
 	// Banner 
-	.hpBanner {
-		height: $banner-height;
-	}
+	// .hpBanner {
+	// 	height: $banner-height;
+	// }
 
-	.banner-programma {
-		max-height: 75vh;
-	}
+	// .banner-programma {
+	// 	max-height: 75vh;
+	// }
 
-	.banner-window {
-		height: 75vh;
-	}
+	// .banner-window {
+	// 	height: 75vh;
+	// }
 	
 	.container:not(.navbar .container, footer .container, .modal-background .container) {
 		width: $container-width;
@@ -481,7 +478,9 @@ h2.card-title {
 		.mixcloud-link {
 
 			img, p {
-				max-width:12rem;
+				// max-width:12rem;
+				max-width:100%;
+
 			}
 		}
 	}
@@ -496,17 +495,17 @@ h2.card-title {
 	}
 
 	// Banner 
-	.hpBanner {
-	    height: $banner-height;
-	}
+	// .hpBanner {
+	//     height: $banner-height;
+	// }
 
-	.banner-programma {
-		max-height: 75vh;
-	}
+	// .banner-programma {
+	// 	max-height: 75vh;
+	// }
 
-	.banner-window {
-		height: 75vh;
-	}
+	// .banner-window {
+	// 	height: 75vh;
+	// }
 
 	.timeslots ul, .timeslots .collapse, #multiCollapse3 {
 		display: block !important;
@@ -533,6 +532,11 @@ h2.card-title {
 }
 
 // Homepage banner styling
+.hpBanner {
+	//TEST:
+	min-height: 75vh; 
+}
+
 .banner-programma {
 	background-color: $color-white;
 	li {
@@ -632,12 +636,6 @@ header {
 	height: inherit;
 }
 
-// .header-hidden {
-// 	// Eerst zo proberen, indien transition niet werkt dan transzform gebruiken
-// 	// display: none;
-// 	transform: translateY(-200px);
-// }
-
 .navbar {
 	z-index: 7000;
 	border-bottom-width: 0;
@@ -683,10 +681,6 @@ header {
 	}
 }
 
-
-// .subnav {
-	
-// }
 
 
 // Banner programma
@@ -827,6 +821,11 @@ header {
 }
 
 // Buttons
+.btn-light {
+	background-color: $color-accent;
+	color: $color-white;
+}
+
 .button-primary, .button-secondary {
 	background-position-y: center;
 	background-position-x: $space-xs;
@@ -1239,6 +1238,16 @@ h2.sectionTitleCentered {
 	color: $color-accent;
 }
 
+.workshops {
+	margin-top: 3rem;
+	background-color: $color-white;
+	padding: 2rem;
+
+	> *:last-child {
+		margin-bottom: 0;
+	}
+}
+
 /* Nieuwsoverzicht listing */
 .nwsOverzicht h2 {
     color: black;
@@ -1332,6 +1341,7 @@ h2.sectionTitleCentered {
     vertical-align: middle;
 }
 
+// Wie zijn we
 
 
 // Fix iframe height
