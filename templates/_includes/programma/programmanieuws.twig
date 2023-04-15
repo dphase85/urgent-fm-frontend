@@ -1,12 +1,10 @@
 {% for item in prgNieuws %}
-	<div class="row mt-2">
-		<div class="col">
-			<div class="programmanieuws">
+
+			<article class="programmanieuws mt-2">
 				<h3>{{ item.title }}</h3>
 				<p class="mb-0">
 					{{ item.programmanieuwsInhoud }}
 				</p>
-			</div>
-		</div>
-	</div>
+			</article>
+
 {% endfor %}

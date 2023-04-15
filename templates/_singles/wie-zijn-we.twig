@@ -8,37 +8,28 @@
     {% set backgroundImageSmall = image.getUrl('bannerImageS640w') %}
     {% set backgroundImageMedium = image.getUrl('bannerImageM1280w') %}
     {% set backgroundImageLarge = image.getUrl('bannerImageL1600w') %}
-    {% set backgroundImageExtraLarge = image.getUrl('bannerImageXl1920w') %}
-    <div class="d-flex align-items-center justify-content-center hpBanner" >
-		<picture style="width: 100%; height: {{heroHeight}}vh">
+    {% set backgroundImageExtraLarge = image.getUrl('bannerImageXl2560w') %}
+    <div class="hero d-flex align-items-center justify-content-center" >
+		<picture class="hero-background-picture">
 			<source srcset="{{ backgroundImageExtraLarge }}" media="(min-width: 1920px)">
 			<source srcset="{{ backgroundImageLarge }}" media="(min-width: 1600px)">
 			<source srcset="{{ backgroundImageMedium }}" media="(min-width: 1280px)">
 			<source srcset="{{ backgroundImageSmall }}" media="(max-width: 1279px)">
-			<img src="{{ backgroundImageMedium }}" alt="picture of {{title}}" style="height:{{heroHeight}}vh; object-fit:cover; object-position:center; width:100%; position: relative"/>
+			<img src="{{ backgroundImageMedium }}" alt="picture of {{title}}" />
 		</picture>
-        <div class="container banner-content align-self-end" style="position: absolute; left:0; right:0;">
+        <div class="hero-content  container align-self-end">
             <h1 id="title" data-title="Wie zijn we"><span>Wie zijn we</span></h1>
         </div>
     </div>
 
     <div class="main container">
         <div class="row">
-        {# {% include "_includes/overUrgentfmMenu" %}  #}
             <div class="col">
-                
-                {{ entry.singlesInhoud }}
-                
+                <article>
+                    {{ entry.singlesInhoud }}
+                </article>
             </div>
         </div>
-        {# <div class="row mt-5">
-            <div class="col d-flex justify-content-end">
-                <a href="/workshops" class="btn btn-light">
-                    Workshops					
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-chevron-right" viewbox="0 0 16 16"><path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/></svg>
-                </a>					
-            </div>
-        </div> #}
     </div>
 {% endblock %}
 

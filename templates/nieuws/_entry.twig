@@ -11,28 +11,24 @@
 	{% set backgroundImageSmall = image.getUrl('bannerImageS640w') %}
 	{% set backgroundImageMedium = image.getUrl('bannerImageM1280w') %}
 	{% set backgroundImageLarge = image.getUrl('bannerImageL1600w') %}
-	{% set backgroundImageExtraLarge = image.getUrl('bannerImageXl1920w') %}
+	{% set backgroundImageExtraLarge = image.getUrl('bannerImageXl2560w') %}
 
-	<div class="d-flex hpBanner banner">
-		<picture style="width: 100%; height: {{heroHeight}}vh">
+	<div class="hero d-flex">
+		<picture class="hero-background-picture">
 			<source srcset="{{ backgroundImageExtraLarge }}" media="(min-width: 1920px)">
 			<source srcset="{{ backgroundImageLarge }}" media="(min-width: 1600px)">
 			<source srcset="{{ backgroundImageMedium }}" media="(min-width: 1280px)">
 			<source srcset="{{ backgroundImageSmall }}" media="(max-width: 1279px)">
-			<img src="{{ backgroundImageMedium }}" alt="picture of {{title}}" style="height:{{heroHeight}}vh; object-fit:cover; object-position:center; width:100%; position: relative"/>
+			<img src="{{ backgroundImageMedium }}" alt="picture of {{title}}"/>
 		</picture>
 
-		<div class="container banner-content align-self-end" style="position: absolute; left:0; right:0;">
+		<div class="hero-content container align-self-end">
 			<div class="row">
 				<div class="col">
 					{% import "_macros/_ui" as ui %}
 					{{ ui.setCategory(rootCategory, 'nieuws') }}
-				</div>
-			</div>
 
-			<div class="row mt-1">
-				<div class="col">
-					<h1 id="title" data-title="{{ entry.title }}">
+					<h1 class="mt-1" id="title" data-title="{{ entry.title }}">
 						<span>{{ entry.title }}</span>
 					</h1>
 				</div>
@@ -43,11 +39,10 @@
 	<div role="main" class="main container">
 		<div class="row">
 			<div class="col">
-				<section>
-					<p>
+				<article>
+					<p class="intro">
 						<strong>{{ entry.intro }}</strong>
 					</p>
-
 					{% for block in entry.nieuwsInhoud.all() %}
 						{% switch block.type %}
 
@@ -59,50 +54,42 @@
 							{% case "fotoreeks" %}
 								<h2>Foto's</h2>
 								<div class="nieuws-fotoreeks my-3">
-								
+
 									{% for foto in block.fotoreeks.all() %}
 
-									{% set img = {
+										{% set img = {
                   					  mode:'crop',
                   					  width: 200,
                   					  height: 200,
                   					  quality: 90
                   					} %}
 
-									<img src="{{ foto.getUrl(img) }}" alt="{{ foto.title }}"/>
+										<img src="{{ foto.getUrl(img) }}" alt="{{ foto.title }}"/>
 
 									{% endfor %}
 								</div>
 						{% endswitch %}
 					{% endfor %}
-				</section>
+
+					{% set nieuws = craft.entries()
+    	  				.section('nieuws')
+    	  				.relatedTo(entry.nieuwsCategories)
+    	  				.id('not ' ~ entry.id)
+    	  				.orderBy('postDate DESC')
+    	  				.limit(4)
+    	  				.all() %}
+
+					{% if nieuws|length %}
+						<aside>
+							<h2 class="mt-5 mb-3">Lees ook dit:</h2>
+
+							{% include "_includes/nieuwsoverzicht" with { nieuws: nieuws, numberOfItemsIsEven: true } only %}
+
+							<a href="/nieuws" class="button-secondary my-5">Nieuwsoverzicht</a>
+						</aside>
+					{% endif %}
+				</article>
 			</div>
 		</div>
-
-
-		{% set nieuws = craft.entries()
-    	  .section('nieuws')
-    	  .relatedTo(entry.nieuwsCategories)
-    	  .id('not ' ~ entry.id)
-    	  .orderBy('postDate DESC')
-    	  .limit(4)
-    	  .all() %}
-
-		{% if nieuws|length %}
-			<section id="suggestions" class="mt-5">
-				<div class="row">
-					<div class="col">
-						<h5>Lees ook dit:</h5>
-					</div>
-				</div>
-				{% include "_includes/nieuwsoverzicht" with { nieuws: nieuws } only %}
-				
-				<div class="row mt-3">
-					<div class="col">
-						<a href="/nieuws" class="button-secondary">Nieuwsoverzicht</a>
-					</div>
-				</div>
-			</section>
-		{% endif %}
 	</div>
 {% endblock %}

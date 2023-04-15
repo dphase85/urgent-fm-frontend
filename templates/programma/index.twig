@@ -4,95 +4,95 @@
 	<div class="main container programmaschema">
 		<div class="row banner-none">
 			<div class="col">
-				<h1>Programmaschema</h1>
-			</div>
-		</div>
+				<h1 class="mb-3">Programmaschema</h1>
 
-		<div class="row progschema-navbar-container">
-			<div class="col d-none d-md-block d-lg-block">
-				<ul class="progSchema-navbar mb-0">
-					<li>
-						<button class="tabs-button" data-for-tab="1">Maandag</button>
-					</li>
-					<li>
-						<button class="tabs-button" data-for-tab="2">Dinsdag</button>
-					</li>
-					<li>
-						<button class="tabs-button" data-for-tab="3">Woensdag</button>
-					</li>
-					<li>
-						<button class="tabs-button" data-for-tab="4">Donderdag</button>
-					</li>
-					<li>
-						<button class="tabs-button" data-for-tab="5">Vrijdag</button>
-					</li>
-					<li>
-						<button class="tabs-button" data-for-tab="6">Zaterdag</button>
-					</li>
-					<li>
-						<button class="tabs-button" data-for-tab="0">Zondag</button>
-					</li>
-				</ul>
-			</div>
+				<div class="progschema-navbar-container">
+					<div class="d-none d-md-block d-lg-block">
+						<ul class="progSchema-navbar mb-0">
+							<li>
+								<button class="tabs-button" data-for-tab="1">Maandag</button>
+							</li>
+							<li>
+								<button class="tabs-button" data-for-tab="2">Dinsdag</button>
+							</li>
+							<li>
+								<button class="tabs-button" data-for-tab="3">Woensdag</button>
+							</li>
+							<li>
+								<button class="tabs-button" data-for-tab="4">Donderdag</button>
+							</li>
+							<li>
+								<button class="tabs-button" data-for-tab="5">Vrijdag</button>
+							</li>
+							<li>
+								<button class="tabs-button" data-for-tab="6">Zaterdag</button>
+							</li>
+							<li>
+								<button class="tabs-button" data-for-tab="0">Zondag</button>
+							</li>
+						</ul>
+					</div>
 
-			<!-- dropdown menu op klein scherm -->
-			<div class="col d-lg-none d-md-none dropdown mb-3">
-				<button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="progSchema-dropdownMenu-buttopn">
-					<span id="weekdag-selected"></span>
-				</button>
-				<div id="dropdown-menu-small-screens" class="dropdown-menu" aria-labelledby="progSchema-dropdownMenu-button">
-					<button class="tabs-button dropdown-item" data-for-tab="1">Maandag</button>
-					<button class="tabs-button dropdown-item" data-for-tab="2">Dinsdag</button>
-					<button class="tabs-button dropdown-item" data-for-tab="3">Woensdag</button>
-					<button class="tabs-button dropdown-item" data-for-tab="4">Donderdag</button>
-					<button class="tabs-button dropdown-item" data-for-tab="5">Vrijdag</button>
-					<button class="tabs-button dropdown-item" data-for-tab="6">Zaterdag</button>
-					<button class="tabs-button dropdown-item" data-for-tab="0">Zondag</button>
+					<!-- dropdown menu op klein scherm -->
+					<div class="d-lg-none d-md-none dropdown mb-3">
+						<button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="progSchema-dropdownMenu-buttopn">
+							<span id="weekdag-selected"></span>
+						</button>
+						<div id="dropdown-menu-small-screens" class="dropdown-menu" aria-labelledby="progSchema-dropdownMenu-button">
+							<button class="tabs-button dropdown-item" data-for-tab="1">Maandag</button>
+							<button class="tabs-button dropdown-item" data-for-tab="2">Dinsdag</button>
+							<button class="tabs-button dropdown-item" data-for-tab="3">Woensdag</button>
+							<button class="tabs-button dropdown-item" data-for-tab="4">Donderdag</button>
+							<button class="tabs-button dropdown-item" data-for-tab="5">Vrijdag</button>
+							<button class="tabs-button dropdown-item" data-for-tab="6">Zaterdag</button>
+							<button class="tabs-button dropdown-item" data-for-tab="0">Zondag</button>
+						</div>
+					</div>
+
 				</div>
-			</div>
 
-		</div>
-
-		<div class="row progSchema-tabsContainer">
-			<div class="col">
-				{% set weekdagen = craft.entries()
+				<div
+					class="progSchema-tabsContainer mb-5">
+					{# <div class="col"> #}
+					{% set weekdagen = craft.entries()
                .section('programScheme')
                .orderBy('title')
                .all() %}
 
-				{% for i in 0..6 %}
-					<div class="tab" data-tab="{{ i }}">
-						{% set weekdag = weekdagen[i] %}
-						<h1 class="weekday">{{ weekdag.title|slice(3, weekdag.title|length) }}</h1>
-						{# De timeslots worden geordend in admin scherm => entries, maar worden bij het processen van de output nogmaals geordend, bij wijze van finale output controle. #}
-						{% set timeslots = weekdag.weekdag.all() %}
+					{% for i in 0..6 %}
+						<div class="tab" data-tab="{{ i }}">
+							{% set weekdag = weekdagen[i] %}
+							<h1 class="weekday">{{ weekdag.title|slice(3, weekdag.title|length) }}</h1>
+							{# De timeslots worden geordend in admin scherm => entries, maar worden bij het processen van de output nogmaals geordend, bij wijze van finale output controle. #}
+							{% set timeslots = weekdag.weekdag.all() %}
 
-						{% for timeslot in timeslots %}
-							{% set programma = timeslot.programma.one() %}
+							{% for timeslot in timeslots %}
+								{% set programma = timeslot.programma.one() %}
 
-							<a class="programmaschema-dag" href="{{ programma.getUrl }}">
-								<div class="slot py-2">
+								<a class="programmaschema-dag" href="{{ programma.getUrl }}">
+									<div class="slot py-2">
+										<div class="row">
+											<div class="col-2 col-md-1 d-flex align-items-center">
+												<h5 class="ms-2 mb-0 programmaschema-uur">
+													{{ timeslot.beginuur|time('short') }}</h5>
+											</div>
+											<div class="col-10 col-md-11 d-flex align-items-center">
+												<h3 class="m-0">{{ programma.title }}</h3>
+											</div>
+										</div>
+									</row>
 									<div class="row">
-										<div class="col-2 col-md-1 d-flex align-items-center">
-											<h5 class="ms-2 mb-0 programmaschema-uur">
-												{{ timeslot.beginuur|time('short') }}</h5>
+										<div class="col-2 col-md-1"></div>
+										<div class="col-10 col-md-11 ">
+											<p>{{ programma.intro|nl2br  }}</p>
 										</div>
-										<div class="col-10 col-md-11 d-flex align-items-center">
-											<h3 class="m-0">{{ programma.title }}</h3>
-										</div>
-									</div>
-								</row>
-								<div class="row">
-									<div class="col-2 col-md-1"></div>
-									<div class="col-10 col-md-11 ">
-										<p>{{ programma.intro|nl2br  }}</p>
 									</div>
 								</div>
-							</div>
-						</a>
-					{% endfor %}
-				</div>
-			{% endfor %}
+							</a>
+						{% endfor %}
+					</div>
+				{% endfor %}
+			</div>
 		</div>
 	</div>
 </div>{% endblock %}

@@ -1,46 +1,34 @@
 <!-- Editor's pick-->
-<div class="container-fluid editorsPick py-3">
-	<div class="swiffy-slider slider-item-show6 slider-item-reveal slider-nav-round">
-		<div class="container">
+<section>
+	<div class="container-fluid editorsPick py-3">
+		<div class="swiffy-slider slider-item-show6 slider-item-reveal slider-nav-round">
 			<div class="row">
 				<div class="col">
 					<h2 class="sectionTitleCentered">Herbeluister:</h2>
+					<ul class="slider-container">
+						{% for i in 0..14 %}
+							<li class="slide-visible" id="pick-{{ i }}">
+								<article>
+									<a class="mixcloud-link" href="" target="_blank">
+										<img src="" alt="">
+										<p></p>
+									</a>
+								</article>
+							</li>
+						{% endfor %}
+						<li class="slide-visible">
+							<article>
+								<a class="mixcloud-link" href="https://www.mixcloud.com/urgentfm/" target="_blank">
+									<img src="/images/btn_Herbeluister.svg" alt="Herbeluister alle Urgent.fm shows"/>
+									<p>Urgent.fm op Mixcloud.com</p>
+								</a>
+							</article>
+						</li>
+					</ul>
+					<button type="button" class="slider-nav"></button>
+					<button type="button" class="slider-nav slider-nav-next"></button>
 				</div>
 			</div>
 		</div>
-
-		<ul class="slider-container">
-			{% for i in 0..14 %}
-				<li class="slide-visible" id="pick-{{ i }}">
-					<div>
-						<a class="mixcloud-link" href="" target="_blank">
-{#							<div class="mixcloud-thumb-image"> #}
-							<img src="" alt="">
-{#							</div> #}
-							<p>
-							</p>
-						</a>
-					</div>
-
-				</li>
-			{% endfor %}
-
-			<li class="slide-visible">
-					<div>
-						<a class="mixcloud-link" href="https://www.mixcloud.com/urgentfm/" target="_blank">
-{#							<div class="mixcloud-thumb-image"> #}
-							<img src="/images/btn_Herbeluister.svg" alt="Herbeluister alle Urgent.fm shows" />
-{#							</div> #}
-							<p>Urgent.fm op Mixcloud.com</p>
-						</a>
-					</div>
-			
-			
-
-			</li>
-		</ul>
-
-		<button type="button" class="slider-nav"></button>
-		<button type="button" class="slider-nav slider-nav-next"></button>
 	</div>
-</div>
+</section>

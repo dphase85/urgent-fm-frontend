@@ -12,21 +12,20 @@
 	<div role="main" class="main container">
 		<div class="row banner-none">
 			<div class="col">
-				<h1>Urgent.fm nieuws</h1>
+				<section>
+					<h1 class="mb-3">Urgent.fm nieuws</h1>
+
+					{% set nieuwsQuery = craft.entries.section('nieuws')
+						.section('nieuws')
+						.relatedTo(filterCategories)
+						.limit(9) %}
+					{% set nieuws = nieuwsQuery.all() %}
+
+					{% paginate nieuwsQuery as pageInfo, pageEntries %}
+					{% include "_includes/nieuwsoverzicht" with { nieuws: pageEntries, numberOfItemsIsEven: false } only %}
+					{{ ui.setPagination(pageInfo) }}
+				</section>
 			</div>
 		</div>
-
-		<section class="nieuws-listing mt-0">
-			{% set nieuwsQuery = craft.entries.section('nieuws')
-				.section('nieuws')
-				.relatedTo(filterCategories)
-				.limit(9) %}
-			{% set nieuws = nieuwsQuery.all() %}
-			
-			{% paginate nieuwsQuery as pageInfo, pageEntries %}
-			{% include "_includes/nieuwsoverzicht" with { nieuws: pageEntries } only %}
-		</section>
-
-		{{ ui.setPagination(pageInfo) }}
 	</div>
 {% endblock %}

@@ -9,25 +9,23 @@
 
 
 	{% set image = entry.singlesBannerImage.one() %}
-    {% set backgroundImageExtraSmall = image.getUrl('bannerImageXs') %}
-    {% set backgroundImageSmall = image.getUrl('bannerImageS640w') %}
-    {% set backgroundImageMedium = image.getUrl('bannerImageM1280w') %}
-    {% set backgroundImageLarge = image.getUrl('bannerImageL1600w') %}
-    {% set backgroundImageExtraLarge = image.getUrl('bannerImageXl1920w') %}
-	<div
-		class="d-flex align-items-center justify-content-center hero" style="{# background-image: url('{{ image.url }}');background-position: center;#} ">
-		<picture style="width: 100%; height: {{heroHeight}}vh">
+	{% set backgroundImageExtraSmall = image.getUrl('bannerImageXs') %}
+	{% set backgroundImageSmall = image.getUrl('bannerImageS640w') %}
+	{% set backgroundImageMedium = image.getUrl('bannerImageM1280w') %}
+	{% set backgroundImageLarge = image.getUrl('bannerImageL1600w') %}
+	{% set backgroundImageExtraLarge = image.getUrl('bannerImageXl2560w') %}
+	<div class="hero d-flex align-items-center justify-content-center">
+		<picture class="hero-background-picture">
 			<source srcset="{{ backgroundImageExtraLarge }}" media="(min-width: 1920px)">
 			<source srcset="{{ backgroundImageLarge }}" media="(min-width: 1600px)">
 			<source srcset="{{ backgroundImageMedium }}" media="(min-width: 1280px)">
 			<source srcset="{{ backgroundImageSmall }}" media="(max-width: 1279px)">
-			<img src="{{ backgroundImageMedium }}" alt="picture of {{title}}" style="height:{{heroHeight}}vh; object-fit:cover; object-position:center; width:100%; position: relative"/>
+			<img src="{{ backgroundImageMedium }}" alt="picture of {{title}}" />
 		</picture>
 
 
-		<div
-			class="container banner-content align-self-end" style="position: absolute; left:0; right:0;">
-			{# <div class="container banner-window banner-content d-flex align-items-center" style="position: absolute"> #}
+		<div class="hero-content container align-self-end">
+	
 			<h1 id="title" data-title="{{ entry.title }}">
 				<span>Contact</span>
 			</h1>
@@ -35,15 +33,11 @@
 	</div>
 
 	<div class="main container">
-
 		<div class="row">
 			<div class="col">
 				<h2>Hoe kan je ons bereiken?</h2>
 				<h3>Urgent.fm @ De Krook Gent</h3>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col">
+
 				<p>
 					<strong>Urgent.fm vzw
 						<br>
@@ -64,141 +58,135 @@
 					Je ziet de radiostudio en redactieruimte vanuit de overdekte fietsstalling, onder de hoofdingang, waar ook onze (dienst-)ingang zich bevindt.
 				</p>
 
-			</div>
-		</div>
-		<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
-			<div class="col">
-				<div class="card w-100 h-100">				
-					<div class="card-body">
-						<h4 class="card-title">Leveringsadres</h4>
-						<div class="card-text">Urgent.fm<br>Platteberg 11<br>9000 Gent</div>
+
+				<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+					<div class="col">
+						<div class="card-contact card w-100 h-100">
+							<div class="card-body">
+								<h4 class="card-title">Leveringsadres</h4>
+								<div class="card-text">Urgent.fm<br>Platteberg 11<br>9000 Gent</div>
+							</div>
+						</div>
+					</div>
+					<div class="col">
+						<div class="card-contact card w-100 h-100">
+							<div class="card-body">
+								<h4 class="card-title">Postadres</h4>
+								<div class="card-text">Urgent.fm<br>Miriam Makebaplein 1<br>9000 Gent</div>
+							</div>
+						</div>
+					</div>
+					<div class="col">
+						<div class="card-contact card w-100 h-100">
+							<div class="card-body">
+								<h4 class="card-title">Facturatiegegevens</h4>
+								<div class="card-text">Urgent.fm vzw<br>Miriam Makebaplein 1<br>9000 Gent<br>Btw.nr. 0457 048 162</div>
+							</div>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="col">
-				<div class="card w-100 h-100">
-					<div class="card-body">
-						<h4 class="card-title">Postadres</h4>
-						<div class="card-text">Urgent.fm<br>Miriam Makebaplein 1<br>9000 Gent</div>
-					</div>
-				</div>
-			</div>
-			<div class="col">
-				<div class="card w-100 h-100">
-					<div class="card-body">
-					<h4 class="card-title">Facturatiegegevens</h4>
-						<div class="card-text">Urgent.fm vzw<br>Miriam Makebaplein 1<br>9000 Gent<br>Btw.nr. 0457 048 162</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row mt-5">
-			<div class="col">
-				<h2>Meewerken of stage?</h2>
+
+				<h2 class="mt-5">Meewerken of stage?</h2>
 				<p>
 					Richt je mail aan:
 					<a href="mailto:contact@urgent.fm">Tania Selleslags</a>
 				</p>
-			</div>
-		</div>
-		<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
-			<div class="col">
-				<div class="card w-100 h-100">
-					<div class="card-body">
-						<h4>Coördinatie studentenwerking</h4>
-						<div class="card-text">
-							UGent Praeses
-							<a href="mailto:praeses@urgent.fm">Anne De Wulf</a><br>
-							Coördinator Urgent.fm,
-							<a href="mailto:tania.selleslags@urgent.fm">Tania Selleslags</a><br>
-							De studentenprogrammatie:
-							<a href="mailto:versgeperst@urgent.fm">Vers Geperst</a>
-							en
-							<a href="mailto:spoetnik@urgent.fm">Spoetnik</a>
+
+				<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+					<div class="col">
+						<div class="card-contact card w-100 h-100">
+							<div class="card-body">
+								<h4>Coördinatie studentenwerking</h4>
+								<div class="card-text">
+									UGent Praeses
+									<a href="mailto:praeses@urgent.fm">Anne De Wulf</a><br>
+									Coördinator Urgent.fm,
+									<a href="mailto:tania.selleslags@urgent.fm">Tania Selleslags</a><br>
+									De studentenprogrammatie:
+									<a href="mailto:versgeperst@urgent.fm">Vers Geperst</a>
+									en
+									<a href="mailto:spoetnik@urgent.fm">Spoetnik</a>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col">
+						<div class="card-contact card w-100 h-100">
+							<div class="card-body">
+								<div class="card-text">
+									<h4>Partner en publiciteit?</h4>
+									<a href="mailto:contact@urgent.fm">contact@urgent.fm</a>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
 
-			<div class="col">
-				<div class="card w-100 h-100">
-					<div class="card-body">
-						<div class="card-text">
-							<h4>Partner en publiciteit?</h4>
-							<a href="mailto:contact@urgent.fm">contact@urgent.fm</a>
+
+				<h2 class="mt-5 mb-3">Redacties</h2>
+
+
+				<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+					<div class="col d-flex align-items-stretch">
+						<div class="card-contact card w-100 h-100">
+							<div class="card-body">
+								<h4>Vers Geperst</h4>
+								<a href="mailto:versgeperst@urgent.fm">versgeperst@urgent.fm<br>
+
+								</a>Producers:
+								<br><a href="mailto:camille.goris@urgent.fm">Camille Goris</a>
+								en
+								<a href="ilias.vanbambost@urgent.fm">Ilias Van Bambost</a>
+							</div>
+						</div>
+					</div>
+					<div class="col d-flex align-items-stretch">
+						<div class="card-contact card w-100 h-100">
+							<div class="card-body">
+								<h4>Spoetnik</h4>
+								<a href="mailto:spoetnik@urgent.fm">spoetnik@urgent.fm</a><br>
+
+								Producers:<br><a href="mailto:anne.dewulf@urgent.fm">Anne Dewulf</a>,
+								<a href="mailto:freyan.bosma@urgent.fm">Freyan Bosma</a>
+								en
+								<a href="mailto:jari.debrabander@urgent.fm">Jari De Brabander</a>
+							</div>
+						</div>
+					</div>
+					<div class="col d-flex align-items-stretch">
+						<div class="card-contact card w-100 h-100">
+							<div class="card-body">
+								<h4>Tumult</h4>
+								<a href="mailto:tumult@urgent.fm">tumult@urgent.fm</a><br><a href="mailto:timon.vandevoorde@urgent.fm">timon.vandevoorde@urgent.fm</a>
+
+							</div>
+						</div>
+					</div>
+					<div class="col d-flex align-items-stretch">
+						<div class="card-contact card w-100 h-100">
+							<div class="card-body">
+								<h4>Opname- en livestudio</h4>
+								<a href="mailto:opnamestudio@urgent.fm">opnamestudio@urgent.fm</a><br>Coördinatoren:
+								<br>Chaitanya Bhagwat en Tom Van Haute
+							</div>
+						</div>
+					</div>
+					<div class="col d-flex align-items-stretch">
+						<div class="card-contact card w-100 h-100">
+							<div class="card-body">
+								<h4>Muziekredactie</h4>
+								<a href="mailto:muziek@urgent.fm">muziek@urgent.fm</a><br>Coördinatoren:
+								<br><a href="mailto:simon.santens@urgent.fm">Simon Santens</a>,
+								<a href="mailto:hella.beerten@urgent.fm">Hella Beerten</a>,
+								<a href="mailto:mathijs.verhaegen@urgent.fm">Mathijs Verhaegen</a>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
 
-		<div class="row mt-5">
-			<div class="col">
-				<h2>Redacties</h2>
-			</div>
-		</div>
 
-		<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
-			<div class="col d-flex align-items-stretch">
-				<div class="card w-100 h-100">
-					<div class="card-body">
-						<h4>Vers Geperst</h4>
-						<a href="mailto:versgeperst@urgent.fm">versgeperst@urgent.fm<br>
-
-						</a>Producers:
-						<br><a href="mailto:camille.goris@urgent.fm">Camille Goris</a>
-						en
-						<a href="ilias.vanbambost@urgent.fm">Ilias Van Bambost</a>
-					</div>
-				</div>
-			</div>
-			<div class="col d-flex align-items-stretch">
-				<div class="card w-100 h-100">
-					<div class="card-body">
-						<h4>Spoetnik</h4>
-						<a href="mailto:spoetnik@urgent.fm">spoetnik@urgent.fm</a><br>
-
-						Producers:<br><a href="mailto:anne.dewulf@urgent.fm">Anne Dewulf</a>,
-						<a href="mailto:freyan.bosma@urgent.fm">Freyan Bosma</a>
-						en
-						<a href="mailto:jari.debrabander@urgent.fm">Jari De Brabander</a>
-					</div>
-				</div>
-			</div>
-			<div class="col d-flex align-items-stretch">
-				<div class="card w-100 h-100">
-					<div class="card-body">
-						<h4>Tumult</h4>
-						<a href="mailto:tumult@urgent.fm">tumult@urgent.fm</a><br><a href="mailto:timon.vandevoorde@urgent.fm">timon.vandevoorde@urgent.fm</a>
-
-					</div>
-				</div>
-			</div>
-			<div class="col d-flex align-items-stretch">
-				<div class="card w-100 h-100">
-					<div class="card-body">
-						<h4>Opname- en livestudio</h4>
-						<a href="mailto:opnamestudio@urgent.fm">opnamestudio@urgent.fm</a><br>Coördinatoren:
-						<br>Chaitanya Bhagwat en Tom Van Haute
-					</div>
-				</div>
-			</div>
-			<div class="col d-flex align-items-stretch">
-				<div class="card w-100 h-100">
-					<div class="card-body">
-						<h4>Muziekredactie</h4>
-						<a href="mailto:muziek@urgent.fm">muziek@urgent.fm</a><br>Coördinatoren:
-						<br><a href="mailto:simon.santens@urgent.fm">Simon Santens</a>,
-						<a href="mailto:hella.beerten@urgent.fm">Hella Beerten</a>,
-						<a href="mailto:mathijs.verhaegen@urgent.fm">Mathijs Verhaegen</a>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="row mt-5">
-			<div class="col">
-				<h2>Avond- en weekenprogramma's</h2>
+				<h2 class="mt-5">Avond- en weekenprogramma's</h2>
 				<p>De contactgegevens van de verschillende programma's zijn te vinden onder de programmalink in het
 					<a href="/programma">uitzendschema</a><br>
 					Algemene vragen over de avond en weekendprogramma's:
@@ -212,8 +200,8 @@
 		</div>
 
 		{#        
-																											            {{ entry.programmaInhoud }}
-																											            #}
+																													            {{ entry.programmaInhoud }}
+																													            #}
 
 	</div>
 {% endblock %}

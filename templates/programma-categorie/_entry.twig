@@ -9,12 +9,11 @@
 	<div role="main" class="main container">
 		<div class="row banner-none">
 			<div class="col">
-				<h1 id="title" data-title="{{ category.title }}">{{ category.title }}</h1>
+				<h1 class="mb-3" id="title" data-title="{{ category.title }}">{{ category.title }}</h1>
+
+				{% set entries = craft.entries.relatedTo(category).all() %}
+				{% include "_includes/relatedShows" with { entries: entries} only %}
 			</div>
 		</div>
-
-		{% set entries = craft.entries.relatedTo(category).all() %}
-
-		{% include "_includes/relatedShows" with { entries: entries} only %}
 	</div>
 {% endblock %}

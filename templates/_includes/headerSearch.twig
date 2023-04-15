@@ -5,17 +5,14 @@
 {% endif %}
 
 <div class="modal-search container">
-	<div class="row">
-		<div class="col">
-			<div class="float-end close">&times;</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col">
-			<form class="formZoek" action="{{ url('zoek/resultaten') }}">
-
-            {% include "_includes/zoek/searchbar" %}
-
+	<div class="d-flex flex-column align-items-center justify-content-center h-100">
+		<div class="w-100">
+			<form class="formZoek flex-column d-flex" action="{{ url('zoek/resultaten') }}">
+				{% embed '_includes/zoek/searchbar' %}
+					{% block closeButton %}
+						<div class="me-2 close">&times;</div>
+					{% endblock %}
+				{% endembed %}
 			</form>
 		</div>
 	</div>

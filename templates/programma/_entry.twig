@@ -25,21 +25,21 @@
 	{% set backgroundImageSmall = image.getUrl('bannerImageS640w') %}
 	{% set backgroundImageMedium = image.getUrl('bannerImageM1280w') %}
 	{% set backgroundImageLarge = image.getUrl('bannerImageL1600w') %}
-	{% set backgroundImageExtraLarge = image.getUrl('bannerImageXl1920w') %}
+	{% set backgroundImageExtraLarge = image.getUrl('bannerImageXl2560w') %}
 
-	<div class="d-flex align-items-center justify-content-center hero">
-		<picture style="width: 100%; height: {{heroHeight}}vh">
+	<section class="hero d-flex align-items-center justify-content-center">
+		<picture class="hero-background-picture">
 			<source srcset="{{ backgroundImageExtraLarge }}" media="(min-width: 1920px)">
 			<source srcset="{{ backgroundImageLarge }}" media="(min-width: 1600px)">
 			<source srcset="{{ backgroundImageMedium }}" media="(min-width: 1280px)">
 			<source srcset="{{ backgroundImageSmall }}" media="(max-width: 1279px)">
-			<img src="{{ backgroundImageMedium }}" alt="picture of {{title}}" style="height:{{heroHeight}}vh; object-fit:cover; object-position:center; width:100%; position: relative"/>
+			<img src="{{ backgroundImageMedium }}" alt="picture of {{title}}"/>
 		</picture>
 
-		<div class="container banner-content align-self-end" style="position: absolute; left:0; right:0;">
+		<div class="hero-content container align-self-end">
 			<div class="row flex-column flex-md-row mb-2">
 				<div class="col-3 col-md-auto">
-					{{ ui.setLogo(entry.programmaLogo.one(), "banner-logo img-fluid") }}
+					{{ ui.setLogo(entry.programmaLogo.one(), "banner-logo rounded-circle h-100") }}
 				</div>
 
 				<div class="col col-md-auto d-flex flex-column justify-content-center justify-content-md-end">
@@ -53,9 +53,8 @@
 
 
 					{# Eerst checken voor listen up. Indien ja: genereer een unieke uurmelding, anders: zoek per weekdag de timeslots op in het weekdag matrixveld, die gerelateerd zijn aan entry #}
-					{% if entry.title == 'Listen Up' %}
-						<div class="mt-1 programma-van-tot"> 
-							<span>Alle niet-live programma-uren.</span>
+						{% if entry.title == 'Listen Up' %}
+							<div class="mt-1 programma-van-tot"> <span>Alle niet-live programma-uren.</span>
 						</div>
 
 					{% else %}
@@ -80,7 +79,7 @@
 							{# Als alle dagen in de dagString geprint zijn, afsluiten met 'van' #}
 							{# {% set dagString = "#{dagString} van " %} #}
 							{# Hier gaan we ervan uit dat een programma, herhalend over meerdere dagen, steeds op het zelfde uur   geprogrammeerd staat #}
-							{% if dag is same as(weekdagen|last) %}
+								{% if dag is same as(weekdagen|last) %}
 								{% set timeslot = dag.weekdag.relatedTo({
                                 	targetElement: entry,
                                 	field: 'programma'
@@ -88,116 +87,103 @@
 									.one() 
 								%}
 
-								{% set timing = "#{timeslot.beginuur|time('short')} tot #{timeslot.einduur|time('short')}" %}
-							{% endif %}
+							{% set timing = "#{timeslot.beginuur|time('short')} tot #{timeslot.einduur|time('short')}" %}
+						{% endif %}
 						{% endfor %}
 
 						{# Programmering: De eerder opgebouwde stringvariabelen worden hier samengevoegd #}
-						<div class="mt-1 programma-van-tot"> 
-							<span>{{ [dagString, timing]|join(' van ') }}</span>
+							<div class="mt-1 programma-van-tot"> <span>{{ [dagString, timing]|join(' van ') }}</span>
 						</div>
 
 					{% endif %}
-						<div class="mt-1">
-							{% if rootCategory is not null %}
-								{{ ui.setCategory(rootCategory) }}
-							{% endif %}
-							{% if subCategories is not null %}
-								{% for subCategory in subCategories %}
-									{{ ui.setCategory(subCategory) }}
-								{% endfor %}
-							{% endif %}
-						</div>
+					<div class="d-flex flex-wrap">
+						{% if rootCategory is not null %}
+							{{ ui.setCategory(rootCategory) }}
+						{% endif %}
+						{% if subCategories is not null %}
+							{% for subCategory in subCategories %}
+								{{ ui.setCategory(subCategory) }}
+							{% endfor %}
+						{% endif %}
+					</div>
 				</div>
 			</div>
 
 		</div>
-	</div>
+	</section>
 
-	<div
+	<main
 		role="main" class="main container">
 		{# Programma inhoud #}
 
-		<section class="row">
-			<p class=" mt-0 mb-5">
-				<strong>{{ entry.intro|nl2br }}</strong>
-			</p>
-			{{ entry.programmaInhoud }}
-		</section>
+		<div class="row">
+			<div class="col">
+				<section>
+					<h2 class="programma-intro mt-0 mb-5">
+						{{ entry.intro|nl2br }}
+					</h2>
+					{{ entry.programmaInhoud }}
+				</section>
+				{# Bouw hier de sociale media links met bijhorende iconen op, indien deze velden ingevuld zijn #}
+				{% if entry.socialMediaLinks|length %}
+					{% include "_includes/programma/socialsList"  %}
+				{% endif %}
 
-		{# Bouw hier de sociale media links met bijhorende iconen op, indien deze velden ingevuld zijn #}
-		{% if entry.socialMediaLinks|length %}
-			{% include "_includes/programma/socialsList"  %}
-		{% endif %}
+				{% if entry.cloudmix.embed is not null %}
+					<section>
+						<h2 class="mt-5 mb-3">Herbeluister</h2>
+						<div class="mix-sound-cloud">
+							{{ entry.cloudmix.render() }}
+						</div>
+					</section>
+				{% endif %}
 
-		{% if entry.cloudmix.embed is not null %}
-			<div class="row mt-5">
-				<div class="col">
-					<h2>Herbeluister</h2>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col">
-					<div class="mix-sound-cloud">
-						{{ entry.cloudmix.render() }}
-					</div>
-				</div>
-			</div>
-		{% endif %}
+				{# Programmanieuws overzicht #}
+				{% set entries = craft.entries.type('programmanieuws')
+					.relatedTo(entry)
+					.limit(2) %}
+				{% set prgNieuws = entries.all() %}
 
-
-		{# Programmanieuws overzicht #}
-
-		{% set entries = craft.entries.type('programmanieuws')
-			.relatedTo(entry)
-			.limit(2) %}
-		{% set prgNieuws = entries.all() %}
-
-		{% if entries|length %}
-			{# Geef deze kop een id, zodat bij paginering op deze sectie gefocused blijft #}
-			<h2 class="mt-5 mb-0">Berichten</h2>
-
-			{% paginate entries as pageInfo, pageEntries %}
-				{% include "_includes/programma/programmanieuws" with { prgNieuws: pageEntries } only %}
-
-				{{ ui.setPagination(pageInfo) }}
-
-			{% endif %}
-
-			{# Zoek eerst naar gelateerde stijlen op een hoger categorieniveau dan 2 #}
-			{% set stijlen = entry.programmaStijl
-			.level('3')
-			.all() %}
-			{# Indien geen matches, zoek dan op volgende categorieniveaus #}
-			{% if stijlen == null %}
-				{% set stijlen = entry.programmaStijl
-				.level('2')
-				.all() %}
-			{% endif %}
-			{% if stijlen == null %}
-				{% set stijlen = entry.programmaStijl
-				.level('1')
-				.all() %}
-			{% endif %}
-
-			{% set entries = craft.entries()
-		.relatedTo(stijlen)
-		.id('not ' ~ entry.id)
-		.limit(4)
-		.all() %}
-
-			<section>
 				{% if entries|length %}
-					<h2>Misschien vind je deze programma's ook leuk:</h2>
+					<section>
+						<h2 class="mt-5 mb-3">Berichten</h2>
 
-					{% include "_includes/relatedShows" with { entries: entries} only %}
+						{% paginate entries as pageInfo, pageEntries %}
+						{% include "_includes/programma/programmanieuws" with { prgNieuws: pageEntries } only %}
+
+						{{ ui.setPagination(pageInfo) }}
+					</section>
 
 				{% endif %}
-				<div class="row programma-suggestie">
-					<div class="col">
-						<a href="/programma" class="button-secondary mt-5">Ontdek alle programma's</a>
-					</div>
-				</div>
-			</section>
+
+				{# Zoek eerst naar gelateerde stijlen op een hoger categorieniveau dan 2 #}
+				{% set stijlen = entry.programmaStijl
+					.level('3')
+					.all() %}
+				{# Indien geen matches, zoek dan op volgende categorieniveaus #}
+				{% if stijlen == null %}
+					{% set stijlen = entry.programmaStijl
+						.level('2')
+						.all() %}
+							{% endif %}
+							{% if stijlen == null %}
+								{% set stijlen = entry.programmaStijl
+						.level('1')
+						.all() %}
+				{% endif %}
+				{% set entries = craft.entries()
+					.relatedTo(stijlen)
+					.id('not ' ~ entry.id)
+					.limit(4)
+					.all() %}
+				{% if entries|length %}
+					<aside>
+						<h2 class="mt-5 mb-3">Misschien vind je deze programma's ook leuk:</h2>
+						{% include "_includes/relatedShows" with { entries: entries} only %}
+						<a href="/programma" class="button-secondary my-5">Ontdek alle programma's</a>
+					</aside>
+				{% endif %}
+			</div>
 		</div>
-	{% endblock %}
+	</main>
+{% endblock %}

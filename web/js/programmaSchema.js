@@ -21,7 +21,7 @@ const setSchema = (e) => {
 	let weekdagSelected = document.getElementById('weekdag-selected');
 	weekdagSelected.innerText = txtDay;
 	let scrollY = history.state.scrollY;
-	history.pushState({ scrollY: scrollY, filters: null }, '', '/programma/'+txtDay.toLowerCase());
+	history.pushState({ scrollY: scrollY, filters: null }, '', '/programma#'+txtDay.toLowerCase());
 };
 
 /* populate programmaschema, met dagnummer als parameter. Aan de hand van parameter wordt de gewenste dag actief gemaakt */
@@ -63,6 +63,5 @@ const populateProgramSchema = (tabDay) => {
 	let txtDay = buttons[btnDay].innerHTML;
 	let weekdagSelected = document.getElementById('weekdag-selected');
 	weekdagSelected.innerText = txtDay;
-	let scrollY = history.state.scrollY;
-	history.replaceState({ scrollY: scrollY, filters: null }, '', '/programma/'+txtDay.toLowerCase());
+	history.replaceState({ scrollY: history.state ? history.state.scrollY : 0, filters: null }, '', '/programma#'+txtDay.toLowerCase());
 };

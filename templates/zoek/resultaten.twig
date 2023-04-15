@@ -13,7 +13,7 @@
 		{% set queryValue = "" %}
 	{% endif %}
 	{# VOORLOPIGE VERSIE: simpele search, zonder custom filters: er wordt dus automatisch resultaten uit sections
-			gehaald, behalve in programScheme (intern gebruik only) #}
+					gehaald, behalve in programScheme (intern gebruik only) #}
 	{% set results = craft.entries()
   		.search(searchQuery)
   		.section('nieuws, programmanieuws')
@@ -25,11 +25,8 @@
 		<div class="row banner-none">
 			<div class="col">
 				<h1>Zoek Resultaten voor: "{{ searchQuery }}"</h1>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col">
-				<div class="form-background">
+
+				<div class="form-background mb-3">
 					<form class="form-zoek" action="{{ url('zoek/resultaten') }}">
 						{% include "_includes/zoek/searchbar" %}
 
@@ -51,20 +48,15 @@
 						</div>
 					</form>
 				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col">
 				{% if results|length %}
 					{% set nieuws = results.all() %}
 					{% paginate results as pageInfo, pageEntries %}
-					{% include "_includes/nieuwsoverzicht" with { nieuws: pageEntries } only %}
-					{{ ui.setPagination(pageInfo) }}
-				{% else %}
-					<p class="text-center mt-4">Je zoekopdracht voor “{{ searchQuery }}” heeft geen resultaten opgeleverd.</p>
-				{% endif %}
+						{% include "_includes/nieuwsoverzicht" with { nieuws: pageEntries, numberOfItemsIsEven: true } only %}
+						{{ ui.setPagination(pageInfo) }}
+					{% else %}
+						<p class="text-center my-5">Je zoekopdracht voor “{{ searchQuery }}” heeft geen resultaten opgeleverd.</p>
+					{% endif %}
 				</div>
 			</div>
-
 		</div>
 	{% endblock %}

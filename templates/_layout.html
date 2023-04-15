@@ -27,38 +27,29 @@
 
     
     <header>
-    <nav id="navBar" class="navbar navbar-expand-lg fixed-top navbar-light ">
-
+    <nav id="navBar" class="navbar navbar-expand-lg fixed-top navbar-light p-0">
         <div class="container m-auto">
-
-
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler"
-            aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button><!-- hamburgermenu-->
-
                 <div class="logo d-flex align-items-center justify-content-center">
-	                
                     <a class="navbar-brand" href="/">
                     <img src="../images/logo_baseline.svg" alt="Urgent.FM | 105.3FM" >
                     </a>
                 </div>
             <!-- branding -->
-            
-
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler, #navbarToggleSearchButton"
+            aria-controls="navbarToggler navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button><!-- hamburgermenu-->
             <div class="collapse navbar-collapse" id="navbarToggler">
-                <div class="navbar-nav ms-1">
-                    <a id="programma" class="nav-item nav-link" href="/programma">programma's</a>
-                    <a id="nieuws"class="nav-item nav-link" href="/nieuws">nieuws</a>
-                    <a id="over-urgent-fm" class="nav-item nav-link" href="/wie-zijn-we">over Urgent.fm</a>
-                    <a id="contact" class="nav-item nav-link" href="/contact">contact</a>
-                    <a class="nav-item nav-item-reversed nav-link" href="https://tumult.fm" >tumult.fm</a>
+                <div class="navbar-nav ms-2 ms-lg-1 mt-2 mt-lg-0">
+                    <a id="programma" class="nav-item nav-link my-1 mx-0 me-lg-3 ms-lg-0 my-lg-0" href="/programma">programma's</a>
+                    <a id="nieuws"class="nav-item nav-link my-1 mx-0 me-lg-3 ms-lg-0 my-lg-0" href="/nieuws">nieuws</a>
+                    <a id="over-urgent-fm" class="nav-item nav-link my-1 mx-0 me-lg-3 ms-lg-0 my-lg-0" href="/wie-zijn-we">over Urgent.fm</a>
+                    <a id="contact" class="nav-item nav-link my-1 mx-0 me-lg-3 ms-lg-0 my-lg-0" href="/contact">contact</a>
+                    <a class="nav-item nav-item-reversed nav-link my-1 mx-0 me-lg-3 ms-lg-0 my-lg-0" href="https://tumult.fm" >tumult.fm</a>
                 </div><!-- navbar -->
             </div><!-- collapse -->
-
-            <a href="/zoek" class="search toggle-search search-right d-none d-lg-inline"></a>
-			<a href="/zoek" class="search toggle-search search-center d-lg-none"></a>
-            
+            <a href="/zoek" class="search toggle-search d-none d-lg-inline"></a>
+			<a href="/zoek" class="search collapse toggle-search d-lg-none" id="navbarToggleSearchButton"></a>
         </div><!-- navBar container-->
     </nav>
 </header>
@@ -69,140 +60,120 @@
 
 {% endblock %}
 </div>
-<footer class="fixed-bottom">
-    <div class="container h-100">
-        <div class="row h-100">
-            <div class="col col-12 col-md-4 d-inline my-auto">
-                    <div class="row audioplayer">
-                        <div class="col-3 d-flex justify-content-center my-auto p-0">
-                            <audio class="live-audio" preload="none">
-                                <source id="source-aac" src="https://urgentstream.radiostudio.be/aac" type="audio/mp4" />
-                                <source id="source-mp3" src="https://urgentstream.radiostudio.be/live" type="audio/mpeg" /> 
-                            </audio>
-                            <button type="submit" class="audio-control audio-control-play" title="Play/Stop button"></button>
-                        </div>
-                        <div class="col-9 p-0 ">
-                            <p class="align-top ms-2 d-inline-block m-0">
-                        <span class="accent-green">luister nu:</span><br />
+{# Zoek programma op in weekdag adhv weeknummer en begintijd #}
+{% set weekdagen = craft.entries()
+        .section('programScheme')
+        .orderBy('title')
+        .all() %}
+{% set dayOfTheWeek = 'now'|date('w') %}
+{# {% set dayOfTheWeek = 5 %} #}
+{% set dag = weekdagen[dayOfTheWeek] %}
+{% set timeslots = dag.weekdag.all() %}
+{% set break = 0 %}
+{% set currentlyPlaying = null %}
+{% set programma = null %}
+{% set next =  null %}
+{# Eerst checken of er een programma van de vorige dag op het huidig uur gespeeld wordt (vb: charged van 10pm tot 6 am) #}
+{% set currentTime = 'now'|time('short') %}
+{# {% set currentTime = '06:00' %} #}
+{% if currentTime < '07:00' %}
+{# Indien dit zo is, haal de programmatie op van de vorige dag #}
+    {% set dayOfTheWeek = dayOfTheWeek - 1 %}
+    {% if dayOfTheWeek < 0 %}
+    {# Indien dag == zondag, dan dagnr veranderen naar zaterdag #}
+        {% set dayOfTheWeek = 6 %}
+    {% endif %}
+    {% set dag = weekdagen[dayOfTheWeek] %}
+    {% set timeslots = dag.weekdag.all() %}
+{% endif %}
+{# Huidig programma zoeken, dan volgend programma en vervolgens de loop beëindigen #}
+{% for timeslot in timeslots if break <= 1 %}
+    {% if break == 0 %}
+        {% set beginuur = timeslot.beginuur|time   ('short') %}
+        {% set einduur = timeslot.einduur|time('short')     %}
+        {% if currentTime >= '07:00' %}
+            {% if (currentTime >= beginuur and currentTime < einduur)
+			or (currentTime >= beginuur and einduur < currentTime and einduur < beginuur)
+			or (currentTime < beginuur and einduur < beginuur) %}
+                {% set currentlyPlaying = timeslot.programma.one() %}
+                {% set break = break + 1 %}
+        	{% endif %}
+        {% elseif currentTime < '07:00' %}
+        	{% if  beginuur > einduur and currentTime < einduur %}
+                {% set currentlyPlaying = timeslot.programma.one() %}
+        		{% set break = break + 1 %}
+            {% elseif currentTime >= beginuur and currentTime < einduur %}
+            {% set currentlyPlaying = timeslot.programma.one() %}
+                {% set break = break + 1 %}
+        	{% endif %}
+        {% else %}
+        	{% if (currentTime >= beginuur and currentTime < einduur) %}
+                {% set currentlyPlaying = timeslot.programma.one() %}
+        		{% set break = break + 1 %}
+        	{% endif %}
+        {% endif %}
+    {% else  %}
+        {% set next = timeslot.programma.one() %}
+        {% set break = break + 1 %}
+    {% endif %}
+{% endfor %}
+{# Fallback, indien er een gat in de programmatie valt (zou niet mogen gebeuren, hiervoor moet input controle geschworden) #}
+{% if currentlyPlaying == null %}
+    {% set currentlyPlaying = 'Nothing planned for this timeslot.' %}
+    <a href="#">{{ currentlyPlaying }}</a>
+{% else %}
+    {# indien currently playing laatste programma in array was, dan is next leeg
+     #}
+    {% if next == null %}
+        {% set dayOfTheWeek = dayOfTheWeek + 1 %}
+        {% if dayOfTheWeek == 7 %}
+            {% set dayOfTheWeek = 0 %}
+        {% endif %}
+        {% set dag = weekdagen[dayOfTheWeek] %}
+        {% set timeslot = dag.weekdag.one() %}
+        {% set next = timeslot.programma.one() %}
+    {% endif %}
+    <!--daarna: <span class="audioplayer-playing-next"><a href="{{ next.url }}"><u>{{ next.title }}</u></a></span>href="/programma"><u>alle programma's</u></a> -->
+{% endif %}
 
-                        {# Zoek programma op in weekdag adhv weeknummer en begintijd #}
-                        {% set weekdagen = craft.entries()
-                                .section('programScheme')
-                                .orderBy('title')
-                                .all() %}
-                        {% set dayOfTheWeek = 'now'|date('w') %}
-                        {# {% set dayOfTheWeek = 5 %} #}
-                        {% set dag = weekdagen[dayOfTheWeek] %}
-                        {% set timeslots = dag.weekdag.all() %}
-                        {% set break = 0 %}
-                        {% set currentlyPlaying = null %}
-                        {% set programma = null %}
-                        {% set next =  null %}
-                        {# Eerst checken of er een programma van de vorige dag op het huidig uur gespeeld wordt (vb: charged van 10pm tot 6 am) #}
-                        {% set currentTime = 'now'|time('short') %}
-                        {# {% set currentTime = '06:00' %} #}
-                        {% if currentTime < '07:00' %}
-                        {# Indien dit zo is, haal de programmatie op van de vorige dag #}
-                            {% set dayOfTheWeek = dayOfTheWeek - 1 %}
-                            {% if dayOfTheWeek < 0 %}
-                            {# Indien dag == zondag, dan dagnr veranderen naar zaterdag #}
-                                {% set dayOfTheWeek = 6 %}
-                            {% endif %}
-                            {% set dag = weekdagen[dayOfTheWeek] %}
-                            {% set timeslots = dag.weekdag.all() %}
-                        {% endif %}
-                        {# Huidig programma zoeken, dan volgend programma en vervolgens de loop beëindigen #}
-                        {% for timeslot in timeslots if break <= 1 %}
-                            {% if break == 0 %}
-                                {% set beginuur = timeslot.beginuur|time   ('short') %}
-                                {% set einduur = timeslot.einduur|time('short')     %}
-                                {% if currentTime >= '07:00' %}
-				                    {% if (currentTime >= beginuur and currentTime < einduur)
-									or (currentTime >= beginuur and einduur < currentTime and einduur < beginuur)
-									or (currentTime < beginuur and einduur < beginuur) %}
-                                        {% set currentlyPlaying = timeslot.programma.one() %}
-                                        {% set break = break + 1 %}
-				                	{% endif %}
-				                {% elseif currentTime < '07:00' %}
-				                	{% if  beginuur > einduur and currentTime < einduur %}
-                                        {% set currentlyPlaying = timeslot.programma.one() %}
-				                		{% set break = break + 1 %}
-                                    {% elseif currentTime >= beginuur and currentTime < einduur %}
-                                    {% set currentlyPlaying = timeslot.programma.one() %}
-						                {% set break = break + 1 %}
-				                	{% endif %}
-				                {% else %}
-				                	{% if (currentTime >= beginuur and currentTime < einduur) %}
-                                        {% set currentlyPlaying = timeslot.programma.one() %}
-				                		{% set break = break + 1 %}
-				                	{% endif %}
-				                {% endif %}
-                            {% else  %}
-                                {% set next = timeslot.programma.one() %}
-                                {% set break = break + 1 %}
-                            {% endif %}
-                        {% endfor %}
-                        {# Fallback, indien er een gat in de programmatie valt (zou niet mogen gebeuren, hiervoor moet input controle geschreven worden) #}
-                        {% if currentlyPlaying == null %}
-                            {% set currentlyPlaying = 'Nothing planned for this timeslot.' %}
-                            <a href="#">{{ currentlyPlaying }}</a>
-                        {% else %}
-                            {# indien currently playing laatste programma in array was, dan is next leeg
-                             #}
-                            {% if next == null %}
-                                {% set dayOfTheWeek = dayOfTheWeek + 1 %}
-                                {% if dayOfTheWeek == 7 %}
-                                    {% set dayOfTheWeek = 0 %}
-                                {% endif %}
-                                {% set dag = weekdagen[dayOfTheWeek] %}
-                                {% set timeslot = dag.weekdag.one() %}
-                                {% set next = timeslot.programma.one() %}
-                            {% endif %}
-                            <span class="audioplayer-currently-playing">
-                            <a href="{{ currentlyPlaying.url }}">{{ currentlyPlaying.title }}</a>
-                            </span><br />
-                            <!--daarna: <span class="audioplayer-playing-next"><a href="{{ next.url }}"><u>{{ next.title }}</u></a></span> / <a href="/programma"><u>alle programma's</u></a> -->
-                        {% endif %}
-
-                        
-                    </p>
-                        </div>
-                    </div><!-- urgent.fm player-->
-            </div>
-
-            <div class="col d-none d-md-inline-block col-md-4 align-self-center">
-                <div class="d-flex justify-content-center">
+ <footer class="fixed-bottom">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="audioplayer d-flex align-items-center">
+                <audio class="live-audio" preload="none">
+                    <source id="source-aac" src="https://urgentstream.radiostudio.be/aac" type="audio/mp4" />
+                    <source id="source-mp3" src="https://urgentstream.radiostudio.be/live" type="audio/mpeg" /> 
+                </audio>
+                <button type="submit" class="audio-control audio-control-play" title="Play/Stop button"></button>
+                <div class="ms-4 p-0">
+                    <span class="accent-green">luister nu:</span><br />
+                    <a class="audioplayer-currently-playing" href="{{ currentlyPlaying.url }}">{{ currentlyPlaying.title }}</a>
                 </div>
-            </div>
-
-            <div class="col d-none d-md-inline-block col-md-4 align-self-center">
-                <div class="d-flex justify-content-end">
-                    <div class="social-media d-none d-md-inline-block">
-                        <ul class="p-0">
-                            <li>
-                                <a class="social-media-link" href="facebook">
-                                    <img src="../images/icons/facebook.svg" alt="facebook">
-                                </a>
-                            </li>
-                            <li>
-                                <a class="social-media-link" href="youtube">
-                                    <img src="../images/icons/youtube.svg" alt="youtube">
-                                </a>
-                            </li>
-                            <li>
-                                <a class="social-media-link" href="instagram">
-                                    <img src="../images/icons/instagram.svg" alt="instagram">
-                                </a>
-                            </li>
-                            <li>
-                                <a class="social-media-link" href="facebook">
-                                    <img src="../images/icons/twitter.svg" alt="twitter">
-                                </a>
-                            </li>
-                        </ul>
-                    </div><!-- social media-->
-                </div>
-            </div>
+            </div><!-- urgent.fm player-->
+            <div class="social-media d-none d-md-inline-block">
+                <ul class="p-0">
+                    <li>
+                        <a class="social-media-link" href="https://www.facebook.com/urgent.fm">
+                            <img src="../images/icons/facebook.svg" alt="facebook">
+                        </a>
+                    </li>
+                    <li>
+                        <a class="social-media-link" href="https://www.youtube.com/@urgentfm">
+                            <img src="../images/icons/youtube.svg" alt="youtube">
+                        </a>
+                    </li>
+                    <li>
+                        <a class="social-media-link" href="https://www.instagram.com/urgent.fm/">
+                            <img src="../images/icons/instagram.svg" alt="instagram">
+                        </a>
+                    </li>
+                    <li>
+                        <a class="social-media-link" href="https://twitter.com/UrgentFM">
+                            <img src="../images/icons/twitter.svg" alt="twitter">
+                        </a>
+                    </li>
+                </ul>
+            </div><!-- social media-->
         </div>
     </div>
 </footer>

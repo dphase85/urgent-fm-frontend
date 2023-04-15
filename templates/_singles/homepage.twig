@@ -1,8 +1,5 @@
 {% extends craft.app.request.isAjax and not craft.app.request.isLivePreview ? "_ajax" : "_layout" %}
 
-
-	{% set heroHeight = 75 %}
-
 {% block content %}
 
 	{# Banner #}
@@ -12,252 +9,238 @@
             .all() %}
 	{% set image = entry.homepageBannerfoto.one() %}
 
-	<div class="d-flex align-items-center justify-content-center hpBanner banner">
+	<section class="hero d-flex align-items-center justify-content-center">
 
 		{% set backgroundImageExtraSmall = image.getUrl('bannerImageXs') %}
 		{% set backgroundImageSmall = image.getUrl('bannerImageS640w') %}
 		{% set backgroundImageMedium = image.getUrl('bannerImageM1280w') %}
 		{% set backgroundImageLarge = image.getUrl('bannerImageL1600w') %}
-		{% set backgroundImageExtraLarge = image.getUrl('bannerImageXl1920w') %}
+		{% set backgroundImageExtraLarge = image.getUrl('bannerImageXl2560w') %}
 
 		<style>
 			@media(max-width: 1279px) {
-				.hpBanner {
+				.hero {
 					background: url("{{ backgroundImageSmall }}") no-repeat center;
 					background-size: cover;
 					background-color: white;
 				}
 			}
 			@media(min-width: 1280px) {
-					.hpBanner {
+				.hero {
 					background: url("{{ backgroundImageMedium }}") no-repeat center;
 					background-size: cover;
 				}
 			}
 			@media(min-width: 1600px) {
-					.hpBanner {
+				.hero {
 					background: url("{{ backgroundImageLarge }}") no-repeat center;
 					background-size: cover;
 				}
 			}
 			@media(min-width: 1920px) {
-					.hpBanner {
+				.hero {
 					background: url("{{ backgroundImageExtraLarge }}") no-repeat center;
 					background-size: cover;
 				}
 			}
 		</style>
 
-		<div
-			class="banner-window d-flex align-items-center m-3">
-			{# Zoek de huidige weekdag adhv date format param. 'w' (weekdag) #}
-			{% set dayOfTheWeek = 'now'|date('w') %}
+		{# Zoek de huidige weekdag adhv date format param. 'w' (weekdag) #}
+		{% set dayOfTheWeek = 'now'|date('w') %}
 
+		{% set dag = weekdagen[dayOfTheWeek] %}
+		{% set timeslots = dag.weekdag.all() %}
+		{# Eerst checken of er een programma van de vorige dag op het huidig uur gespeeld wordt (vb: charged van 10pm tot 6 am) #}
+		{% set currentTime = 'now'|time('short') %}
+
+		{% if currentTime < '07:00' %}
+			{# Indien dit zo is, haal de programmatie op van de vorige dag #}
+			{% set dayOfTheWeek = dayOfTheWeek - 1 %}
+			{% if dayOfTheWeek < 0 %}
+				{# Indien dag == zondag, dan dagnr veranderen naar zaterdag #}
+				{% set dayOfTheWeek = 6 %}
+			{% endif %}
 			{% set dag = weekdagen[dayOfTheWeek] %}
 			{% set timeslots = dag.weekdag.all() %}
-			{# Eerst checken of er een programma van de vorige dag op het huidig uur gespeeld wordt (vb: charged van 10pm tot 6 am) #}
-			{% set currentTime = 'now'|time('short') %}
+		{% endif %}
+		{% if timeslots|length %}
+			{# First check who is playing now #}
+			{% set break = 0 %}
+			{% set nowOnair = null %}
+			{% set programOnair = null %}
 
-				{% if currentTime < '07:00' %}
-				{# Indien dit zo is, haal de programmatie op van de vorige dag #}
-				{% set dayOfTheWeek = dayOfTheWeek - 1 %}
-					{% if dayOfTheWeek < 0 %}
-					{# Indien dag == zondag, dan dagnr veranderen naar zaterdag #}
-				{% set dayOfTheWeek = 6 %}
-				{% endif %}
-				{% set dag = weekdagen[dayOfTheWeek] %}
-			{% set timeslots = dag.weekdag.all() %}
-			{% endif %}
-				{% if timeslots|length %}
-				{# First check who is playing now #}
-				{% set break = 0 %}
-				{% set nowOnair = null %}
-				{% set programOnair = null %}
-
-					{% for timeslot in timeslots if break == 0 %}
-					{% set beginuur = timeslot.beginuur|time('short') %}
-					{% set einduur = timeslot.einduur|time('short') %}
-						{% if currentTime >= '07:00' %}
-							{% if (currentTime >= beginuur and currentTime < einduur)
+			{% for timeslot in timeslots if break == 0 %}
+				{% set beginuur = timeslot.beginuur|time('short') %}
+				{% set einduur = timeslot.einduur|time('short') %}
+				{% if currentTime >= '07:00' %}
+					{% if (currentTime >= beginuur and currentTime < einduur)
 									or (currentTime >= beginuur and einduur < currentTime and einduur < beginuur)
 									or (currentTime < beginuur and einduur < beginuur) %}
-							{% set nowOnair = timeslot %}
-							{% set programOnair = timeslot.programma.one() %}
+						{% set nowOnair = timeslot %}
+						{% set programOnair = timeslot.programma.one() %}
 						{% set break = 1 %}
-						{% endif %}
-					{% elseif currentTime < '07:00' %}
-						{% if  beginuur > einduur and currentTime < einduur %}
-							{% set nowOnair = timeslot %}
-							{% set programOnair = timeslot.programma.one() %}
-							{% set break = 1 %}
-						{% elseif currentTime >= beginuur and currentTime < einduur %}
-							{% set nowOnair = timeslot %}
-							{% set programOnair = timeslot.programma.one() %}
-							{% set break = 1 %}
-						{% endif %}
-					{% else  %}
-						{% if (currentTime >= beginuur and currentTime < einduur) %}
-							{% set nowOnair = timeslot %}
-							{% set programOnair = timeslot.programma.one() %}
-							{% set break = 1 %}
-						{% endif %}
 					{% endif %}
-				{% endfor %}
-				<div class="banner-programma container align-self-center p-4">
-					<div class="row row-cols-1 row-cols-md-2">
-						<div class="col col-md-6">
-							<div class="row">
-								<div class="col">
-									<p class="ms-3">Nu op urgent.fm</p>
-								</div>
+				{% elseif currentTime < '07:00' %}
+					{% if  beginuur > einduur and currentTime < einduur %}
+						{% set nowOnair = timeslot %}
+						{% set programOnair = timeslot.programma.one() %}
+						{% set break = 1 %}
+					{% elseif currentTime >= beginuur and currentTime < einduur %}
+						{% set nowOnair = timeslot %}
+						{% set programOnair = timeslot.programma.one() %}
+						{% set break = 1 %}
+					{% endif %}
+				{% else  %}
+					{% if (currentTime >= beginuur and currentTime < einduur) %}
+						{% set nowOnair = timeslot %}
+						{% set programOnair = timeslot.programma.one() %}
+						{% set break = 1 %}
+					{% endif %}
+				{% endif %}
+			{% endfor %}
+
+			<div class="hero-content-programma-vandaag m-3 container p-4">
+				<div class="row row-cols-1 row-cols-md-2">
+					<div class="col d-flex flex-column">
+						<div class="programma-vandaag-label ms-3 mb-3">
+							Nu op urgent.fm
+						</div>
+
+						{% if nowOnair is not null %}
+							<h1>
+								<span class="text-break">{{ programOnair.title }}</span>
+							</h1>
+							<p>{{ programOnair.intro|nl2br }}</p>
+						{% endif %}
+
+						<div class="mt-auto">
+							{% if nowOnair is not null %}
+								<a href="{{ programOnair.getUrl }}" class="button-primary">
+									Over deze show
+								</a>
 							</div>
-							<div class="row">
-								<div class="col">
-									{% if nowOnair is not null %}
-										<h1>
-											<span class="text-break">{{ programOnair.title }}</span>
-										</h1>
-										<p class="banner-programma-intro">{{ programOnair.intro|nl2br }}</p>
-									{% endif %}
-								</div>
-							</div>
-							<div class="row">
-								<div class="col banner-button">
-									{% if nowOnair is not null %}
-										<a href="{{ programOnair.getUrl }}" class="button-primary">
-											Over deze show
-										</a>
-									{% endif %}
-								</div>
+						{% endif %}
+					</div>
+
+
+					<div class="col d-flex flex-column">
+						<div class="programma-vandaag-label d-none d-md-block d-lg-block ms-3 mb-3">
+							Vandaag
+						</div>
+						<div class="row">
+							<div class="col">
+								<button class="btn-vandaag-toggle btn btn-primary d-md-none my-3" type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapse1 multiCollapse2 multiCollapse3">Vandaag</button>
 							</div>
 						</div>
-						<div class="col col-md-6">
-							<div class="row d-none d-md-block d-lg-block">
-								<div class="col">
-									<p>Vandaag</p>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col">
-									<button class="btn-vandaag-toggle btn btn-primary d-md-none my-3" type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapse1 multiCollapse2 multiCollapse3">Vandaag</button>
-								</div>
-							</div>
-							<div class="row row-cols-1 row-cols-sm-2">
-								{% set isOnair = false %}
-								{% if timeslots|length < 6 %}
-									<div
-										class="col timeslots">
-										<ul class="ps-0 collapse multi-collapse py-3" id="multiCollapse1">
-											{% for timeslot in timeslots %}
-
-												{% set programma = timeslot.programma.one() %}
-												<li>
-													<div class="row">
-														<div class="col-5 col-sm-3 col-md-5 col-lg-4 col-xxl-4">
-															{{timeslot.beginuur|time('short')}}
-														</div>
-														{# <div class="col-12 col-sm-9 col-md-7 col-lg-8 col-xxl-8 ps-sm-0 text-break"> #}
-														<div class="col-12 col-lg-8 col-xxl-8 ps-lg-0 text-break">
-
-															{% if nowOnair is not null and programma.title == programOnair.title and (timeslot.beginuur|time	('short') == nowOnair.beginuur|	time('short') and timeslot.einduur|time			('short') == 	nowOnair.einduur|time('short')) %}
-																<strong>{{ programma.title }}</strong>
-																{% set isOnair = true %}
-															{% elseif  isOnair == true %}
-																{{ programma.title }}
-															{% else %}
-																<i>{{ programma.title }}</i>
-															{% endif %}
-														</div>
-													</div>
-												</li>
-											{% endfor %}
-										</ul>
-									</div>
-									<div class="col"></div>
-								</div>
-
-							{% else %}
-								{% set i = 0 %}
+						<div class="row row-cols-1 row-cols-sm-2">
+							{% set isOnair = false %}
+							{% if timeslots|length < 6 %}
 								<div class="col timeslots">
-									<div
-										class="collapse multi-collapse" id="multiCollapse1">
+									<div class="collapse multi-collapse d-md-block" id="multiCollapse1">
 										{% for timeslot in timeslots %}
-											{% set programma = timeslot.programma.one() %}
-											{# <div class="row mb-2 mb-sm-0"> #}
-											<div class="row mb-2 mb-lg-0">
-												<div class="col-5 col-sm-3 col-md-5 col-lg-4 col-xxl-4">
-													{{timeslot.beginuur|time('short')}}
-												</div>
-													{# <div class="col-12 col-sm-9 col-md-7 col-lg-8 col-xxl-8 ps-sm-0 text-break"> #}
-													<div class="col-12 col-lg-8 col-xxl-8 ps-lg-0 text-break">
-													{% if nowOnair is not null and programma.title == programOnair.title and (timeslot.beginuur|time	('short') == nowOnair.beginuur|	time('short') and timeslot.einduur|time			('short') == 	nowOnair.einduur|time('short')) %}
-														<strong>{{ programma.title }}</strong>
-														{% set isOnair = true %}
-													{% elseif  isOnair == true %}
-														{{ programma.title }}
-													{% else %}
-														<i>{{ programma.title }}</i>
-													{% endif %}
-												</div>
-											</div>
-											{% set i = i + 1 %}
-											{# Wanneer we in de helft zijn van de entries, verplaats naar 2de kolom #}
-											{# In geval van oneven aantal entries, zorg dat de grootste helft de linkerkolom is #}
-											{% if i == ceil(timeslots|length/2) %}
-											</div>
-										</div>
 
-										<div class="col timeslots">
-											<div
-												class="collapse multi-collapse" id="multiCollapse2">
-											{% endif %}
+											{% set programma = timeslot.programma.one() %}
+	
+												<div class="row">
+													<div class="col-5 col-sm-3 col-md-5 col-lg-4 col-xxl-4">
+														{{timeslot.beginuur|time('short')}}
+													</div>
+													<div class="col-12 col-lg-8 col-xxl-8 ps-lg-0 text-break">
+
+														{% if nowOnair is not null and programma.title == programOnair.title and (timeslot.beginuur|time	('short') == nowOnair.beginuur|	time('short') and timeslot.einduur|time			('short') == 	nowOnair.einduur|time('short')) %}
+															<strong>{{ programma.title }}</strong>
+															{% set isOnair = true %}
+														{% elseif  isOnair == true %}
+															{{ programma.title }}
+														{% else %}
+															<i>{{ programma.title }}</i>
+														{% endif %}
+													</div>
+												</div>
 										{% endfor %}
 									</div>
 								</div>
-							{% endif %}
-						</div>
-						<div class="row collapse multi-collapse" id="multiCollapse3">
-							<div class="col banner-button">
-								<a href="/programma" class="button-secondary">Programmaschema</a>
+								<div class="col"></div>
 							</div>
-						</div>
+
+						{% else %}
+							{% set i = 0 %}
+							<div class="col timeslots">
+								<div class="collapse multi-collapse d-md-block" id="multiCollapse1">
+									{% for timeslot in timeslots %}
+										{% set programma = timeslot.programma.one() %}
+										<div class="row mb-2 mb-lg-0">
+											<div class="col-5 col-sm-3 col-md-5 col-lg-4 col-xxl-4">
+												{{timeslot.beginuur|time('short')}}
+											</div>
+											<div class="col-12 col-lg-8 col-xxl-8 ps-lg-0 text-break">
+												{% if nowOnair is not null and programma.title == programOnair.title and (timeslot.beginuur|time	('short') == nowOnair.beginuur|	time('short') and timeslot.einduur|time			('short') == 	nowOnair.einduur|time('short')) %}
+													<strong>{{ programma.title }}</strong>
+													{% set isOnair = true %}
+												{% elseif  isOnair == true %}
+													{{ programma.title }}
+												{% else %}
+													<i>{{ programma.title }}</i>
+												{% endif %}
+											</div>
+										</div>
+										{% set i = i + 1 %}
+										{# Wanneer we in de helft zijn van de entries, verplaats naar 2de kolom #}
+										{# In geval van oneven aantal entries, zorg dat de grootste helft de linkerkolom is #}
+										{% if i == ceil(timeslots|length/2) %}
+									</div>
+									</div>
+
+										<div class="col timeslots"> <div class="collapse multi-collapse d-md-block" id="multiCollapse2">
+										{% endif %}
+									{% endfor %}
+								</div>
+							</div>
+						{% endif %}
+					</div>
+					<div class="collapse multi-collapse mt-auto d-md-block" id="multiCollapse3">
+						<a href="/programma" class="button-secondary">Programmaschema</a>
 					</div>
 				</div>
 			</div>
+		</div>
 
-		{% endif %}
-	</div>
-</div>
+	{% endif %}
+	</section>
 
 {# Editor's Pick #}
 {% include "_includes/homepage/editorsPick" %}
 
 {#Main content #}
-<div role="main" class="main container" id="homepage">
-	<section class="nieuws-uitgelicht">
-		<h2 class="sectionTitle">Nieuws</h2>
-		{% set nieuwsQuery = entry.uitgelicht.type('nieuws').limit(9).all() %}
-		 
-		{% set nieuws = [] %}
-		{% for queryItem in nieuwsQuery %}
-			{% set nieuws = nieuws|merge([queryItem.item.one()]) %}
-		{% endfor %}
+<main role="main" class="main container" id="homepage">
+	<section>
+		<div class="row">
+			<div class="col">
+				<h2 class="sectionTitle">Nieuws</h2>
 
-		{% include "_includes/nieuwsoverzicht" with { nieuws: nieuws } only %}
-		<a href="/nieuws" class="button-primary mt-5 mb-5">alle nieuwsberichten</a>
+				{% set nieuwsQuery = entry.uitgelicht.type('nieuws').limit(9).all() %}
+				{% set nieuws = [] %}
+				{% for queryItem in nieuwsQuery %}
+					{% set nieuws = nieuws|merge([queryItem.item.one()]) %}
+				{% endfor %}
+
+				{% include "_includes/nieuwsoverzicht" with { nieuws: nieuws, numberOfItemsIsEven: false } only %}
+				<a href="/nieuws" class="button-primary my-5">alle nieuwsberichten</a>
+			</div>
+		</div>
 	</section>
-{#	
-	<!--    Nieuwsoverzicht-->
-	<section class="programmaNieuws">
-		<h2 class="m-0 sectionTitle">Nieuws van Urgent.fm shows</h2>
-
-		{% set nieuws = craft.entries.section('programmaNieuws').limit(5).all() %}
-
-		{% include "_includes/homepage/prognieuwsoverzicht" with { nieuws: nieuws } only %}
-		<a href="/programma" class="button-secondary mt-3">programma's</a>
-	</section>
-	<!--Sidebar met programmanieuws-->
-#}
-</div>
+	{#	
+				<!--    Nieuwsoverzicht-->
+				<section class="programmaNieuws">
+					<h2 class="m-0 sectionTitle">Nieuws van Urgent.fm shows</h2>
+			
+					{% set nieuws = craft.entries.section('programmaNieuws').limit(5).all() %}
+			
+					{% include "_includes/homepage/prognieuwsoverzicht" with { nieuws: nieuws } only %}
+					<a href="/programma" class="button-secondary mt-3">programma's</a>
+				</section>
+				<!--Sidebar met programmanieuws-->
+			#}
+</main>
 
 {% js "../js/script.js" %}{% endblock %}

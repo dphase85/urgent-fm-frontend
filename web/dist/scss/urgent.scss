@@ -12,43 +12,36 @@
 $roboto: 'Roboto', sans-serif;
 $source-serif: 'Source Serif Pro', serif;
 
-
-
 // Spacing Variables
 $space-unit: 1rem;
 
-$space-xxs:  calc( #{$space-unit} / 4);
-$space-xs: 	 calc( #{$space-unit} / 2);
-$space-sm:   calc(1 * #{$space-unit});
-$space-md:   calc(1.5 * #{$space-unit});
-$space-lg:   calc(2 * #{$space-unit});
-$space-xl:   calc(2.5 * #{$space-unit});
-$space-xxl:  calc(3.5 * #{$space-unit});
-$space-xxxl:  calc(4.5 * #{$space-unit});
-
-
-
+$space-xxs: calc(#{$space-unit} / 4);
+$space-xs: calc(#{$space-unit} / 2);
+$space-sm: calc(1 * #{$space-unit});
+$space-md: calc(1.5 * #{$space-unit});
+$space-lg: calc(2 * #{$space-unit});
+$space-xl: calc(2.5 * #{$space-unit});
+$space-xxl: calc(3.5 * #{$space-unit});
+$space-xxxl: calc(4.5 * #{$space-unit});
 
 // Font Size Variables
 $font-size-unit: 16px;
 
-$font-size-xxs:   calc(0.5 * #{$space-unit});
-$font-size-xs:   calc(0.85 * #{$space-unit});
-$font-size-sm:   calc(1 * #{$space-unit});
-$font-size-md:   calc(1.25 * #{$space-unit});
-$font-size-lg:   calc(1.5 * #{$space-unit});
-$font-size-xl:   calc(2.5 * #{$space-unit});
-$font-size-xxl:   calc(3.5 * #{$space-unit});
+$font-size-xxs: calc(0.5 * #{$space-unit});
+$font-size-xs: calc(0.85 * #{$space-unit});
+$font-size-sm: calc(1 * #{$space-unit});
+$font-size-md: calc(1.25 * #{$space-unit});
+$font-size-lg: calc(1.5 * #{$space-unit});
+$font-size-xl: calc(2.5 * #{$space-unit});
+$font-size-xxl: calc(3.5 * #{$space-unit});
 
 /* Color Variables */
 $color-primary: #009FE3;
 $color-secondary: #220059;
 $color-accent: #3ED8A0;
 $color-accent-hover: #09D389;
-
 $color-message-error: #E81739;
 $color-message-warning: #EBB122;
-
 $color-message-success: #5E8821;
 
 // Nieuws categorieën
@@ -58,10 +51,8 @@ $color-category-nieuws-2: #40B7EA;
 // Programma categorieën
 $color-category-actualiteit-1: #166a88;
 $color-category-actualiteit-2: #508FA6;
-
 $color-category-muziek-1: #009FE3;
 $color-category-muziek-2: #40B7EA;
-
 $color-category-cultuur-1: #EBB122;
 $color-category-cultuur-2: #F0C459;
 
@@ -69,7 +60,7 @@ $color-category-cultuur-2: #F0C459;
 /* Grey scales */
 $color-greyscale-1: #242424;
 $color-greyscale-2: #484848;
-$color-greyscale-3:	#919191;
+$color-greyscale-3: #919191;
 $color-greyscale-4: #f2f2f2;
 $color-greyscale-5: #EBEBEB;
 
@@ -79,13 +70,10 @@ $color-background: #F2F2F2;
 
 $color-border: #cdcdcd;
 
-$container-width: 60vw; //TODO: ofwel 67vw om responsive logo te fixen in programma entry 
-
-$header-height: 10vh;
-$banner-height: 75vh;
-$footer-height:10vh;
-
-$hero-height: 75vh;
+$container-width: 60; //TODO: ofwel 67vw om responsive logo te fixen in programma entry 
+$header-height: 10;
+$footer-height: 10;
+$hero-height: 75;
 
 $max-width-small: 575.98px;
 $min-width-small: 576px;
@@ -105,29 +93,31 @@ $programma-logo-size: 6rem;
 
 
 @mixin box-shadow($top, $left, $blur, $color, $inset: false) {
-  @if $inset {
-    -webkit-box-shadow:inset $top $left $blur $color;
-    -moz-box-shadow:inset $top $left $blur $color;
-    box-shadow:inset $top $left $blur $color;
-  } @else {
-    -webkit-box-shadow: $top $left $blur $color;
-    -moz-box-shadow: $top $left $blur $color;
-    box-shadow: $top $left $blur $color;
-  }
+	@if $inset {
+		-webkit-box-shadow: inset $top $left $blur $color;
+		-moz-box-shadow: inset $top $left $blur $color;
+		box-shadow: inset $top $left $blur $color;
+	}
+
+	@else {
+		-webkit-box-shadow: $top $left $blur $color;
+		-moz-box-shadow: $top $left $blur $color;
+		box-shadow: $top $left $blur $color;
+	}
 }
 
 @mixin rounded_all($radius: 0.33em) {
-  -webkit-border-radius: $radius; 
-  -moz-border-radius: $radius;
-  border-radius: $radius;
+	-webkit-border-radius: $radius;
+	-moz-border-radius: $radius;
+	border-radius: $radius;
 }
 
 @mixin transition($args...) {
-  -webkit-transition: $args;
-  -moz-transition: $args;
-  -ms-transition: $args;
-  -o-transition: $args;
-  transition: $args;
+	-webkit-transition: $args;
+	-moz-transition: $args;
+	-ms-transition: $args;
+	-o-transition: $args;
+	transition: $args;
 }
 
 @mixin text-overflow($numberOfLines) {
@@ -140,6 +130,10 @@ $programma-logo-size: 6rem;
 	-webkit-line-clamp: $numberOfLines;
 }
 
+@mixin height($height) {
+	height: $height + vh;
+	height: $height + svh;
+}
 
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -161,369 +155,114 @@ body {
 }
 
 // Typography
-h1, h2, h3, h4 {
-	font-family: $source-serif;	
+h1,
+h2,
+h3,
+h4 {
+	font-family: $source-serif;
 }
 
 
-h3 span{
-font-family: $roboto;
-font-size: $space-sm;
+h1 {
+	font-size: $font-size-xl;
 }
 
 h2 {
-font-size: $font-size-lg;
+	font-size: $font-size-lg;
 }
 
 h3 {
 	font-size: $font-size-md;
 }
 
+h3 span {
+	font-family: $roboto;
+	font-size: $space-sm;
+}
+
 h5 {
-font-size: $font-size-sm;
+	font-size: $font-size-sm;
+}
+
+.programma-vandaag-label {
+	font-size: $font-size-md;
 }
 
 p {
 	font-size: $font-size-md;
+
 	&.date {
 		color: $color-greyscale-3;
 		font-size: $font-size-sm;
 	}
-	
+
 	&.intro {
 		font-size: $font-size-lg;
 	}
 }
 
-
+.programma-intro {
+	font-family: inherit;
+	font-size: $font-size-md;
+	font-weight: bolder;
+}
 
 a {
-	//    text-decoration: none; 
 	color: $color-accent;
 	text-decoration: none;
+
 	&:hover {
 		color: $color-greyscale-3;
 		text-decoration: none;
 	}
 }
-	
+
 
 .navbar .nav-active,
 .navbar .nav-link:active {
-	background-color: #09D389!important;
+	background-color: #09D389 !important;
 }
 
 
 .accent-green {
-color: $color-accent;
+	color: $color-accent;
 }
-
-
-h2.card-title {
-	color: red;
-	font-size: $font-size-lg;
-}
-
-	.contentcard {
-		width:100%;
-		
-	}
 
 .social-links {
 	margin-left: 0;
 	padding-left: 0;
+
 	li {
 		display: inline-block;
-		list-style: none;      
+		list-style: none;
 		margin-left: 0;
 	}
 }
 
 // Viewports
-//xS
-@media(max-width: 576px) {
 
-	// h1 {
-	// 	font-size: $font-size-md;
-	// }
-
+@media(max-width: 991px) {
+	.navbar-nav {
+		width: fit-content;
 	
-	.hero {
-		min-height: $hero-height;
-		object-fit:cover;
-		picture {
-			width: 100%; height: $hero-height;
-			
-			img {
-				object-fit:cover;	
-			}
-		}
-	}
-	
-	.backgroundImageSmall {
-		height:$hero-height; 	
-		object-fit:cover; 
-		object-position:center; 
-		width:100%; 
-		position: 	relative
-	}
-	
-	.backgroundImageMedium {
-		height:$hero-height; 
-		object-fit:cover; 
-		object-position:center;
-		width:100%; 
-		position: relative
-	}
-
-	.banner-window {
-		margin-top: 0;
-		z-index: 1000;
-	}
-
-	.banner-programma {
-		h1 {
-			display: inline-block;
-
-		}
-
-		.button-primary, .button-secondary {
-			font-size:  $font-size-xs;
-			
-		}
-
-		// .banner-button {
-		// 	padding: 0;
-		// }
-
-	}
-
-	.modal-search {
-		margin-top: 7vh;
-	}
-
-	// programmaschema slots
-	.programmaschema-uur {
-		font-size: 1rem;
-	}
-
-	.slot-tags {
-		display: block;
-	}
-
-	// Herbeluister
-	.editorsPick {
-		.mixcloud-link {
-
-			img, p {
-				// max-width:9rem;
-				max-width:100%;
-
-			}
+		a {
+			padding: 0.5rem 0.75rem;
 		}
 	}
 }
 
-@media(min-width: 576px) {
-
-	// Herbeluister
-	.editorsPick {
-		.mixcloud-link {
-
-			img, p {
-				// max-width:14rem;
-				max-width:100%;
-
-			}
-		}
-	}
-}
-
-@media(min-width: 768px) {
-
-	
-	// Banner 
-	// .hpBanner {
-	// 	height: $banner-height;
-	// }
-
-	// .banner-programma {
-	// 	max-height: 75vh;
-	// }
-
-	// .banner-window {
-	// 	height: 75vh;
-	// }
-
-	.timeslots ul, .timeslots .collapse, #multiCollapse3 {
-		display: block !important;
-	}
+@media(min-width: 1200px) {
 
 	.container:not(.navbar .container, footer .container, .modal-background .container) {
-		width: 90vw;
-	}
-
-	h1 {
-		font-size: $font-size-xl;
-	}
-
-	.modal-search {
-		margin-top: 7vh;
-	}
-
-	// Programmaschema
-	.slot-tags {
-		display: inline-block;
-	}
-	// Herbeluister
-	.editorsPick {
-		.mixcloud-link {
-
-			img, p {
-				// max-width:10rem;
-				max-width:100%;
-
-			}
-		}
-	}
-}
-
-@media(min-width: 992px) {
-
-		// Banner 
-	// .hpBanner {
-	//     height: $banner-height;
-	// }
-
-	// .banner-programma {
-	// 	max-height: 75vh;
-	// }
-
-	// .banner-window {
-	// 	height: 75vh;
-	// }
-
-	.timeslots ul, .timeslots .collapse, #multiCollapse3 {
-		display: block !important;
-	}
-
-	.container:not(.navbar .container, footer .container, .modal-background .container) {
-		width: 90vw;
-	}
-	
-	h1 {
-		font-size: $font-size-xxl;
-	}
-
-	.modal-search {
-		margin-top: 7vh;
-	}
-
-
-
-	// Programmaschema
-	.slot-tags {
-		display: inline-block;
-	}
-
-	.editorsPick {
-		.mixcloud-link {
-
-			img, p {
-				// max-width:9rem;
-				max-width:100%;
-
-			}
-		}
-	}
-	
-}
-
-@media(min-width: 1200px) {
-	// Banner 
-	// .hpBanner {
-	// 	height: $banner-height;
-	// }
-
-	// .banner-programma {
-	// 	max-height: 75vh;
-	// }
-
-	// .banner-window {
-	// 	height: 75vh;
-	// }
-	
-	.container:not(.navbar .container, footer .container, .modal-background .container) {
-		width: $container-width;
-	}
-	h1 {
-		font-size: $font-size-xxl;
-	}
-
-	.timeslots ul, .timeslots .collapse, #multiCollapse3 {
-		display: block !important;
-	}
-	.modal-search {
-		margin-top: 7vh;
-	}
-
-	// Programmaschema
-	.slot-tags {
-		display: inline-block;
-	}
-}
-
-@media(min-width: 1350px) {
-	.editorsPick {
-		.mixcloud-link {
-
-			img, p {
-				// max-width:12rem;
-				max-width:100%;
-
-			}
-		}
-	}
-}
-
-@media(min-width: 1900px) {
-	.container:not(.navbar .container, footer .container, .modal-background .container) {
-		width: $container-width;
-	}
-	h1 {
-		font-size: $font-size-xxl;
-	}
-
-	// Banner 
-	// .hpBanner {
-	//     height: $banner-height;
-	// }
-
-	// .banner-programma {
-	// 	max-height: 75vh;
-	// }
-
-	// .banner-window {
-	// 	height: 75vh;
-	// }
-
-	.timeslots ul, .timeslots .collapse, #multiCollapse3 {
-		display: block !important;
-	}
-
-	.modal-search {
-		margin-top: 7.5vh;
-	}
-
-	// Programmaschema
-	.slot-tags {
-		display: inline-block;
+		max-width: $container-width + vw;
+		max-width: $container-width + svw;
 	}
 }
 
 // No Banner
 .banner-none {
 	margin-top: 20vh;
+	margin-top: 20svh;
 }
 
 
@@ -531,53 +270,56 @@ h2.card-title {
 	overflow: hidden;
 }
 
-// Homepage banner styling
-.hpBanner {
-	//TEST:
-	min-height: 75vh; 
+// Homepage hero styling
+.hero {
+	min-height: $hero-height + vh;
+	min-height: $hero-height + svh;
 }
 
-.banner-programma {
+.hero-background-picture {
+	width: 100%;
+	@include height($hero-height);
+
+	& img {
+		@include height($hero-height);;
+		object-fit: cover;
+		object-position: center;
+		width: 100%;
+	}
+}
+
+.hero-content-programma-vandaag {
 	background-color: $color-white;
-	li {
-		list-style: none;
-		margin-bottom: 0.50em;
-	  }
 }
 
-.banner-content {
-	position: absolute; left:0; right:0;
-	
+.hero-content {
+	position: absolute;
+	left: 0;
+	right: 0;
+
 	h1,
 	.programma-van-tot {
-		// display: inline-block;
 		color: $color-white;
+
 		span,
 		div {
 			background-color: $color-black;
 			border-left: solid $color-black 1rem;
 			border-right: solid $color-black 1rem;
 			box-decoration-break: clone;
-			-webkit-box-decoration-break:clone;
+			-webkit-box-decoration-break: clone;
 		}
 	}
-
-	h1 + div {
+	h1,
+	h1+div {
 		line-height: normal;
 	}
 }
 
-// Programma-entry 
-.banner-logo {
-	@include rounded_all(50%);
-	max-height: 100%;
-}
-
 .category-base {
 	// custom margin-y to match margin-x
-	margin-top: 0.125rem!important;
-	margin-bottom: 0.125rem!important;
-
+	// margin-top: 0.125rem !important;
+	// margin-bottom: 0.125rem !important;
 	color: $color-white;
 	background-color: $color-greyscale-2;
 	font-size: 0.75rem;
@@ -586,7 +328,7 @@ h2.card-title {
 	padding: 0.1rem 0.5rem;
 	@include rounded_all(0.25rem);
 
-	&:hover{
+	&:hover {
 		color: $color-white;
 		background-color: $color-greyscale-3;
 	}
@@ -594,6 +336,7 @@ h2.card-title {
 
 .cultuur {
 	background-color: $color-category-cultuur-1;
+
 	&:hover {
 		background-color: $color-category-cultuur-2;
 	}
@@ -601,6 +344,7 @@ h2.card-title {
 
 .muziek {
 	background-color: $color-category-muziek-1;
+
 	&:hover {
 		background-color: $color-category-muziek-2;
 	}
@@ -608,6 +352,7 @@ h2.card-title {
 
 .actualiteit {
 	background-color: $color-category-actualiteit-1;
+
 	&:hover {
 		background-color: $color-category-actualiteit-2;
 	}
@@ -620,74 +365,81 @@ h2.card-title {
 }
 
 .main {
-    margin-bottom: calc($space-lg + 10vh);
+	margin-bottom: calc($space-lg + 10vh);
 	margin-top: $space-lg;
-	
+
 }
 
 // Header
 header {
-	height: $header-height;
-}
+	min-height: $header-height + vh;
+	min-height: $header-height + svh;
 
-#navBar {
-	z-index: 8000;
-	transition: transform 0.5s;
-	height: inherit;
+	#navBar {
+		min-height: inherit;
+	}
+
+	.search {
+		background-color: transparent;
+		border: none;
+		
+		&::before {
+			content: url("../images/icons/search.svg");
+		}
+	}
 }
 
 .navbar {
 	z-index: 7000;
 	border-bottom-width: 0;
 	@include box-shadow(2px, 0, 4px, rgba(0, 0, 0, 0.16));
-    background-color: $color-white;
-    width: 100vw;
-
-//     .logo {
-// //    background-color: red;
-// 	    img {
-// //		    width: 156px;
-// //		    height: 64px; 
-// //		    border: 1px solid #000;
-// 	    }
-//     }
+	background-color: $color-white;
+	width: 100vw;
+	width: 100svw;
 
 	a {
-			color: $color-black;
-			font-weight: bold;
-		}
+		color: $color-black;
+		font-weight: bold;
+	}
 
 	.nav-item {
 		font-family: $roboto;
-		font-weight: 500!important;
+		font-weight: 500 !important;
 		font-size: $font-size-sm;
 		background-color: $color-black;
-		color: $color-white!important;
-		margin-right: $space-sm;
+		color: $color-white !important;
 		line-height: 100%;
-		&:hover, &reversed:hover {
-		background-color: $color-accent!important;	
+
+		&:hover,
+		&reversed:hover {
+			background-color: $color-accent !important;
 		}
 
 		&-reversed {
-			color: $color-black!important;
-			background-color: $color-greyscale-4!important;
+			color: $color-black !important;
+			background-color: $color-greyscale-4 !important;
 		}
-		
+
 	}
+
 	.nav-item-reversed::after {
 		padding-left: 0.1em;
 		content: url('../images/icons/link-external.svg');
 	}
 }
 
-
+#navbarToggleSearchButton {
+	margin-top: 0.25rem;
+    padding-left: 0.5rem;
+}
 
 // Banner programma
-.banner-programma {
+.hero-content-programma-vandaag {
 	overflow: auto;
 }
-.banner-programma .first-row p,.banner-programma .timeslots i{
+
+.hero-content-programma-vandaag .first-row p,
+.hero-content-programma-vandaag .timeslots i {
 	color: $color-greyscale-3;
 }
 
@@ -707,24 +459,6 @@ header {
 	.form-label {
 		margin-bottom: 0;
 		color: $color-greyscale-3;
-	}
-}
-
-#searchBar {
-    background-image: url("../images/glassSearch.png");
-    background-position: right;
-    background-repeat: no-repeat;
-    background-size: contain;
-    width: 20vw;
-}
-
-.search {
-	background-color: transparent;
-	border: none;
-	
-	&::before {
-		content: url("../images/icons/search.svg");
-		
 	}
 }
 
@@ -762,50 +496,33 @@ header {
 
 .overlay {
 	position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: white;
-    opacity: 0.9;
-    z-index: 8999;
-	display: none;
-}
-
-.modal-background {
-	position: fixed;
-	z-index: 9000;
-	width: 100%;
-	height: 100%;
 	top: 0;
 	left: 0;
-	background-color: rgba(255, 255, 255, 0.9);
+	right: 0;
+	bottom: 0;
+	background-color: white;
+	opacity: 0.9;
+	z-index: 8999;
 	display: none;
-	justify-content: center;
 }
 
-	.btnZoek {
-		background-color: $color-accent;
-		border: none;
-	}
-	
+.btnZoek {
+	background-color: $color-accent;
+	border: none;
+}
+
 .modal-search {
 	z-index: 9002;
-	top: 50%;
-    left: 50%;
-    position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	position: fixed;
 	display: none;
-    transform: translate(-50%, -50%);
-	.btn-close-white {
-		background-color: $color-black;
-		@include rounded_all(24px);
-	}
 
 	.form-zoek {
 		align-content: center;
 	}
-
-
 
 	.close {
 		cursor: pointer;
@@ -817,7 +534,6 @@ header {
 		background-color: $color-black;
 		@include rounded_all(50%);
 	}
-
 }
 
 // Buttons
@@ -826,13 +542,13 @@ header {
 	color: $color-white;
 }
 
-.button-primary, .button-secondary {
+.button-primary,
+.button-secondary {
 	background-position-y: center;
 	background-position-x: $space-xs;
 	background-repeat: no-repeat;
-
 	display: inline-block;
-	padding: $space-xs  $space-sm  $space-xs  $space-xl;
+	padding: $space-xs $space-sm $space-xs $space-xl;
 }
 
 .button-primary {
@@ -840,13 +556,11 @@ header {
 	color: $color-white;
 	@include rounded_all(4px);
 	@include box-shadow(2px, 0, 8px, rgba(0, 0, 0, 0.08));
-	&:hover {
-		@include box-shadow(2px, 0, 8px, rgba(0, 0, 0, 0.24))		
-	}
 
 	&:hover {
 		background-color: $color-black;
 		color: $color-white;
+		@include box-shadow(2px, 0, 8px, rgba(0, 0, 0, 0.24))
 	}
 }
 
@@ -854,11 +568,16 @@ header {
 	background-image: url("../images/icons/next.svg");
 }
 
+.btn-vandaag-toggle:focus {
+	background-color: $color-accent;
+}
+
 a.button-secondary {
 	@include rounded_all(4px);
 	background-color: $color-white;
 	background-image: url("../images/icons/next-accent.svg");
 	color: $color-accent;
+
 	&:hover {
 		&:hover {
 			background-color: $color-black;
@@ -889,7 +608,7 @@ button.accordion-button:focus {
 // Custom form styling
 .searchbar:focus {
 	border-color: $color-accent !important;
-	box-shadow: inset 0 0 0 .25rem rgba(62, 216, 160, 0.25) !important;	
+	box-shadow: inset 0 0 0 .25rem rgba(62, 216, 160, 0.25) !important;
 }
 
 .form-control-custom input[type="checkbox"] {
@@ -897,69 +616,73 @@ button.accordion-button:focus {
 	display: none;
 }
 
-.form-control-custom input[type="checkbox"] + label {
+.form-control-custom input[type="checkbox"]+label {
 	position: relative;
 	padding-left: 1.5em;
 	cursor: pointer;
 	display: inline-block;
 	color: $color-black;
-	line-height: 1em; 
+	line-height: 1em;
 }
 
-.form-control-custom input[type="checkbox"] + label::before {
+.form-control-custom input[type="checkbox"]+label::before {
 	content: "";
 	position: absolute;
 	left: 0;
 	right: 0;
 	width: 1em;
-	height:1em;
+	height: 1em;
 	background-image: url("../images/icons/checkmark-unchecked.svg");
 	background-size: cover;
 }
 
-.form-control-custom input[type="checkbox"]:checked + label::before {
+.form-control-custom input[type="checkbox"]:checked+label::before {
 	content: "";
 	position: absolute;
 	left: 0;
 	right: 0;
 	width: 1em;
-	height:1em;
+	height: 1em;
 }
 
-.form-control-custom input[type="checkbox"]:checked + label::after {
+.form-control-custom input[type="checkbox"]:checked+label::after {
 	content: "";
 	position: absolute;
 	left: 0;
 	right: 0;
 	width: 1em;
-	height:1em;
+	height: 1em;
 	background-image: url("../images/icons/checkmark-checked.svg");
 	background-size: cover;
 }
 
 // Footer
 footer {
-    /*voorlopige hack*/
-    clear: both;
-    background-color: $color-white;
-    height: $footer-height;
+	background-color: $color-white;
+	min-height: $footer-height + vh;
+	min-height: $footer-height + svh;
 	z-index: 8030 !important;
-}
 
-.btnPlay img{
-    width: 50px;
-    height: 50px;
+	.container {
+		min-height: inherit;
+
+		>* {
+			min-height: inherit;
+		}
+	}
 }
 
 .social-media {
-    color: $color-white;
-    background-color: $color-white;
+	color: $color-white;
+	background-color: $color-white;
 
 	ul {
-		margin: 0!important;
+		margin: 0 !important;
+
 		li {
 			display: inline-block;
 		}
+
 		li:not(:last-child) {
 			padding: 16px;
 		}
@@ -969,32 +692,20 @@ footer {
 .audio-control {
 
 	border: none;
-	
-	height: 50px;
-	width: 50px;
-	display: inline-block;
-	align-content: center;
-	justify-content: center;
+	height: 3rem;
+	width: 3rem;
 }
 
 .audio-control-play {
-	background: url("../images/icons/playknop.svg") no-repeat;
+	background: border-box no-repeat center/contain url("../images/icons/playknop.svg");
 }
 
 .audio-control-pause {
-	background: url("../images/icons/stop.svg") no-repeat;
+	background: border-box no-repeat center/contain url("../images/icons/stop.svg");
 }
 
 
 // Home 
-
-section {
-	margin-top:0;			
-}
-	
-section ~ section {
-	margin-top:$space-xxl;
-}
 
 h2.sectionTitle {
 	color: $color-greyscale-2;
@@ -1010,26 +721,34 @@ h2.sectionTitleCentered {
 
 .editorsPick {
 	background-color: $color-white;
-	
+
 	.mixcloud-link {
+
+		img,
+		p {
+			width: 100%;
+		}
+
 		width: 100px;
 		text-decoration: none;
 		color: $color-black;
-		&:hover {
-		text-decoration: underline;
-		}
-			img {
-				object-fit: cover;
-		
-			}
-			p {
-				font-size: $font-size-xs;
-				padding-top: $space-xs;
-				font-weight: 400;
-				// @include text-overflow(3.1rem, 1.2rem)
-				@include text-overflow(2)
 
-			}
+		&:hover {
+			text-decoration: underline;
+		}
+
+		img {
+			object-fit: cover;
+
+		}
+
+		p {
+			font-size: $font-size-xs;
+			padding-top: $space-xs;
+			font-weight: 400;
+			// @include text-overflow(3.1rem, 1.2rem)
+			@include text-overflow(2)
+		}
 	}
 
 	.herbeluister {
@@ -1041,15 +760,8 @@ h2.sectionTitleCentered {
 		height: 0;
 		max-height: 160px;
 		padding-bottom: 100%;
-		
+
 	}
-}
-
-.tegel {
-	background-color: $color-white;
-	@include box-shadow(2px, 0, 4px, rgba(0, 0, 0, 0.16));
-	@include rounded_all();
-
 }
 
 // Programma
@@ -1072,7 +784,8 @@ h2.sectionTitleCentered {
 		color: $color-black;
 
 		&:hover {
-			color: $color-accent;
+			// color: $color-accent;
+			color: $color-greyscale-3;
 			background-color: $color-white;
 		}
 
@@ -1089,9 +802,7 @@ h2.sectionTitleCentered {
 	font-size: larger;
 }
 
-.programma-suggestie {
-	height: $programma-logo-size;
-}
+
 
 //Programmanieuws
 .programmanieuws {
@@ -1099,66 +810,39 @@ h2.sectionTitleCentered {
 	background-color: $color-white;
 }
 
-// Tiles
-.tegel {
+// Cards
+.card {
 	&:hover {
 		@include box-shadow(2px, 0, 8px, rgba(0, 0, 0, 0.24))
 	}
-	.nwsItemCopy {
-		padding: $space-md;
-		h3 {
-			font-size: $font-size-lg;
-			color: $color-black;			
-		}
-		
-		p {
-			font-size: $font-size-sm;
-			color: $color-black;
-			@include text-overflow(2);
-				
-		}
-		p:hover, h3:hover {
-			color: $color-greyscale-3;
-		}
+
+	h3 {
+		font-size: $font-size-lg;
+		color: $color-black;
 	}
 
-	.nwsItemTitle {
+	p {
+		font-size: $font-size-sm;
+		color: $color-black;
+		@include text-overflow(2);
+	}
+
+	p:hover,
+	h3:hover {
+		color: $color-greyscale-3;
+
+	}
+
+	a:not(.category-base, .card-contact a) {
 		color: $color-greyscale-1;
+
 		&:hover {
 			color: $color-greyscale-3;
 		}
-	}	
-}
-
-.card.img-fluid {
-	border-color: transparent;
-}
-
-.nwsimg {
-    width: 100%;
-    height: 50%;
-    position: relative;
-
-	img {
-		width: 100%;
-		object-fit: cover;
 	}
 
-}
-
-.category-container {
-    position: absolute;
-    right: 0.25rem;
-    top: 0.25rem;
-}
-
-.firstRow {
-	height: fit-content;
-    position: relative;
-
-	img {
-		width:100%;
-		height: 56%;
+	.img-fluid {
+		border-color: transparent;
 	}
 }
 
@@ -1166,15 +850,16 @@ h2.sectionTitleCentered {
 .prgLogo {
 	width: 12rem;
 	height: 12rem;
-    background-color: #005cbf;
+	background-color: #005cbf;
 }
 
 .prgInfo p {
-    margin: 0;
+	margin: 0;
 }
 
 .prgNwsCategory {
-    color: black;
+	color: black;
+
 	&:hover {
 		text-decoration: none;
 		color: gray;
@@ -1182,7 +867,9 @@ h2.sectionTitleCentered {
 }
 
 // Pagination Styling
-.pagination-prev-page, .pagination-next-page, .pagination-change-page {
+.pagination-prev-page,
+.pagination-next-page,
+.pagination-change-page {
 	text-decoration: none;
 }
 
@@ -1201,11 +888,11 @@ h2.sectionTitleCentered {
 .accordion-header button.accordion-button:not(.collapsed) {
 	border: none;
 	background-color: $color-white;
-	box-shadow: none!important;
+	box-shadow: none !important;
 	color: $color-greyscale-3;
 }
 
-.accordion-header .accordion-button::after{
+.accordion-header .accordion-button::after {
 	background-image: url("../images/icons/down-arrow-of-angle-svgrepo-com.svg"); // Tijdelijke oplossing? HIER ACCORDION ARROW VERANDEREN!
 }
 
@@ -1216,14 +903,14 @@ h2.sectionTitleCentered {
 
 // Programma
 .social-media-list {
-    background-color: $color-black;
-    border-radius: 5px;
-    padding: 0.2em 0;
+	background-color: $color-black;
+	border-radius: 5px;
+	padding: 0.2em 0;
 
 	ul {
 		list-style: none;
 	}
-	
+
 	a {
 		color: white;
 	}
@@ -1243,86 +930,89 @@ h2.sectionTitleCentered {
 	background-color: $color-white;
 	padding: 2rem;
 
-	> *:last-child {
+	>*:last-child {
 		margin-bottom: 0;
 	}
 }
 
 /* Nieuwsoverzicht listing */
 .nwsOverzicht h2 {
-    color: black;
+	color: black;
 }
 
 .nwsOverzicht a:hover {
-    text-decoration: none;
-    color: #777777;
+	text-decoration: none;
+	color: #777777;
 }
 
 .nwsOverzicht h2:hover {
-    color: #777777;
+	color: #777777;
 }
 
 .listingCategory {
-    display: inline-block;
-    background-color: rgb(172, 155, 155);
-    border-radius: 10px;
-    padding: 2px 10px;
+	display: inline-block;
+	background-color: rgb(172, 155, 155);
+	border-radius: 10px;
+	padding: 2px 10px;
 }
 
 .listingCategory a {
-    color: white;
-    text-decoration: none;
+	color: white;
+	text-decoration: none;
 }
 
 
 /* programmaschema styling */
 .progschema-navbar-container {
-    border-bottom: solid black 1px;
+	border-bottom: solid black 1px;
 }
 
 .progSchema-navbar li {
-    display: inline;
-    margin-right: 5px;
+	display: inline;
+	margin-right: 5px;
 }
 
 .tabs {
-    border:  1px solid #cccccc;
-    display: flex;
+	border: 1px solid #cccccc;
+	display: flex;
 }
 
 .tabs-button {
-    background: none;
-    border: none;
+	background: none;
+	border: none;
 }
 
 .tabs-button:active {
-    color: lightgray;
+	color: lightgray;
 }
 
 .tabs-button:not(.tabs-button-active):hover {
-    color: gray;
-    font-weight: bolder;
+	color: gray;
+	font-weight: bolder;
 }
 
 .tabs-button-active {
-    font-weight: bold;
-    border-bottom: 3px solid black;
+	font-weight: bold;
+	border-bottom: 3px solid black;
 }
 
 .tabs-content {
-    display: none;
+	display: none;
 }
 
-.tabs-content-active, .tab {
-    display: block;
+.tabs-content-active,
+.tab {
+	display: block;
 }
 
 .programmaschema-dag {
-	text-decoration: none; 
-    color: $color-black;
+	text-decoration: none;
+	color: $color-black;
+
 	p {
 		font-size: $font-size-sm;
 	}
+
 	&:hover {
 		background-color: $color-white;
 	}
@@ -1330,18 +1020,17 @@ h2.sectionTitleCentered {
 
 .slot {
 	border-bottom: solid black 1px;
+
 	&:hover {
-	background-color: inherit;
+		background-color: inherit;
 	}
 }
 
 
 /* programma entry */
-.social-media-link{
-    vertical-align: middle;
+.social-media-link {
+	vertical-align: middle;
 }
-
-// Wie zijn we
 
 
 // Fix iframe height
@@ -1349,16 +1038,8 @@ h2.sectionTitleCentered {
 	height: auto;
 }
 
-
-.audioplayer {
-	p {
-		font-size: $font-size-sm;
-		.audioplayer-currently-playing {
-			font-size: $font-size-md;
-			a {
-				color: $color-black;
-				text-decoration: none;
-			}
-		}	
-	}
+.audioplayer-currently-playing {
+	font-size: $font-size-md;
+	color: $color-black;
+	text-decoration: none;
 }
