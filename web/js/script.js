@@ -209,6 +209,10 @@ const setActiveNavItem = (url) => {
 		case 'contact':
 			activeNavItem = document.querySelector('#contact');
 			activeNavItem.classList.add('nav-active');
+			break;
+		case 'workshops':
+			activeNavItem = document.querySelector('#workshops');
+			activeNavItem.classList.add('nav-active');
 	}
 }
 

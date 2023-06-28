@@ -624,17 +624,19 @@ h2.sectionTitleCentered {
   background-color: #FFFFFF;
 }
 
-.card:hover {
+.card p {
+  font-size: calc(1 * 1rem);
+}
+.card:not(.card-contact):hover {
   -webkit-box-shadow: 2px 0 8px rgba(0, 0, 0, 0.24);
   -moz-box-shadow: 2px 0 8px rgba(0, 0, 0, 0.24);
   box-shadow: 2px 0 8px rgba(0, 0, 0, 0.24);
 }
-.card h3 {
+.card:not(.card-contact) h3 {
   font-size: calc(1.5 * 1rem);
   color: #242424;
 }
-.card p {
-  font-size: calc(1 * 1rem);
+.card:not(.card-contact) p {
   color: #242424;
   width: 100%;
   overflow: hidden;
@@ -642,17 +644,17 @@ h2.sectionTitleCentered {
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
 }
-.card p:hover,
-.card h3:hover {
+.card:not(.card-contact) p:hover,
+.card:not(.card-contact) h3:hover {
   color: #919191;
 }
-.card a:not(.category-base, .card-contact a) {
+.card:not(.card-contact) a:not(.category-base, .card-contact a) {
   color: #242424;
 }
-.card a:not(.category-base, .card-contact a):hover {
+.card:not(.card-contact) a:not(.category-base, .card-contact a):hover {
   color: #919191;
 }
-.card .img-fluid {
+.card:not(.card-contact) .img-fluid {
   border-color: transparent;
 }
 
@@ -835,4 +837,9 @@ h2.sectionTitleCentered {
   font-size: calc(1.25 * 1rem);
   color: #242424;
   text-decoration: none;
+}
+
+.header {
+  margin-top: 5rem;
+  margin-bottom: 5rem;
 }

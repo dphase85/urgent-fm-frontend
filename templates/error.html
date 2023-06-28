@@ -1,0 +1,36 @@
+{% extends craft.app.request.isAjax and not craft.app.request.isLivePreview ? "_ajax" : "_layout" %}
+
+{% block content %}
+
+{% set queryValue = "" %}
+
+<main role="main" class="main container">
+    <div class="row">
+        <div class="col">
+            <div class="header">
+                <h1 id="title" data-title="404 Not Found">Error 404 - pagina niet gevonden</h1>
+                <p>Het spijt ons, we hebben de gezochte pagina niet gevonden.</p>
+            </div>
+
+            <h2>Mogelijke oorzaken</h2>
+            <ul>
+                <li>De pagina die je zoekt bestaat niet meer</li>
+                <li>Je klikte op een oude link die niet meer werkt</li>
+                <li>Je typte de verkeerde URL in</li>
+            </ul>
+
+            <h2 class="mt-5">Dit kan je zelf doen</h2>
+            <ul class="mb-3">
+                <li>Zoek de gewenste pagina:</li>
+
+            </ul> 
+                {% include "_includes/zoek/searchbar" %}
+                
+            <ul class="mt-4">  
+                <li>Bezoek de homepage</li>
+                <li>Type de URL opnieuw en controleer op typefouten</li>
+            </ul>
+        </div>
+    </div>
+</main> 
+{% endblock %}

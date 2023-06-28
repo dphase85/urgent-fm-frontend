@@ -1,36 +1,33 @@
 {% extends craft.app.request.isAjax and not craft.app.request.isLivePreview ? "_ajax" : "_layout" %}
 {% set title = entry.title %}
-{% set heroHeight = 75 %}
 
 {% block content %}
-	{% set image = entry.image.one() %}
+
+	{% if entry.image is not empty %}
+		{% set image = entry.image.one() %}
+		{% set backgroundImageExtraSmall = image.getUrl('bannerImageXs') %}
+		{% set backgroundImageSmall = image.getUrl('bannerImageS640w') %}
+		{% set backgroundImageMedium = image.getUrl('bannerImageM1280w') %}
+		{% set backgroundImageLarge = image.getUrl('bannerImageL1600w') %}
+		{% set backgroundImageExtraLarge = image.getUrl('bannerImageXl2560w') %}
+	{% endif %}
+	
 	{% set rootCategory = entry.nieuwsCategories
 		.level('1')
 		.one() %}
-	{% set backgroundImageExtraSmall = image.getUrl('bannerImageXs') %}
-	{% set backgroundImageSmall = image.getUrl('bannerImageS640w') %}
-	{% set backgroundImageMedium = image.getUrl('bannerImageM1280w') %}
-	{% set backgroundImageLarge = image.getUrl('bannerImageL1600w') %}
-	{% set backgroundImageExtraLarge = image.getUrl('bannerImageXl2560w') %}
 
 	<div class="hero d-flex">
-		<picture class="hero-background-picture">
-			<source srcset="{{ backgroundImageExtraLarge }}" media="(min-width: 1920px)">
-			<source srcset="{{ backgroundImageLarge }}" media="(min-width: 1600px)">
-			<source srcset="{{ backgroundImageMedium }}" media="(min-width: 1280px)">
-			<source srcset="{{ backgroundImageSmall }}" media="(max-width: 1279px)">
-			<img src="{{ backgroundImageMedium }}" alt="picture of {{title}}"/>
-		</picture>
 
-		<div class="hero-content container align-self-end">
+		<div class="header container align-self-end">
 			<div class="row">
 				<div class="col">
+					<h1 class="m-0" id="title" data-title="{{ entry.title }}">
+						{{ entry.title }}
+					</h1>
+
 					{% import "_macros/_ui" as ui %}
 					{{ ui.setCategory(rootCategory, 'nieuws') }}
-
-					<h1 class="mt-1" id="title" data-title="{{ entry.title }}">
-						<span>{{ entry.title }}</span>
-					</h1>
+					
 				</div>
 			</div>
 		</div>
@@ -43,6 +40,18 @@
 					<p class="intro">
 						<strong>{{ entry.intro }}</strong>
 					</p>
+
+					{% if entry.image is not empty %}
+						<picture class="hero-background-picture">
+							<source srcset="{{ backgroundImageExtraLarge }}			" media="(min-width: 1920px)">
+							<source srcset="{{ backgroundImageLarge }}" 			media="(min-width: 1600px)">
+							<source srcset="{{ backgroundImageMedium }}" 			media="(min-width: 1280px)">
+							<source srcset="{{ backgroundImageSmall }}" 			media="(max-width: 1279px)">
+							<img src="{{ backgroundImageMedium }}" 			alt="picture of {{title}}"/>
+						</picture>
+					{% endif %}
+					
+
 					{% for block in entry.nieuwsInhoud.all() %}
 						{% switch block.type %}
 

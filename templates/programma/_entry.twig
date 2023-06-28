@@ -1,6 +1,5 @@
 {% extends craft.app.request.isAjax and not craft.app.request.isLivePreview ? "_ajax" : "_layout" %}
 {% set title = entry.title %}
-{% set heroHeight = 75 %}
 
 {% block content %}
 
@@ -8,11 +7,16 @@
 	{% import "_macros/_ui" as ui %}
 	{% set image = null %}
 	{# Banner #}
-	{% if entry.programmaBanner.one() is empty %}
-		{% set image = generic.programmadefaultbanner.one() %}
-	{% else %}
+	{% if entry.programmaBanner is not empty %}
 		{% set image = entry.programmaBanner.one() %}
+
+		{% set backgroundImageExtraSmall = image.getUrl('bannerImageXs') %}
+		{% set backgroundImageSmall = image.getUrl('bannerImageS640w') %}
+		{% set backgroundImageMedium = image.getUrl('bannerImageM1280w') %}
+		{% set backgroundImageLarge = image.getUrl('bannerImageL1600w') %}
+		{% set backgroundImageExtraLarge = image.getUrl('bannerImageXl2560w') %}
 	{% endif %}
+	
 	{% set rootCategory = entry.programmaStijl
 		.level('1')
 		.one() %}
@@ -21,22 +25,7 @@
         .level('>1')
         .all() %}
 
-	{% set backgroundImageExtraSmall = image.getUrl('bannerImageXs') %}
-	{% set backgroundImageSmall = image.getUrl('bannerImageS640w') %}
-	{% set backgroundImageMedium = image.getUrl('bannerImageM1280w') %}
-	{% set backgroundImageLarge = image.getUrl('bannerImageL1600w') %}
-	{% set backgroundImageExtraLarge = image.getUrl('bannerImageXl2560w') %}
-
-	<section class="hero d-flex align-items-center justify-content-center">
-		<picture class="hero-background-picture">
-			<source srcset="{{ backgroundImageExtraLarge }}" media="(min-width: 1920px)">
-			<source srcset="{{ backgroundImageLarge }}" media="(min-width: 1600px)">
-			<source srcset="{{ backgroundImageMedium }}" media="(min-width: 1280px)">
-			<source srcset="{{ backgroundImageSmall }}" media="(max-width: 1279px)">
-			<img src="{{ backgroundImageMedium }}" alt="picture of {{title}}"/>
-		</picture>
-
-		<div class="hero-content container align-self-end">
+		<div class="header container align-self-end">
 			<div class="row flex-column flex-md-row mb-2">
 				<div class="col-3 col-md-auto">
 					{{ ui.setLogo(entry.programmaLogo.one(), "banner-logo rounded-circle h-100") }}
@@ -44,13 +33,8 @@
 
 				<div class="col col-md-auto d-flex flex-column justify-content-center justify-content-md-end">
 
-					<h1 id="title" data-title="{{ entry.title }}" class="mt-1 mb-0">
-						<span>{{ entry.title }}</span>
-					</h1>
-
 					{# Haal de programma dag, begin en einduur op uit programScheme matrix (voorlopig ideale workflow) #}
 					{# TODO: Deze code is (nog) niet efficient! (zie hiervoor craft docs: eager-loading) #}
-
 
 					{# Eerst checken voor listen up. Indien ja: genereer een unieke uurmelding, anders: zoek per weekdag de timeslots op in het weekdag matrixveld, die gerelateerd zijn aan entry #}
 						{% if entry.title == 'Listen Up' %}
@@ -67,28 +51,28 @@
 							.orderBy('title')
 							.all() %}
 						{# De string variabelen(dagen waarop wordt uitgezonden, het uur waarop wordt uitgezonden) waarmee de programmering wordt opgebouwd #}
-						{% set dagString = 'Elke ' %}
+						{% set dagString = 'Elke' %}
 						{% set timing = null %}
 						{% for dag in weekdagen %}
 							{% set dagCropped = dag.title|slice(3, dag.title|length)|lcfirst %}
-							{% if dag == weekdagen|first %}
+							{% if dag is same as(weekdagen|first) %}
 								{% set dagString = "#{dagString} #{dagCropped}"  %}
 							{% else %}
 								{% set dagString = "#{dagString}, #{dagCropped}" %}
 							{% endif %}
-							{# Als alle dagen in de dagString geprint zijn, afsluiten met 'van' #}
-							{# {% set dagString = "#{dagString} van " %} #}
-							{# Hier gaan we ervan uit dat een programma, herhalend over meerdere dagen, steeds op het zelfde uur   geprogrammeerd staat #}
-								{% if dag is same as(weekdagen|last) %}
+								{# Als alle dagen in de dagString geprint zijn, afsluiten met 'van' #}
+								{# {% set dagString = "#{dagString} van " %} 
+								{# Hier gaan we ervan uit dat een programma, herhalend over meerdere dagen, steeds op het zelfde uur   geprogrammeerd staat 	#}
+							{% if dag is same as(weekdagen|last) %}
 								{% set timeslot = dag.weekdag.relatedTo({
-                                	targetElement: entry,
-                                	field: 'programma'
-                                	})
+                        	    	targetElement: entry,
+                        	    	field: 'programma'
+                        	    	})
 									.one() 
 								%}
 
-							{% set timing = "#{timeslot.beginuur|time('short')} tot #{timeslot.einduur|time('short')}" %}
-						{% endif %}
+								{% set timing = "#{timeslot.beginuur|time('short')} tot #{timeslot.einduur|time('short')}" %}
+							{% endif %}
 						{% endfor %}
 
 						{# Programmering: De eerder opgebouwde stringvariabelen worden hier samengevoegd #}
@@ -96,6 +80,11 @@
 						</div>
 
 					{% endif %}
+
+					<h1 id="title" data-title="{{ entry.title }}" class="my-0">
+						<span>{{ entry.title }}</span>
+					</h1>
+
 					<div class="d-flex flex-wrap">
 						{% if rootCategory is not null %}
 							{{ ui.setCategory(rootCategory) }}
@@ -110,8 +99,6 @@
 			</div>
 
 		</div>
-	</section>
-
 	<main
 		role="main" class="main container">
 		{# Programma inhoud #}
@@ -119,9 +106,22 @@
 		<div class="row">
 			<div class="col">
 				<section>
-					<h2 class="programma-intro mt-0 mb-5">
+					<h2 class="programma-intro mt-0">
 						{{ entry.intro|nl2br }}
 					</h2>
+
+				{% if entry.programmaBanner is not empty %}
+					<div class="my-3">
+						<picture class="hero-background-picture">
+							<source srcset="{{ backgroundImageExtraLarge }}" media="(min-width: 1920px)">
+							<source srcset="{{ backgroundImageLarge }}" media="(min-width: 1600px)">
+							<source srcset="{{ backgroundImageMedium }}" media="(min-width: 1280px)">
+							<source srcset="{{ backgroundImageSmall }}" media="(max-width: 1279px)">
+							<img src="{{ backgroundImageMedium }}" alt="picture of {{title}}"/>
+						</picture>
+					</div>
+				{% endif %}
+
 					{{ entry.programmaInhoud }}
 				</section>
 				{# Bouw hier de sociale media links met bijhorende iconen op, indien deze velden ingevuld zijn #}

@@ -11,7 +11,12 @@
 		<div class="col">
 			<article class="card border-0 p-0 h-100 position-relative">
 				{# Eerst source image laden #}
-				{% set image = item.image.one() %}
+				{% if item.image is not empty %}
+					{% set image = item.image.one() %}
+				{% else %}
+					{% set image = generic.newsImageDefault.one() %}
+				{% endif %}
+				
 				{# Dan de verschillende imagetransforms #}
 				{% set imageSrcsetSmall = image.getUrl('homepageLatestS') %}
 				{% set imageSrcsetMedium = image.getUrl('homepageLatestM') %}
@@ -66,7 +71,11 @@
 				class="card border-0 p-0 h-100 position-relative">
 
 				{# Eerst source image laden #}
-				{% set image = item.image.one() %}
+				{% if item.image is not empty %}
+					{% set image = item.image.one() %}
+				{% else %}
+					{% set image = generic.newsImageDefault.one() %}
+				{% endif %}
 				{# Dan de verschillende imagetransforms #}
 				{% set imageSrcsetSmall = image.getUrl('homepageLatestS') %}
 				{% set imageSrcsetMedium = image.getUrl('homepageLatestM') %}

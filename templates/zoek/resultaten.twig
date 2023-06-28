@@ -28,9 +28,13 @@
 
 				<div class="form-background mb-3">
 					<form class="form-zoek" action="{{ url('zoek/resultaten') }}">
-						{% include "_includes/zoek/searchbar" %}
+						{% embed "_includes/zoek/searchbar" %}
+							{% block label %}
+							<label for="input-search" class="form-label mb-0">Zoeken op urgent.fm:</label>
+							{% endblock %}
+						{% endembed %}
 
-						<div class="form-categoriefilter">
+						<div class="form-categoriefilter mt-4">
 							{% set categories =  craft.categories
                 	    	.group('nieuwsCategories')
                 	    	.all()

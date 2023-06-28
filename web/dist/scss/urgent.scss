@@ -812,37 +812,41 @@ h2.sectionTitleCentered {
 
 // Cards
 .card {
-	&:hover {
-		@include box-shadow(2px, 0, 8px, rgba(0, 0, 0, 0.24))
-	}
-
-	h3 {
-		font-size: $font-size-lg;
-		color: $color-black;
-	}
-
 	p {
 		font-size: $font-size-sm;
-		color: $color-black;
-		@include text-overflow(2);
 	}
-
-	p:hover,
-	h3:hover {
-		color: $color-greyscale-3;
-
-	}
-
-	a:not(.category-base, .card-contact a) {
-		color: $color-greyscale-1;
-
+	&:not(.card-contact) {
 		&:hover {
-			color: $color-greyscale-3;
+			@include box-shadow(2px, 0, 8px, rgba(0, 0, 0, 0.24))
 		}
-	}
-
-	.img-fluid {
-		border-color: transparent;
+	
+		h3 {
+			font-size: $font-size-lg;
+			color: $color-black;
+		}
+	
+		p {		
+			color: $color-black;
+			@include text-overflow(2);
+		}
+	
+		p:hover,
+		h3:hover {
+			color: $color-greyscale-3;
+	
+		}
+	
+		a:not(.category-base, .card-contact a) {
+			color: $color-greyscale-1;
+	
+			&:hover {
+				color: $color-greyscale-3;
+			}
+		}
+	
+		.img-fluid {
+			border-color: transparent;
+		}
 	}
 }
 
@@ -1042,4 +1046,9 @@ h2.sectionTitleCentered {
 	font-size: $font-size-md;
 	color: $color-black;
 	text-decoration: none;
+}
+
+.header {
+	margin-top: 5rem;
+	margin-bottom: 5rem;
 }
