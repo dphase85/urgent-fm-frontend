@@ -7,7 +7,6 @@
 // Font Variables
 @import url(https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Source+Serif+Pro:ital,wght@0,600;0,700;1,600;1,700&display=swap);
 
-
 // Font Variables
 $roboto: 'Roboto', sans-serif;
 $source-serif: 'Source Serif Pro', serif;
@@ -36,41 +35,40 @@ $font-size-xl: calc(2.5 * #{$space-unit});
 $font-size-xxl: calc(3.5 * #{$space-unit});
 
 /* Color Variables */
-$color-primary: #009FE3;
+$color-primary: #009fe3;
 $color-secondary: #220059;
-$color-accent: #3ED8A0;
-$color-accent-hover: #09D389;
-$color-message-error: #E81739;
-$color-message-warning: #EBB122;
-$color-message-success: #5E8821;
+$color-accent: #3ed8a0;
+$color-accent-hover: #09d389;
+$color-message-error: #e81739;
+$color-message-warning: #ebb122;
+$color-message-success: #5e8821;
 
 // Nieuws categorieën
-$color-category-nieuws-1: #009FE3;
-$color-category-nieuws-2: #40B7EA;
+$color-category-nieuws-1: #009fe3;
+$color-category-nieuws-2: #40b7ea;
 
 // Programma categorieën
 $color-category-actualiteit-1: #166a88;
-$color-category-actualiteit-2: #508FA6;
-$color-category-muziek-1: #009FE3;
-$color-category-muziek-2: #40B7EA;
-$color-category-cultuur-1: #EBB122;
-$color-category-cultuur-2: #F0C459;
-
+$color-category-actualiteit-2: #508fa6;
+$color-category-muziek-1: #009fe3;
+$color-category-muziek-2: #40b7ea;
+$color-category-cultuur-1: #ebb122;
+$color-category-cultuur-2: #f0c459;
 
 /* Grey scales */
 $color-greyscale-1: #242424;
 $color-greyscale-2: #484848;
 $color-greyscale-3: #919191;
 $color-greyscale-4: #f2f2f2;
-$color-greyscale-5: #EBEBEB;
+$color-greyscale-5: #ebebeb;
 
-$color-white: #FFFFFF;
+$color-white: #ffffff;
 $color-black: #242424;
-$color-background: #F2F2F2;
+$color-background: #f2f2f2;
 
 $color-border: #cdcdcd;
 
-$container-width: 60; //TODO: ofwel 67vw om responsive logo te fixen in programma entry 
+$container-width: 60; //TODO: ofwel 67vw om responsive logo te fixen in programma entry
 $header-height: 10;
 $footer-height: 10;
 $hero-height: 75;
@@ -91,50 +89,46 @@ $programma-logo-size: 6rem;
 	
 ///////////////////////////////////////////////////////////////////////////// */
 
-
 @mixin box-shadow($top, $left, $blur, $color, $inset: false) {
-	@if $inset {
-		-webkit-box-shadow: inset $top $left $blur $color;
-		-moz-box-shadow: inset $top $left $blur $color;
-		box-shadow: inset $top $left $blur $color;
-	}
-
-	@else {
-		-webkit-box-shadow: $top $left $blur $color;
-		-moz-box-shadow: $top $left $blur $color;
-		box-shadow: $top $left $blur $color;
-	}
+    @if $inset {
+        -webkit-box-shadow: inset $top $left $blur $color;
+        -moz-box-shadow: inset $top $left $blur $color;
+        box-shadow: inset $top $left $blur $color;
+    } @else {
+        -webkit-box-shadow: $top $left $blur $color;
+        -moz-box-shadow: $top $left $blur $color;
+        box-shadow: $top $left $blur $color;
+    }
 }
 
 @mixin rounded_all($radius: 0.33em) {
-	-webkit-border-radius: $radius;
-	-moz-border-radius: $radius;
-	border-radius: $radius;
+    -webkit-border-radius: $radius;
+    -moz-border-radius: $radius;
+    border-radius: $radius;
 }
 
 @mixin transition($args...) {
-	-webkit-transition: $args;
-	-moz-transition: $args;
-	-ms-transition: $args;
-	-o-transition: $args;
-	transition: $args;
+    -webkit-transition: $args;
+    -moz-transition: $args;
+    -ms-transition: $args;
+    -o-transition: $args;
+    transition: $args;
 }
 
 @mixin text-overflow($numberOfLines) {
-	width: 100%;
-	// white-space: nowrap;
-	overflow: hidden;
+    width: 100%;
+    // white-space: nowrap;
+    overflow: hidden;
 
-	display: -webkit-box;
-	-webkit-box-orient: vertical;
-	-webkit-line-clamp: $numberOfLines;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: $numberOfLines;
 }
 
 @mixin height($height) {
-	height: $height + vh;
-	height: $height + svh;
+    height: $height + vh;
+    height: $height + svh;
 }
-
 
 /* /////////////////////////////////////////////////////////////////////////////
 	
@@ -142,16 +136,15 @@ $programma-logo-size: 6rem;
 	
 ///////////////////////////////////////////////////////////////////////////// */
 
-
 // General
 
 html {
-	scroll-behavior: auto !important;
+    scroll-behavior: auto !important;
 }
 
 body {
-	font-family: $roboto;
-	background-color: $color-background;
+    font-family: $roboto;
+    background-color: $color-background;
 }
 
 // Typography
@@ -159,896 +152,908 @@ h1,
 h2,
 h3,
 h4 {
-	font-family: $source-serif;
+    font-family: $source-serif;
 }
 
-
 h1 {
-	font-size: $font-size-xl;
+    font-size: $font-size-xl;
 }
 
 h2 {
-	font-size: $font-size-lg;
+    font-size: $font-size-lg;
 }
 
 h3 {
-	font-size: $font-size-md;
+    font-size: $font-size-md;
 }
 
 h3 span {
-	font-family: $roboto;
-	font-size: $space-sm;
+    font-family: $roboto;
+    font-size: $space-sm;
 }
 
 h5 {
-	font-size: $font-size-sm;
+    font-size: $font-size-sm;
 }
 
 .programma-vandaag-label {
-	font-size: $font-size-md;
+    font-size: $font-size-md;
 }
 
 p {
-	font-size: $font-size-md;
+    font-size: $font-size-md;
 
-	&.date {
-		color: $color-greyscale-3;
-		font-size: $font-size-sm;
-	}
+    &.date {
+        color: $color-greyscale-3;
+        font-size: $font-size-sm;
+    }
 
-	&.intro {
-		font-size: $font-size-lg;
-	}
+    &.intro {
+        font-size: $font-size-lg;
+    }
 }
 
 .programma-intro {
-	font-family: inherit;
-	font-size: $font-size-md;
-	font-weight: bolder;
+    font-family: inherit;
+    font-size: $font-size-md;
+    font-weight: bolder;
 }
 
 a {
-	color: $color-accent;
-	text-decoration: none;
+    color: $color-accent;
+    text-decoration: none;
 
-	&:hover {
-		color: $color-greyscale-3;
-		text-decoration: none;
-	}
+    &:hover {
+        color: $color-greyscale-3;
+        text-decoration: none;
+    }
 }
-
 
 .navbar .nav-active,
 .navbar .nav-link:active {
-	background-color: #09D389 !important;
+    background-color: #09d389 !important;
 }
 
-
 .accent-green {
-	color: $color-accent;
+    color: $color-accent;
 }
 
 .social-links {
-	margin-left: 0;
-	padding-left: 0;
+    margin-left: 0;
+    padding-left: 0;
 
-	li {
-		display: inline-block;
-		list-style: none;
-		margin-left: 0;
-	}
+    li {
+        display: inline-block;
+        list-style: none;
+        margin-left: 0;
+    }
 }
 
 // Viewports
 
-@media(max-width: 991px) {
-	.navbar-nav {
-		width: fit-content;
-	
-		a {
-			padding: 0.5rem 0.75rem;
-		}
-	}
+@media (max-width: 991px) {
+    .navbar-nav {
+        width: fit-content;
+
+        a {
+            padding: 0.5rem 0.75rem;
+        }
+    }
 }
 
-@media(min-width: 1200px) {
+@media (min-width: 992px) {
+    header {
+        .navbar {
+            .logo {
+                width: unset !important;
+            }
+        }
+    }
+}
 
-	.container:not(.navbar .container, footer .container, .modal-background .container) {
-		max-width: $container-width + vw;
-		max-width: $container-width + svw;
-	}
+@media (min-width: 1200px) {
+    .container:not(
+            .navbar .container,
+            footer .container,
+            .modal-background .container
+        ) {
+        max-width: $container-width + vw;
+        max-width: $container-width + svw;
+    }
 }
 
 // No Banner
 .banner-none {
-	margin-top: 20vh;
-	margin-top: 20svh;
+    margin-top: 20vh;
+    margin-top: 20svh;
 }
 
-
 .banner-image-container {
-	overflow: hidden;
+    overflow: hidden;
 }
 
 // Homepage hero styling
 .hero {
-	min-height: $hero-height + vh;
-	min-height: $hero-height + svh;
+    min-height: $hero-height + vh;
+    min-height: $hero-height + svh;
 }
 
 .hero-background-picture {
-	width: 100%;
-	@include height($hero-height);
+    width: 100%;
+    @include height($hero-height);
 
-	& img {
-		@include height($hero-height);;
-		object-fit: cover;
-		object-position: center;
-		width: 100%;
-	}
+    & img {
+        @include height($hero-height);
+        object-fit: cover;
+        object-position: center;
+        width: 100%;
+    }
 }
 
 .hero-content-programma-vandaag {
-	background-color: $color-white;
+    background-color: $color-white;
 }
 
 .hero-content {
-	position: absolute;
-	left: 0;
-	right: 0;
+    position: absolute;
+    left: 0;
+    right: 0;
 
-	h1,
-	.programma-van-tot {
-		color: $color-white;
+    h1,
+    .programma-van-tot {
+        color: $color-white;
 
-		span,
-		div {
-			background-color: $color-black;
-			border-left: solid $color-black 1rem;
-			border-right: solid $color-black 1rem;
-			box-decoration-break: clone;
-			-webkit-box-decoration-break: clone;
-		}
-	}
-	h1,
-	h1+div {
-		line-height: normal;
-	}
+        span,
+        div {
+            background-color: $color-black;
+            border-left: solid $color-black 1rem;
+            border-right: solid $color-black 1rem;
+            box-decoration-break: clone;
+            -webkit-box-decoration-break: clone;
+        }
+    }
+    h1,
+    h1 + div {
+        line-height: normal;
+    }
 }
 
 .category-base {
-	// custom margin-y to match margin-x
-	// margin-top: 0.125rem !important;
-	// margin-bottom: 0.125rem !important;
-	color: $color-white;
-	background-color: $color-greyscale-2;
-	font-size: 0.75rem;
-	text-decoration: none;
-	display: inline-block;
-	padding: 0.1rem 0.5rem;
-	@include rounded_all(0.25rem);
+    // custom margin-y to match margin-x
+    // margin-top: 0.125rem !important;
+    // margin-bottom: 0.125rem !important;
+    color: $color-white;
+    background-color: $color-greyscale-2;
+    font-size: 0.75rem;
+    text-decoration: none;
+    display: inline-block;
+    padding: 0.1rem 0.5rem;
+    @include rounded_all(0.25rem);
 
-	&:hover {
-		color: $color-white;
-		background-color: $color-greyscale-3;
-	}
+    &:hover {
+        color: $color-white;
+        background-color: $color-greyscale-3;
+    }
 }
 
 .cultuur {
-	background-color: $color-category-cultuur-1;
+    background-color: $color-category-cultuur-1;
 
-	&:hover {
-		background-color: $color-category-cultuur-2;
-	}
+    &:hover {
+        background-color: $color-category-cultuur-2;
+    }
 }
 
 .muziek {
-	background-color: $color-category-muziek-1;
+    background-color: $color-category-muziek-1;
 
-	&:hover {
-		background-color: $color-category-muziek-2;
-	}
+    &:hover {
+        background-color: $color-category-muziek-2;
+    }
 }
 
 .actualiteit {
-	background-color: $color-category-actualiteit-1;
+    background-color: $color-category-actualiteit-1;
 
-	&:hover {
-		background-color: $color-category-actualiteit-2;
-	}
+    &:hover {
+        background-color: $color-category-actualiteit-2;
+    }
 }
 
 //TODO: shape newscategory like programma categories
 .nieuws {
-	color: $color-white;
-	background-color: $color-primary;
+    color: $color-white;
+    background-color: $color-primary;
 }
 
 .main {
-	margin-bottom: calc($space-lg + 10vh);
-	margin-top: $space-lg;
-
+    margin-bottom: calc($space-lg + 10vh);
+    margin-top: $space-lg;
 }
 
 // Header
 header {
-	min-height: $header-height + vh;
-	min-height: $header-height + svh;
+    min-height: $header-height + vh;
+    min-height: $header-height + svh;
 
-	#navBar {
-		min-height: inherit;
-	}
+    #navBar {
+        min-height: inherit;
 
-	.search {
-		background-color: transparent;
-		border: none;
-		
-		&::before {
-			content: url("../images/icons/search.svg");
-		}
-	}
+        .logo {
+            min-height: $header-height + vh;
+            min-height: $header-height + svh;
+        }
+    }
+
+    .search {
+        background-color: transparent;
+        border: none;
+
+        &::before {
+            content: url('../images/icons/search.svg');
+        }
+    }
 }
 
 .navbar {
-	z-index: 7000;
-	border-bottom-width: 0;
-	@include box-shadow(2px, 0, 4px, rgba(0, 0, 0, 0.16));
-	background-color: $color-white;
-	width: 100vw;
-	width: 100svw;
+    z-index: 7000;
+    border-bottom-width: 0;
+    @include box-shadow(2px, 0, 4px, rgba(0, 0, 0, 0.16));
+    background-color: $color-white;
+    width: 100vw;
+    width: 100svw;
 
-	a {
-		color: $color-black;
-		font-weight: bold;
-	}
+    margin-bottom: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    flex-basis: auto;
+    align-items: flex-start;
+    overflow: hidden;
+    // width: fit-content;
+    line-height: 100%;
 
-	.nav-item {
-		font-family: $roboto;
-		font-weight: 500 !important;
-		font-size: $font-size-sm;
-		background-color: $color-black;
-		color: $color-white !important;
-		line-height: 100%;
+    a {
+        color: $color-black;
+        font-weight: bold;
+    }
 
-		&:hover,
-		&reversed:hover {
-			background-color: $color-accent !important;
-		}
+    .nav-item {
+        font-family: $roboto;
+        font-weight: 500 !important;
+        font-size: $font-size-sm;
+        background-color: $color-black;
+        color: $color-white !important;
+        line-height: 100%;
+        margin-top: 0.5rem !important;
+        margin-bottom: 0.5rem !important;
 
-		&-reversed {
-			color: $color-black !important;
-			background-color: $color-greyscale-4 !important;
-		}
+        width: 100%;
 
-	}
+        &:hover,
+        &reversed:hover {
+            background-color: $color-accent !important;
+        }
 
-	.nav-item-reversed::after {
-		padding-left: 0.1em;
-		content: url('../images/icons/link-external.svg');
-	}
+        &-reversed {
+            color: $color-black !important;
+            background-color: $color-greyscale-4 !important;
+        }
+    }
+
+    .nav-item-reversed::after {
+        padding-left: 0.1em;
+        content: url('../images/icons/link-external.svg');
+    }
 }
 
 #navbarToggleSearchButton {
-	margin-top: 0.25rem;
+    margin-top: 0.25rem;
     padding-left: 0.5rem;
 }
 
 // Banner programma
 .hero-content-programma-vandaag {
-	overflow: auto;
+    overflow: auto;
 }
 
 .hero-content-programma-vandaag .first-row p,
 .hero-content-programma-vandaag .timeslots i {
-	color: $color-greyscale-3;
+    color: $color-greyscale-3;
 }
 
 .timeslots {
-	z-index: 4000;
+    z-index: 4000;
 }
 
 // Zoek resultaten page
 .form-background {
-	background-color: $color-white;
-	padding: $space-md;
+    background-color: $color-white;
+    padding: $space-md;
 
-	.cb-filter {
-		margin-top: $space-sm;
-	}
+    .cb-filter {
+        margin-top: $space-sm;
+    }
 
-	.form-label {
-		margin-bottom: 0;
-		color: $color-greyscale-3;
-	}
+    .form-label {
+        margin-bottom: 0;
+        color: $color-greyscale-3;
+    }
 }
 
 // Search
 .searchbar {
-	border: none;
-	font-size: $font-size-lg;
+    border: none;
+    font-size: $font-size-lg;
 }
 
 .zoekveld {
-	border: 1px solid $color-border;
-	background-color: $color-white;
-	display: flex;
-	padding: 0.5rem;
+    border: 1px solid $color-border;
+    background-color: $color-white;
+    display: flex;
+    padding: 0.5rem;
 }
 
 .input-search {
-	flex-grow: 1;
-	border: none;
+    flex-grow: 1;
+    border: none;
 }
 
 .form-categoriefilter,
 .form-label {
-	margin-left: 0.5rem;
+    margin-left: 0.5rem;
 }
 
 // Search Overlay
 .search:hover {
-	cursor: pointer;
+    cursor: pointer;
 }
 
 .modal form {
-	z-index: 9001;
+    z-index: 9001;
 }
 
 .overlay {
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	background-color: white;
-	opacity: 0.9;
-	z-index: 8999;
-	display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: white;
+    opacity: 0.9;
+    z-index: 8999;
+    display: none;
 }
 
 .btnZoek {
-	background-color: $color-accent;
-	border: none;
+    background-color: $color-accent;
+    border: none;
 }
 
 .modal-search {
-	z-index: 9002;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	position: fixed;
-	display: none;
+    z-index: 9002;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+    display: none;
 
-	.form-zoek {
-		align-content: center;
-	}
+    .form-zoek {
+        align-content: center;
+    }
 
-	.close {
-		cursor: pointer;
-		font-size: 2rem;
-		border: none;
-		color: $color-white;
-		width: 3rem;
-		text-align: center;
-		background-color: $color-black;
-		@include rounded_all(50%);
-	}
+    .close {
+        cursor: pointer;
+        font-size: 2rem;
+        border: none;
+        color: $color-white;
+        width: 3rem;
+        text-align: center;
+        background-color: $color-black;
+        @include rounded_all(50%);
+    }
 }
 
 // Buttons
 .btn-light {
-	background-color: $color-accent;
-	color: $color-white;
+    background-color: $color-accent;
+    color: $color-white;
 }
 
 .button-primary,
 .button-secondary {
-	background-position-y: center;
-	background-position-x: $space-xs;
-	background-repeat: no-repeat;
-	display: inline-block;
-	padding: $space-xs $space-sm $space-xs $space-xl;
+    background-position-y: center;
+    background-position-x: $space-xs;
+    background-repeat: no-repeat;
+    display: inline-block;
+    padding: $space-xs $space-sm $space-xs $space-xl;
 }
 
 .button-primary {
-	background-color: $color-accent;
-	color: $color-white;
-	@include rounded_all(4px);
-	@include box-shadow(2px, 0, 8px, rgba(0, 0, 0, 0.08));
+    background-color: $color-accent;
+    color: $color-white;
+    @include rounded_all(4px);
+    @include box-shadow(2px, 0, 8px, rgba(0, 0, 0, 0.08));
 
-	&:hover {
-		background-color: $color-black;
-		color: $color-white;
-		@include box-shadow(2px, 0, 8px, rgba(0, 0, 0, 0.24))
-	}
+    &:hover {
+        background-color: $color-black;
+        color: $color-white;
+        @include box-shadow(2px, 0, 8px, rgba(0, 0, 0, 0.24));
+    }
 }
 
 .button-primary {
-	background-image: url("../images/icons/next.svg");
+    background-image: url('../images/icons/next.svg');
 }
 
 .btn-vandaag-toggle:focus {
-	background-color: $color-accent;
+    background-color: $color-accent;
 }
 
 a.button-secondary {
-	@include rounded_all(4px);
-	background-color: $color-white;
-	background-image: url("../images/icons/next-accent.svg");
-	color: $color-accent;
+    @include rounded_all(4px);
+    background-color: $color-white;
+    background-image: url('../images/icons/next-accent.svg');
+    color: $color-accent;
 
-	&:hover {
-		&:hover {
-			background-color: $color-black;
-			color: $color-white;
-			background-image: url("../images/icons/next.svg");
-		}
-	}
+    &:hover {
+        &:hover {
+            background-color: $color-black;
+            color: $color-white;
+            background-image: url('../images/icons/next.svg');
+        }
+    }
 }
 
 .btn-vandaag-toggle {
-	background-color: $color-black;
-	border: none;
+    background-color: $color-black;
+    border: none;
 
-	&:hover {
-		background-color: $color-accent;
-	}
+    &:hover {
+        background-color: $color-accent;
+    }
 }
 
 // Disable bootstrap button:focus boxshadow:
 .btn:focus {
-	box-shadow: none !important;
+    box-shadow: none !important;
 }
 
 button.accordion-button:focus {
-	box-shadow: $color-primary !important;
+    box-shadow: $color-primary !important;
 }
 
 // Custom form styling
 .searchbar:focus {
-	border-color: $color-accent !important;
-	box-shadow: inset 0 0 0 .25rem rgba(62, 216, 160, 0.25) !important;
+    border-color: $color-accent !important;
+    box-shadow: inset 0 0 0 0.25rem rgba(62, 216, 160, 0.25) !important;
 }
 
-.form-control-custom input[type="checkbox"] {
-	opacity: 0;
-	display: none;
+.form-control-custom input[type='checkbox'] {
+    opacity: 0;
+    display: none;
 }
 
-.form-control-custom input[type="checkbox"]+label {
-	position: relative;
-	padding-left: 1.5em;
-	cursor: pointer;
-	display: inline-block;
-	color: $color-black;
-	line-height: 1em;
+.form-control-custom input[type='checkbox'] + label {
+    position: relative;
+    padding-left: 1.5em;
+    cursor: pointer;
+    display: inline-block;
+    color: $color-black;
+    line-height: 1em;
 }
 
-.form-control-custom input[type="checkbox"]+label::before {
-	content: "";
-	position: absolute;
-	left: 0;
-	right: 0;
-	width: 1em;
-	height: 1em;
-	background-image: url("../images/icons/checkmark-unchecked.svg");
-	background-size: cover;
+.form-control-custom input[type='checkbox'] + label::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 1em;
+    height: 1em;
+    background-image: url('../images/icons/checkmark-unchecked.svg');
+    background-size: cover;
 }
 
-.form-control-custom input[type="checkbox"]:checked+label::before {
-	content: "";
-	position: absolute;
-	left: 0;
-	right: 0;
-	width: 1em;
-	height: 1em;
+.form-control-custom input[type='checkbox']:checked + label::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 1em;
+    height: 1em;
 }
 
-.form-control-custom input[type="checkbox"]:checked+label::after {
-	content: "";
-	position: absolute;
-	left: 0;
-	right: 0;
-	width: 1em;
-	height: 1em;
-	background-image: url("../images/icons/checkmark-checked.svg");
-	background-size: cover;
+.form-control-custom input[type='checkbox']:checked + label::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 1em;
+    height: 1em;
+    background-image: url('../images/icons/checkmark-checked.svg');
+    background-size: cover;
 }
 
 // Footer
 footer {
-	background-color: $color-white;
-	min-height: $footer-height + vh;
-	min-height: $footer-height + svh;
-	z-index: 8030 !important;
+    background-color: $color-white;
+    min-height: $footer-height + vh;
+    min-height: $footer-height + svh;
+    z-index: 8030 !important;
+    @include box-shadow(0, 0, 4px, rgba(0, 0, 0, 0.16));
 
-	.container {
-		min-height: inherit;
+    .container {
+        min-height: inherit;
 
-		>* {
-			min-height: inherit;
-		}
-	}
+        > * {
+            min-height: inherit;
+        }
+    }
 }
 
 .social-media {
-	color: $color-white;
-	background-color: $color-white;
+    color: $color-white;
+    background-color: $color-white;
 
-	ul {
-		margin: 0 !important;
-
-		li {
-			display: inline-block;
-		}
-
-		li:not(:last-child) {
-			padding: 16px;
-		}
-	}
+    ul {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        gap: 2rem;
+    }
 }
 
 .audio-control {
-
-	border: none;
-	height: 3rem;
-	width: 3rem;
+    border: none;
+    height: 3rem;
+    width: 3rem;
 }
 
 .audio-control-play {
-	background: border-box no-repeat center/contain url("../images/icons/playknop.svg");
+    background: border-box no-repeat center/contain
+        url('../images/icons/playknop.svg');
 }
 
 .audio-control-pause {
-	background: border-box no-repeat center/contain url("../images/icons/stop.svg");
+    background: border-box no-repeat center/contain
+        url('../images/icons/stop.svg');
 }
 
-
-// Home 
+// Home
 
 h2.sectionTitle {
-	color: $color-greyscale-2;
-	font-size: $font-size-lg;
+    color: $color-greyscale-2;
+    font-size: $font-size-lg;
 }
 
 h2.sectionTitleCentered {
-	color: $color-greyscale-2;
-	font-size: $font-size-lg;
-	text-align: center;
-	font-family: $roboto;
+    color: $color-greyscale-2;
+    font-size: $font-size-lg;
+    text-align: center;
+    font-family: $roboto;
 }
 
 .editorsPick {
-	background-color: $color-white;
+    background-color: $color-white;
 
-	.mixcloud-link {
+    .mixcloud-link {
+        img,
+        p {
+            width: 100%;
+        }
 
-		img,
-		p {
-			width: 100%;
-		}
+        width: 100px;
+        text-decoration: none;
+        color: $color-black;
 
-		width: 100px;
-		text-decoration: none;
-		color: $color-black;
+        &:hover {
+            text-decoration: underline;
+        }
 
-		&:hover {
-			text-decoration: underline;
-		}
+        img {
+            object-fit: cover;
+        }
 
-		img {
-			object-fit: cover;
+        p {
+            font-size: $font-size-xs;
+            padding-top: $space-xs;
+            font-weight: 400;
+            // @include text-overflow(3.1rem, 1.2rem)
+            @include text-overflow(2);
+        }
+    }
 
-		}
-
-		p {
-			font-size: $font-size-xs;
-			padding-top: $space-xs;
-			font-weight: 400;
-			// @include text-overflow(3.1rem, 1.2rem)
-			@include text-overflow(2)
-		}
-	}
-
-	.herbeluister {
-		display: inline-block;
-		background-color: $color-accent;
-		/* fixed responsive square: code gevonden op https://stackoverflow.com/questions/19068070/how-to-style-a-div-to-be-a-responsive-square*/
-		width: 100%;
-		max-width: 16px;
-		height: 0;
-		max-height: 160px;
-		padding-bottom: 100%;
-
-	}
+    .herbeluister {
+        display: inline-block;
+        background-color: $color-accent;
+        /* fixed responsive square: code gevonden op https://stackoverflow.com/questions/19068070/how-to-style-a-div-to-be-a-responsive-square*/
+        width: 100%;
+        max-width: 16px;
+        height: 0;
+        max-height: 160px;
+        padding-bottom: 100%;
+    }
 }
 
 // Programma
 .mix-sound-cloud iframe {
-	width: 100%;
+    width: 100%;
 }
 
 .programma-logo {
-	img {
-		width: $programma-logo-size;
-		height: $programma-logo-size;
-		object-fit: cover;
-		object-position: center;
-	}
+    img {
+        width: $programma-logo-size;
+        height: $programma-logo-size;
+        object-fit: cover;
+        object-position: center;
+    }
 }
 
 .related-shows {
-	.col a {
-		max-height: $programma-logo-size;
-		color: $color-black;
+    .col a {
+        max-height: $programma-logo-size;
+        color: $color-black;
 
-		&:hover {
-			// color: $color-accent;
-			color: $color-greyscale-3;
-			background-color: $color-white;
-		}
-
-	}
+        &:hover {
+            // color: $color-accent;
+            color: $color-greyscale-3;
+            background-color: $color-white;
+        }
+    }
 }
 
 .related-show p {
-	@include text-overflow(2);
-	font-size: medium
+    @include text-overflow(2);
+    font-size: medium;
 }
 
 .related-show h3 {
-	@include text-overflow(1);
-	font-size: larger;
+    @include text-overflow(1);
+    font-size: larger;
 }
-
-
 
 //Programmanieuws
 .programmanieuws {
-	padding: $space-sm;
-	background-color: $color-white;
+    padding: $space-sm;
+    background-color: $color-white;
 }
 
 // Cards
 .card {
-	p {
-		font-size: $font-size-sm;
-	}
-	&:not(.card-contact) {
-		&:hover {
-			@include box-shadow(2px, 0, 8px, rgba(0, 0, 0, 0.24))
-		}
-	
-		h3 {
-			font-size: $font-size-lg;
-			color: $color-black;
-		}
-	
-		p {		
-			color: $color-black;
-			@include text-overflow(2);
-		}
-	
-		p:hover,
-		h3:hover {
-			color: $color-greyscale-3;
-	
-		}
-	
-		a:not(.category-base, .card-contact a) {
-			color: $color-greyscale-1;
-	
-			&:hover {
-				color: $color-greyscale-3;
-			}
-		}
-	
-		.img-fluid {
-			border-color: transparent;
-		}
-	}
+    p {
+        font-size: $font-size-sm;
+    }
+    &:not(.card-contact) {
+        &:hover {
+            @include box-shadow(2px, 0, 8px, rgba(0, 0, 0, 0.24));
+        }
+
+        h3 {
+            font-size: $font-size-lg;
+            color: $color-black;
+        }
+
+        p {
+            color: $color-black;
+            @include text-overflow(2);
+        }
+
+        p:hover,
+        h3:hover {
+            color: $color-greyscale-3;
+        }
+
+        a:not(.category-base, .card-contact a) {
+            color: $color-greyscale-1;
+
+            &:hover {
+                color: $color-greyscale-3;
+            }
+        }
+
+        .img-fluid {
+            border-color: transparent;
+        }
+    }
 }
 
 // Programma nieuwsItem
 .prgLogo {
-	width: 12rem;
-	height: 12rem;
-	background-color: #005cbf;
+    width: 12rem;
+    height: 12rem;
+    background-color: #005cbf;
 }
 
 .prgInfo p {
-	margin: 0;
+    margin: 0;
 }
 
 .prgNwsCategory {
-	color: black;
+    color: black;
 
-	&:hover {
-		text-decoration: none;
-		color: gray;
-	}
+    &:hover {
+        text-decoration: none;
+        color: gray;
+    }
 }
 
 // Pagination Styling
 .pagination-prev-page,
 .pagination-next-page,
 .pagination-change-page {
-	text-decoration: none;
+    text-decoration: none;
 }
 
 .pagination-current-page {
-	pointer-events: none;
-	border-radius: 50%;
-	background-color: $color-accent;
-	color: $color-white;
-	height: 2em;
-	width: 2em;
-	line-height: 2em;
-	display: inline-block;
+    pointer-events: none;
+    border-radius: 50%;
+    background-color: $color-accent;
+    color: $color-white;
+    height: 2em;
+    width: 2em;
+    line-height: 2em;
+    display: inline-block;
 }
 
 // Nieuwsindex Styling
 .accordion-header button.accordion-button:not(.collapsed) {
-	border: none;
-	background-color: $color-white;
-	box-shadow: none !important;
-	color: $color-greyscale-3;
+    border: none;
+    background-color: $color-white;
+    box-shadow: none !important;
+    color: $color-greyscale-3;
 }
 
 .accordion-header .accordion-button::after {
-	background-image: url("../images/icons/down-arrow-of-angle-svgrepo-com.svg"); // Tijdelijke oplossing? HIER ACCORDION ARROW VERANDEREN!
+    background-image: url('../images/icons/down-arrow-of-angle-svgrepo-com.svg'); // Tijdelijke oplossing? HIER ACCORDION ARROW VERANDEREN!
 }
 
 // Programmaschema
 .slot-title {
-	display: inline-block;
+    display: inline-block;
 }
 
 // Programma
 .social-media-list {
-	background-color: $color-black;
-	border-radius: 5px;
-	padding: 0.2em 0;
+    background-color: $color-black;
+    border-radius: 5px;
+    padding: 0.2em 0;
 
-	ul {
-		list-style: none;
-	}
+    ul {
+        list-style: none;
+    }
 
-	a {
-		color: white;
-	}
+    a {
+        color: white;
+    }
 }
 
 // About pages
 .nav-link.link {
-	color: $color-black;
+    color: $color-black;
 }
 
 .nav-link.link:hover {
-	color: $color-accent;
+    color: $color-accent;
 }
 
 .workshops {
-	margin-top: 3rem;
-	background-color: $color-white;
-	padding: 2rem;
+    margin-top: 3rem;
+    background-color: $color-white;
+    padding: 2rem;
 
-	>*:last-child {
-		margin-bottom: 0;
-	}
+    > *:last-child {
+        margin-bottom: 0;
+    }
 }
 
 /* Nieuwsoverzicht listing */
 .nwsOverzicht h2 {
-	color: black;
+    color: black;
 }
 
 .nwsOverzicht a:hover {
-	text-decoration: none;
-	color: #777777;
+    text-decoration: none;
+    color: #777777;
 }
 
 .nwsOverzicht h2:hover {
-	color: #777777;
+    color: #777777;
 }
 
 .listingCategory {
-	display: inline-block;
-	background-color: rgb(172, 155, 155);
-	border-radius: 10px;
-	padding: 2px 10px;
+    display: inline-block;
+    background-color: rgb(172, 155, 155);
+    border-radius: 10px;
+    padding: 2px 10px;
 }
 
 .listingCategory a {
-	color: white;
-	text-decoration: none;
+    color: white;
+    text-decoration: none;
 }
-
 
 /* programmaschema styling */
 .progschema-navbar-container {
-	border-bottom: solid black 1px;
+    border-bottom: solid black 1px;
 }
 
 .progSchema-navbar li {
-	display: inline;
-	margin-right: 5px;
+    display: inline;
+    margin-right: 5px;
 }
 
 .tabs {
-	border: 1px solid #cccccc;
-	display: flex;
+    border: 1px solid #cccccc;
+    display: flex;
 }
 
 .tabs-button {
-	background: none;
-	border: none;
+    background: none;
+    border: none;
 }
 
 .tabs-button:active {
-	color: lightgray;
+    color: lightgray;
 }
 
 .tabs-button:not(.tabs-button-active):hover {
-	color: gray;
-	font-weight: bolder;
+    color: gray;
+    font-weight: bolder;
 }
 
 .tabs-button-active {
-	font-weight: bold;
-	border-bottom: 3px solid black;
+    font-weight: bold;
+    border-bottom: 3px solid black;
 }
 
 .tabs-content {
-	display: none;
+    display: none;
 }
 
 .tabs-content-active,
 .tab {
-	display: block;
+    display: block;
 }
 
 .programmaschema-dag {
-	text-decoration: none;
-	color: $color-black;
+    text-decoration: none;
+    color: $color-black;
 
-	p {
-		font-size: $font-size-sm;
-	}
+    p {
+        font-size: $font-size-sm;
+    }
 
-	&:hover {
-		background-color: $color-white;
-	}
+    &:hover {
+        background-color: $color-white;
+    }
 }
 
 .slot {
-	border-bottom: solid black 1px;
+    border-bottom: solid black 1px;
 
-	&:hover {
-		background-color: inherit;
-	}
+    &:hover {
+        background-color: inherit;
+    }
 }
-
 
 /* programma entry */
 .social-media-link {
-	vertical-align: middle;
+    vertical-align: middle;
 }
-
 
 // Fix iframe height
 .news-embedded-media iframe {
-	height: auto;
+    height: auto;
 }
 
 .audioplayer-currently-playing {
-	font-size: $font-size-md;
-	color: $color-black;
-	text-decoration: none;
+    font-size: $font-size-md;
+    color: $color-black;
+    text-decoration: none;
 }
 
 .header {
-	margin-top: 5rem;
-	margin-bottom: 5rem;
+    margin-top: 5rem;
+    margin-bottom: 5rem;
 }

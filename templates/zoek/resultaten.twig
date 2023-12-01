@@ -12,8 +12,8 @@
 	{% else %}
 		{% set queryValue = "" %}
 	{% endif %}
-	{# VOORLOPIGE VERSIE: simpele search, zonder custom filters: er wordt dus automatisch resultaten uit sections
-					gehaald, behalve in programScheme (intern gebruik only) #}
+
+	{# VOORLOPIGE VERSIE: simpele search, zonder custom filters: er wordt dus automatisch resultaten uit sections gehaald, behalve in programScheme (intern gebruik only) #}
 	{% set results = craft.entries()
   		.search(searchQuery)
   		.section('nieuws, programmanieuws')
@@ -30,19 +30,20 @@
 					<form class="form-zoek" action="{{ url('zoek/resultaten') }}">
 						{% embed "_includes/zoek/searchbar" %}
 							{% block label %}
-							<label for="input-search" class="form-label mb-0">Zoeken op urgent.fm:</label>
+								<label for="input-search" class="form-label mb-0">Zoeken op urgent.fm:</label>
 							{% endblock %}
 						{% endembed %}
 
 						<div class="form-categoriefilter mt-4">
 							{% set categories =  craft.categories
-                	    	.group('nieuwsCategories')
-                	    	.all()
-                			%}
+                	    		.group('nieuwsCategories')
+                	    		.all() %}
+
 							<p class="form-control-custom">
 								<input class="cb-filter cb-defaultfilter" id="all" type="checkbox" name="category" value=""/>
 								<label for="all">Alle resultaten</label>
 							</p>
+
 							{% for category in categories %}
 								<p class="form-control-custom">
 									<input class="cb-filter" id="{{ category.title }}" type="checkbox" name="category" value="{{ category.title }}"/>
@@ -52,14 +53,18 @@
 						</div>
 					</form>
 				</div>
+
 				{% if results|length %}
 					{% set nieuws = results.all() %}
+
 					{% paginate results as pageInfo, pageEntries %}
-						{% include "_includes/nieuwsoverzicht" with { nieuws: pageEntries, numberOfItemsIsEven: true } only %}
-						{{ ui.setPagination(pageInfo) }}
-					{% else %}
-						<p class="text-center my-5">Je zoekopdracht voor “{{ searchQuery }}” heeft geen resultaten opgeleverd.</p>
-					{% endif %}
+
+					{% include "_includes/nieuwsoverzicht" with { nieuws: pageEntries, numberOfItemsIsEven: true } only %}
+					
+					{{ ui.setPagination(pageInfo) }}
+				{% else %}
+					<p class="text-center my-5">Je zoekopdracht voor “{{ searchQuery }}” heeft geen resultaten opgeleverd.</p>
+				{% endif %}
 				</div>
 			</div>
 		</div>

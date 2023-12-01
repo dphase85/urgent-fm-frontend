@@ -22,7 +22,7 @@ html {
 
 body {
   font-family: "Roboto", sans-serif;
-  background-color: #F2F2F2;
+  background-color: #f2f2f2;
 }
 
 h1,
@@ -75,7 +75,7 @@ p.intro {
 }
 
 a {
-  color: #3ED8A0;
+  color: #3ed8a0;
   text-decoration: none;
 }
 a:hover {
@@ -85,11 +85,11 @@ a:hover {
 
 .navbar .nav-active,
 .navbar .nav-link:active {
-  background-color: #09D389 !important;
+  background-color: #09d389 !important;
 }
 
 .accent-green {
-  color: #3ED8A0;
+  color: #3ed8a0;
 }
 
 .social-links {
@@ -110,8 +110,15 @@ a:hover {
     padding: 0.5rem 0.75rem;
   }
 }
+@media (min-width: 992px) {
+  header .navbar .logo {
+    width: unset !important;
+  }
+}
 @media (min-width: 1200px) {
-  .container:not(.navbar .container, footer .container, .modal-background .container) {
+  .container:not(.navbar .container,
+  footer .container,
+  .modal-background .container) {
     max-width: 60vw;
     max-width: 60svw;
   }
@@ -144,7 +151,7 @@ a:hover {
 }
 
 .hero-content-programma-vandaag {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 }
 
 .hero-content {
@@ -154,7 +161,7 @@ a:hover {
 }
 .hero-content h1,
 .hero-content .programma-van-tot {
-  color: #FFFFFF;
+  color: #ffffff;
 }
 .hero-content h1 span,
 .hero-content h1 div,
@@ -172,7 +179,7 @@ a:hover {
 }
 
 .category-base {
-  color: #FFFFFF;
+  color: #ffffff;
   background-color: #484848;
   font-size: 0.75rem;
   text-decoration: none;
@@ -183,34 +190,34 @@ a:hover {
   border-radius: 0.25rem;
 }
 .category-base:hover {
-  color: #FFFFFF;
+  color: #ffffff;
   background-color: #919191;
 }
 
 .cultuur {
-  background-color: #EBB122;
+  background-color: #ebb122;
 }
 .cultuur:hover {
-  background-color: #F0C459;
+  background-color: #f0c459;
 }
 
 .muziek {
-  background-color: #009FE3;
+  background-color: #009fe3;
 }
 .muziek:hover {
-  background-color: #40B7EA;
+  background-color: #40b7ea;
 }
 
 .actualiteit {
   background-color: #166a88;
 }
 .actualiteit:hover {
-  background-color: #508FA6;
+  background-color: #508fa6;
 }
 
 .nieuws {
-  color: #FFFFFF;
-  background-color: #009FE3;
+  color: #ffffff;
+  background-color: #009fe3;
 }
 
 .main {
@@ -224,6 +231,10 @@ header {
 }
 header #navBar {
   min-height: inherit;
+}
+header #navBar .logo {
+  min-height: 10vh;
+  min-height: 10svh;
 }
 header .search {
   background-color: transparent;
@@ -239,9 +250,17 @@ header .search::before {
   -webkit-box-shadow: 2px 0 4px rgba(0, 0, 0, 0.16);
   -moz-box-shadow: 2px 0 4px rgba(0, 0, 0, 0.16);
   box-shadow: 2px 0 4px rgba(0, 0, 0, 0.16);
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   width: 100vw;
   width: 100svw;
+  margin-bottom: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex-basis: auto;
+  align-items: flex-start;
+  overflow: hidden;
+  line-height: 100%;
 }
 .navbar a {
   color: #242424;
@@ -252,11 +271,14 @@ header .search::before {
   font-weight: 500 !important;
   font-size: calc(1 * 1rem);
   background-color: #242424;
-  color: #FFFFFF !important;
+  color: #ffffff !important;
   line-height: 100%;
+  margin-top: 0.5rem !important;
+  margin-bottom: 0.5rem !important;
+  width: 100%;
 }
 .navbar .nav-item:hover, .navbar .nav-itemreversed:hover {
-  background-color: #3ED8A0 !important;
+  background-color: #3ed8a0 !important;
 }
 .navbar .nav-item-reversed {
   color: #242424 !important;
@@ -286,7 +308,7 @@ header .search::before {
 }
 
 .form-background {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   padding: calc(1.5 * 1rem);
 }
 .form-background .cb-filter {
@@ -304,7 +326,7 @@ header .search::before {
 
 .zoekveld {
   border: 1px solid #cdcdcd;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   display: flex;
   padding: 0.5rem;
 }
@@ -340,7 +362,7 @@ header .search::before {
 }
 
 .btnZoek {
-  background-color: #3ED8A0;
+  background-color: #3ed8a0;
   border: none;
 }
 
@@ -360,7 +382,7 @@ header .search::before {
   cursor: pointer;
   font-size: 2rem;
   border: none;
-  color: #FFFFFF;
+  color: #ffffff;
   width: 3rem;
   text-align: center;
   background-color: #242424;
@@ -370,8 +392,8 @@ header .search::before {
 }
 
 .btn-light {
-  background-color: #3ED8A0;
-  color: #FFFFFF;
+  background-color: #3ed8a0;
+  color: #ffffff;
 }
 
 .button-primary,
@@ -384,8 +406,8 @@ header .search::before {
 }
 
 .button-primary {
-  background-color: #3ED8A0;
-  color: #FFFFFF;
+  background-color: #3ed8a0;
+  color: #ffffff;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px;
@@ -395,7 +417,7 @@ header .search::before {
 }
 .button-primary:hover {
   background-color: #242424;
-  color: #FFFFFF;
+  color: #ffffff;
   -webkit-box-shadow: 2px 0 8px rgba(0, 0, 0, 0.24);
   -moz-box-shadow: 2px 0 8px rgba(0, 0, 0, 0.24);
   box-shadow: 2px 0 8px rgba(0, 0, 0, 0.24);
@@ -406,20 +428,20 @@ header .search::before {
 }
 
 .btn-vandaag-toggle:focus {
-  background-color: #3ED8A0;
+  background-color: #3ed8a0;
 }
 
 a.button-secondary {
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   background-image: url("../images/icons/next-accent.svg");
-  color: #3ED8A0;
+  color: #3ed8a0;
 }
 a.button-secondary:hover:hover {
   background-color: #242424;
-  color: #FFFFFF;
+  color: #ffffff;
   background-image: url("../images/icons/next.svg");
 }
 
@@ -428,7 +450,7 @@ a.button-secondary:hover:hover {
   border: none;
 }
 .btn-vandaag-toggle:hover {
-  background-color: #3ED8A0;
+  background-color: #3ed8a0;
 }
 
 .btn:focus {
@@ -436,11 +458,11 @@ a.button-secondary:hover:hover {
 }
 
 button.accordion-button:focus {
-  box-shadow: #009FE3 !important;
+  box-shadow: #009fe3 !important;
 }
 
 .searchbar:focus {
-  border-color: #3ED8A0 !important;
+  border-color: #3ed8a0 !important;
   box-shadow: inset 0 0 0 0.25rem rgba(62, 216, 160, 0.25) !important;
 }
 
@@ -490,10 +512,13 @@ button.accordion-button:focus {
 }
 
 footer {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   min-height: 10vh;
   min-height: 10svh;
   z-index: 8030 !important;
+  -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.16);
+  -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.16);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.16);
 }
 footer .container {
   min-height: inherit;
@@ -503,17 +528,14 @@ footer .container > * {
 }
 
 .social-media {
-  color: #FFFFFF;
-  background-color: #FFFFFF;
+  color: #ffffff;
+  background-color: #ffffff;
 }
 .social-media ul {
-  margin: 0 !important;
-}
-.social-media ul li {
-  display: inline-block;
-}
-.social-media ul li:not(:last-child) {
-  padding: 16px;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 2rem;
 }
 
 .audio-control {
@@ -543,7 +565,7 @@ h2.sectionTitleCentered {
 }
 
 .editorsPick {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 }
 .editorsPick .mixcloud-link {
   width: 100px;
@@ -572,7 +594,7 @@ h2.sectionTitleCentered {
 }
 .editorsPick .herbeluister {
   display: inline-block;
-  background-color: #3ED8A0;
+  background-color: #3ed8a0;
   /* fixed responsive square: code gevonden op https://stackoverflow.com/questions/19068070/how-to-style-a-div-to-be-a-responsive-square*/
   width: 100%;
   max-width: 16px;
@@ -598,7 +620,7 @@ h2.sectionTitleCentered {
 }
 .related-shows .col a:hover {
   color: #919191;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 }
 
 .related-show p {
@@ -621,7 +643,7 @@ h2.sectionTitleCentered {
 
 .programmanieuws {
   padding: calc(1 * 1rem);
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 }
 
 .card p {
@@ -685,8 +707,8 @@ h2.sectionTitleCentered {
 .pagination-current-page {
   pointer-events: none;
   border-radius: 50%;
-  background-color: #3ED8A0;
-  color: #FFFFFF;
+  background-color: #3ed8a0;
+  color: #ffffff;
   height: 2em;
   width: 2em;
   line-height: 2em;
@@ -695,7 +717,7 @@ h2.sectionTitleCentered {
 
 .accordion-header button.accordion-button:not(.collapsed) {
   border: none;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   box-shadow: none !important;
   color: #919191;
 }
@@ -725,12 +747,12 @@ h2.sectionTitleCentered {
 }
 
 .nav-link.link:hover {
-  color: #3ED8A0;
+  color: #3ed8a0;
 }
 
 .workshops {
   margin-top: 3rem;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   padding: 2rem;
 }
 .workshops > *:last-child {
@@ -814,7 +836,7 @@ h2.sectionTitleCentered {
   font-size: calc(1 * 1rem);
 }
 .programmaschema-dag:hover {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 }
 
 .slot {
