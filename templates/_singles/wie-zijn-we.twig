@@ -9,6 +9,7 @@
     {% set backgroundImageMedium = image.getUrl('bannerImageM1280w') %}
     {% set backgroundImageLarge = image.getUrl('bannerImageL1600w') %}
     {% set backgroundImageExtraLarge = image.getUrl('bannerImageXl2560w') %}
+
     <div class="hero d-flex align-items-center justify-content-center" >
 		<picture class="hero-background-picture">
 			<source srcset="{{ backgroundImageExtraLarge }}" media="(min-width: 1920px)">
@@ -18,7 +19,10 @@
 			<img src="{{ backgroundImageMedium }}" alt="picture of {{title}}" />
 		</picture>
         <div class="hero-content  container align-self-end">
-            <h1 id="title" data-title="Wie zijn we"><span>Wie zijn we</span></h1>
+            <h1 id="title" data-title="Wie zijn we">
+                <span>Wie zijn we</span>
+                
+            </h1>
         </div>
     </div>
 

@@ -10,14 +10,12 @@
 	<div class="row row-cols-1 my-3"> 
 		<div class="col">
 			<article class="card border-0 p-0 h-100 position-relative">
-				{# Eerst source image laden #}
 				{% if item.image is not empty %}
 					{% set image = item.image.one() %}
 				{% else %}
 					{% set image = generic.newsImageDefault.one() %}
 				{% endif %}
 				
-				{# Dan de verschillende imagetransforms #}
 				{% set imageSrcsetSmall = image.getUrl('homepageLatestS') %}
 				{% set imageSrcsetMedium = image.getUrl('homepageLatestM') %}
 				{% set imageSrcsetLarge = image.getUrl('homepageLatestL') %}
@@ -66,17 +64,17 @@
 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 g-3">
 	{% for item in nieuws %}
 		{% set category = item.nieuwsCategories.one() %}
+		
 		<div class="col">
 			<article
 				class="card border-0 p-0 h-100 position-relative">
 
-				{# Eerst source image laden #}
 				{% if item.image is not empty %}
 					{% set image = item.image.one() %}
 				{% else %}
 					{% set image = generic.newsImageDefault.one() %}
 				{% endif %}
-				{# Dan de verschillende imagetransforms #}
+
 				{% set imageSrcsetSmall = image.getUrl('homepageLatestS') %}
 				{% set imageSrcsetMedium = image.getUrl('homepageLatestM') %}
 				{% set imageSrcsetLarge = image.getUrl('homepageLatestL') %}

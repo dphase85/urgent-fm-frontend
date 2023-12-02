@@ -7,7 +7,7 @@
 <div class="modal-search container">
 	<div class="d-flex flex-column align-items-center justify-content-center h-100">
 		<div class="w-100">
-			<form class="formZoek flex-column d-flex" action="{{ url('zoek/resultaten') }}">
+			<form class="modal-search-form flex-column d-flex" action="{{ url('zoek/resultaten') }}">
 				{% embed '_includes/zoek/searchbar' %}
 					{% block label %}
 							<label for="input-search" class="form-label mb-0">Zoeken op urgent.fm:</label>

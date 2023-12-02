@@ -50,23 +50,19 @@
 							<img src="{{ backgroundImageMedium }}" 			alt="picture of {{title}}"/>
 						</picture>
 					{% endif %}
-					
 
 					{% for block in entry.nieuwsInhoud.all() %}
 						{% switch block.type %}
-
 							{% case "tekst" %}
 								<div class="nieuws-tekst my-3">
 									{{ block.tekst }}
 								</div>
-
 							{% case "fotoreeks" %}
 								<h2>Foto's</h2>
 								<div class="nieuws-fotoreeks my-3">
-
 									{% for foto in block.fotoreeks.all() %}
 
-										{% set img = {
+									{% set img = {
                   					  mode:'crop',
                   					  width: 200,
                   					  height: 200,
@@ -74,7 +70,6 @@
                   					} %}
 
 										<img src="{{ foto.getUrl(img) }}" alt="{{ foto.title }}"/>
-
 									{% endfor %}
 								</div>
 						{% endswitch %}

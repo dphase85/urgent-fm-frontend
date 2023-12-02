@@ -1,8 +1,6 @@
 {% extends craft.app.request.isAjax and not craft.app.request.isLivePreview ? "_ajax" : "_layout" %}
 
 {% block content %}
-
-	{# Banner #}
 	{% set weekdagen = craft.entries()
             .section('programScheme')
             .orderBy('title')
@@ -47,7 +45,6 @@
 
 		{# Zoek de huidige weekdag adhv date format param. 'w' (weekdag) #}
 		{% set dayOfTheWeek = 'now'|date('w') %}
-
 		{% set dag = weekdagen[dayOfTheWeek] %}
 		{% set timeslots = dag.weekdag.all() %}
 		{# Eerst checken of er een programma van de vorige dag op het huidig uur gespeeld wordt (vb: charged van 10pm tot 6 am) #}
@@ -56,13 +53,16 @@
 		{% if currentTime < '07:00' %}
 			{# Indien dit zo is, haal de programmatie op van de vorige dag #}
 			{% set dayOfTheWeek = dayOfTheWeek - 1 %}
+
 			{% if dayOfTheWeek < 0 %}
 				{# Indien dag == zondag, dan dagnr veranderen naar zaterdag #}
 				{% set dayOfTheWeek = 6 %}
 			{% endif %}
+
 			{% set dag = weekdagen[dayOfTheWeek] %}
 			{% set timeslots = dag.weekdag.all() %}
 		{% endif %}
+
 		{% if timeslots|length %}
 			{# First check who is playing now #}
 			{% set break = 0 %}
@@ -72,6 +72,7 @@
 			{% for timeslot in timeslots if break == 0 %}
 				{% set beginuur = timeslot.beginuur|time('short') %}
 				{% set einduur = timeslot.einduur|time('short') %}
+
 				{% if currentTime >= '07:00' %}
 					{% if (currentTime >= beginuur and currentTime < einduur)
 									or (currentTime >= beginuur and einduur < currentTime and einduur < beginuur)
@@ -134,11 +135,11 @@
 						</div>
 						<div class="row row-cols-1 row-cols-sm-2">
 							{% set isOnair = false %}
+
 							{% if timeslots|length < 6 %}
 								<div class="col timeslots">
 									<div class="collapse multi-collapse d-md-block" id="multiCollapse1">
 										{% for timeslot in timeslots %}
-
 											{% set programma = timeslot.programma.one() %}
 	
 												<div class="row">
@@ -146,7 +147,6 @@
 														{{timeslot.beginuur|time('short')}}
 													</div>
 													<div class="col-12 col-lg-8 col-xxl-8 ps-lg-0 text-break">
-
 														{% if nowOnair is not null and programma.title == programOnair.title and (timeslot.beginuur|time	('short') == nowOnair.beginuur|	time('short') and timeslot.einduur|time			('short') == 	nowOnair.einduur|time('short')) %}
 															<strong>{{ programma.title }}</strong>
 															{% set isOnair = true %}
@@ -184,63 +184,52 @@
 												{% endif %}
 											</div>
 										</div>
+
 										{% set i = i + 1 %}
 										{# Wanneer we in de helft zijn van de entries, verplaats naar 2de kolom #}
 										{# In geval van oneven aantal entries, zorg dat de grootste helft de linkerkolom is #}
 										{% if i == ceil(timeslots|length/2) %}
-									</div>
-									</div>
+												</div>
+											</div>
 
-										<div class="col timeslots"> <div class="collapse multi-collapse d-md-block" id="multiCollapse2">
+											<div class="col timeslots"> <div class="collapse multi-collapse d-md-block" id="multiCollapse2">
 										{% endif %}
 									{% endfor %}
 								</div>
 							</div>
 						{% endif %}
-					</div>
-					<div class="collapse multi-collapse mt-auto d-md-block" id="multiCollapse3">
-						<a href="/programma" class="button-secondary">Programmaschema</a>
+						</div>
+						<div class="collapse multi-collapse mt-auto d-md-block" id="multiCollapse3">
+							<a href="/programma" class="button-secondary">Programmaschema</a>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
 
-	{% endif %}
+		{% endif %}
 	</section>
 
-{# Editor's Pick #}
-{% include "_includes/homepage/editorsPick" %}
+	{% include "_includes/homepage/editorsPick" %}
 
-{#Main content #}
-<main role="main" class="main container" id="homepage">
-	<section>
-		<div class="row">
-			<div class="col">
-				<h2 class="sectionTitle">Nieuws</h2>
+	<main role="main" class="main container" id="homepage">
+		<section>
+			<div class="row">
+				<div class="col">
+					<h2 class="section-title">Nieuws</h2>
 
-				{% set nieuwsQuery = entry.uitgelicht.type('nieuws').limit(9).all() %}
-				{% set nieuws = [] %}
-				{% for queryItem in nieuwsQuery %}
-					{% set nieuws = nieuws|merge([queryItem.item.one()]) %}
-				{% endfor %}
+					{% set nieuwsQuery = entry.uitgelicht.type('nieuws').limit(9).all() %}
+					{% set nieuws = [] %}
 
-				{% include "_includes/nieuwsoverzicht" with { nieuws: nieuws, numberOfItemsIsEven: false } only %}
-				<a href="/nieuws" class="button-primary my-5">alle nieuwsberichten</a>
+					{% for queryItem in nieuwsQuery %}
+						{% set nieuws = nieuws|merge([queryItem.item.one()]) %}
+					{% endfor %}
+
+					{% include "_includes/nieuwsoverzicht" with { nieuws: nieuws, numberOfItemsIsEven: false } only %}
+					<a href="/nieuws" class="button-primary my-5">alle nieuwsberichten</a>
+				</div>
 			</div>
-		</div>
-	</section>
-	{#	
-				<!--    Nieuwsoverzicht-->
-				<section class="programmaNieuws">
-					<h2 class="m-0 sectionTitle">Nieuws van Urgent.fm shows</h2>
-			
-					{% set nieuws = craft.entries.section('programmaNieuws').limit(5).all() %}
-			
-					{% include "_includes/homepage/prognieuwsoverzicht" with { nieuws: nieuws } only %}
-					<a href="/programma" class="button-secondary mt-3">programma's</a>
-				</section>
-				<!--Sidebar met programmanieuws-->
-			#}
-</main>
+		</section>
+	</main>
 
-{% js "../js/script.js" %}{% endblock %}
+	{% js "../js/script.js" %}
+{% endblock %}

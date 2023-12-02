@@ -3,17 +3,14 @@
 {% set heroHeight = 75 %}
 
 {% block content %}
-
-
 	{% set heroHeight = 75 %}
-
-
 	{% set image = entry.singlesBannerImage.one() %}
 	{% set backgroundImageExtraSmall = image.getUrl('bannerImageXs') %}
 	{% set backgroundImageSmall = image.getUrl('bannerImageS640w') %}
 	{% set backgroundImageMedium = image.getUrl('bannerImageM1280w') %}
 	{% set backgroundImageLarge = image.getUrl('bannerImageL1600w') %}
 	{% set backgroundImageExtraLarge = image.getUrl('bannerImageXl2560w') %}
+
 	<div class="hero d-flex align-items-center justify-content-center">
 		<picture class="hero-background-picture">
 			<source srcset="{{ backgroundImageExtraLarge }}" media="(min-width: 1920px)">
@@ -22,7 +19,6 @@
 			<source srcset="{{ backgroundImageSmall }}" media="(max-width: 1279px)">
 			<img src="{{ backgroundImageMedium }}" alt="picture of {{title}}"/>
 		</picture>
-
 
 		<div class="hero-content container align-self-end">
 
@@ -53,15 +49,10 @@
 				</p>
 
 				<p>
-					De Urgent.fm redactie en studio&#39;s bevinden zich op het -1 niveau van het
-																									Krookgebouw, eenvoudig te bereiken wanneer je op het Miriam Makebaplein - aan
-																									de zijde van het Wintercircus - de trap naar beneden neemt.
-																									Je kan ons ook vinden via de Platteberg Gent.
+					De Urgent.fm redactie en studio&#39;s bevinden zich op het -1 niveau van het Krookgebouw, eenvoudig te bereiken wanneer je op het Miriam Makebaplein - aan de zijde van het Wintercircus - de trap naar beneden neemt. Je kan ons ook vinden via de Platteberg Gent.
 				</p>
 				<p>
-					Je ziet de radiostudio en redactieruimte vanuit de overdekte fietsstalling, onder de
-																				hoofdingang, waar ook onze (dienst-)ingang zich bevindt.
-																				Urgent.fm heeft geen deurbel maar wuif gerust even aan het venster.
+					Je ziet de radiostudio en redactieruimte vanuit de overdekte fietsstalling, onder de hoofdingang, waar ook onze (dienst-)ingang zich bevindt. Urgent.fm heeft geen deurbel maar wuif gerust even aan het venster.
 				</p>
 
 				<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">

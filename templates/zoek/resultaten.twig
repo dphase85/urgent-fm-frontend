@@ -21,13 +21,13 @@
   		.orderBy('score')
   		.limit(8) %}
 
-	<div class="main container">
-		<div class="row banner-none">
+	<div class="search-results-container main container">
+		<div class="banner-none row">
 			<div class="col">
 				<h1>Zoek Resultaten voor: "{{ searchQuery }}"</h1>
 
 				<div class="form-background mb-3">
-					<form class="form-zoek" action="{{ url('zoek/resultaten') }}">
+					<form class="form-search" action="{{ url('zoek/resultaten') }}">
 						{% embed "_includes/zoek/searchbar" %}
 							{% block label %}
 								<label for="input-search" class="form-label mb-0">Zoeken op urgent.fm:</label>

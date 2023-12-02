@@ -1,14 +1,14 @@
 {% extends craft.app.request.isAjax and not craft.app.request.isLivePreview ? "_ajax" : "_layout" %}
 
 {% block content %}
-	<div class="main container programmaschema">
+	<div class="programmaschema main container">
 		<div class="row banner-none">
 			<div class="col">
 				<h1 class="mb-3">Programmaschema</h1>
 
-				<div class="progschema-navbar-container">
+				<div class="programmaschema-navbar-container">
 					<div class="d-none d-md-block d-lg-block">
-						<ul class="progSchema-navbar mb-0">
+						<ul class="programmaschema-navbar mb-0">
 							<li>
 								<button class="tabs-button" data-for-tab="1">Maandag</button>
 							</li>
@@ -33,7 +33,6 @@
 						</ul>
 					</div>
 
-					<!-- dropdown menu op klein scherm -->
 					<div class="d-lg-none d-md-none dropdown mb-3">
 						<button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="progSchema-dropdownMenu-buttopn">
 							<span id="weekdag-selected"></span>
@@ -51,13 +50,11 @@
 
 				</div>
 
-				<div
-					class="progSchema-tabsContainer mb-5">
-					{# <div class="col"> #}
+				<div class="programmaschema-tabs-container mb-5">
 					{% set weekdagen = craft.entries()
-               .section('programScheme')
-               .orderBy('title')
-               .all() %}
+               			.section('programScheme')
+               			.orderBy('title')
+               			.all() %}
 
 					{% for i in 0..6 %}
 						<div class="tab" data-tab="{{ i }}">

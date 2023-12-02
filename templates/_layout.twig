@@ -19,7 +19,6 @@
     <body>
         <header>
             <nav
-                id="navBar"
                 class="navbar navbar-expand-lg fixed-top navbar-light p-0"
             >
                 <div class="container m-auto">
@@ -170,7 +169,7 @@
                 {% if dayOfTheWeek == 7 %}
                     {% set dayOfTheWeek = 0 %}
                 {% endif %}
-                
+
                 {% set dag = weekdagen[dayOfTheWeek] %}
                 {% set timeslot = dag.weekdag.one() %}
                 {% set next = timeslot.programma.one() %}
@@ -246,14 +245,14 @@
                                 </a>
                             </li>
                             <li>
-                                <a
-                                    class="social-media-link"
-                                    href="https://twitter.com/UrgentFM"
+                                <a 
+                                    class="social-media-link" 
+                                    href="https://www.twitter.com/UrgentFM" 
                                     target="_blank"
                                 >
-                                    <img
-                                        src="../images/icons/twitter.svg"
-                                        alt="twitter"
+                                    <img 
+                                        src="../images/icons/X.svg"    
+                                        alt="X"
                                     />
                                 </a>
                             </li>
@@ -263,7 +262,7 @@
             </div>
         </footer>
 
-        {% include "_includes/headerSearch" %} 
+        {% include "_includes/searchModal" %} 
 
         {% js
         "../dist/bootstrap/js/bootstrap.bundle.min.js" %} {% js

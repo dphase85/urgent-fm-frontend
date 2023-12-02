@@ -288,7 +288,7 @@ const navigate = (e) => {
     );
 
     // Navigate to search results
-    if (e.currentTarget.classList.contains('btnZoek')) {
+    if (e.currentTarget.classList.contains('btn-search')) {
         const form = e.currentTarget.form;
         // Prevent performing empty search query
         if (form[0].value.length === 0) {
@@ -313,7 +313,7 @@ const navigate = (e) => {
     // Navigate to other pages
 
     // First clear (navbar) searchform(s)
-    let forms = document.querySelectorAll('.formZoek');
+    let forms = document.querySelectorAll('.modal-search-form');
     forms.forEach((form) => {
         form[0].value = '';
     });
@@ -364,7 +364,7 @@ const setDisplay = () => {
 const setAnchors = () => {
     // TODO: efficientere toepassing vinden (bv. pas bij click op juise anchor actie ondernemen, ipv telkens ankers te moeten toewijzen)
     const anchors = document.querySelectorAll(
-        "a:not(#yii-debug-toolbar a, .social-media-link, a[href^='mailto:'], .mixcloud-link), .btnZoek"
+        "a:not(#yii-debug-toolbar a, .social-media-link, a[href^='mailto:'], .mixcloud-link), .btn-search"
     ); // DEV: not statement enkel in DEV mode!
 
     anchors.forEach((a) => a.addEventListener('click', navigate));
@@ -489,7 +489,7 @@ const buildFilterURLParam = () => {
         document.querySelectorAll('.cb-filter:is(:not(.cb-defaultfilter))')
     );
 
-    const searchForm = document.querySelector('.form-zoek');
+    const searchForm = document.querySelector('.form-search');
     const baseUrl = searchForm.action;
     const searchQueryParameterValue = searchForm[0].value;
 
@@ -528,7 +528,6 @@ const populateEditorsPick = (response) => {
 };
 
 const fetchTimetable = () => {
-    //TODO: Kan searchquery nog verder gespecifieerd worden?
     const query = `{
 		entries(section: "programScheme" orderBy: "title") {
 		  title

@@ -92,11 +92,11 @@ a:hover {
   color: #3ed8a0;
 }
 
-.social-links {
+.social-media-links {
   margin-left: 0;
   padding-left: 0;
 }
-.social-links li {
+.social-media-links li {
   display: inline-block;
   list-style: none;
   margin-left: 0;
@@ -221,7 +221,7 @@ a:hover {
 }
 
 .main {
-  margin-bottom: calc((2 * 1rem) + 10vh);
+  margin-bottom: calc(2 * 1rem + 10vh);
   margin-top: calc(2 * 1rem);
 }
 
@@ -229,10 +229,10 @@ header {
   min-height: 10vh;
   min-height: 10svh;
 }
-header #navBar {
+header .navbar {
   min-height: inherit;
 }
-header #navBar .logo {
+header .navbar .logo {
   min-height: 10vh;
   min-height: 10svh;
 }
@@ -297,34 +297,31 @@ header .search::before {
 .hero-content-programma-vandaag {
   overflow: auto;
 }
-
+.hero-content-programma-vandaag .timeslots {
+  z-index: 4000;
+}
 .hero-content-programma-vandaag .first-row p,
 .hero-content-programma-vandaag .timeslots i {
   color: #919191;
 }
 
-.timeslots {
-  z-index: 4000;
-}
-
-.form-background {
+.search-results-container .form-background {
   background-color: #ffffff;
   padding: calc(1.5 * 1rem);
 }
-.form-background .cb-filter {
+.search-results-container .form-background .cb-filter {
   margin-top: calc(1 * 1rem);
 }
-.form-background .form-label {
+.search-results-container .form-background .form-label {
   margin-bottom: 0;
   color: #919191;
 }
 
-.searchbar {
-  border: none;
-  font-size: calc(1.5 * 1rem);
+.search-container {
+  height: 80vh;
 }
 
-.zoekveld {
+.searchfield-container {
   border: 1px solid #cdcdcd;
   background-color: #ffffff;
   display: flex;
@@ -341,14 +338,6 @@ header .search::before {
   margin-left: 0.5rem;
 }
 
-.search:hover {
-  cursor: pointer;
-}
-
-.modal form {
-  z-index: 9001;
-}
-
 .overlay {
   position: fixed;
   top: 0;
@@ -361,7 +350,7 @@ header .search::before {
   display: none;
 }
 
-.btnZoek {
+.btn-search {
   background-color: #3ed8a0;
   border: none;
 }
@@ -375,7 +364,7 @@ header .search::before {
   position: fixed;
   display: none;
 }
-.modal-search .form-zoek {
+.modal-search .form-search {
   align-content: center;
 }
 .modal-search .close {
@@ -552,37 +541,37 @@ footer .container > * {
   background: border-box no-repeat center/contain url("../images/icons/stop.svg");
 }
 
-h2.sectionTitle {
+h2.section-title {
   color: #484848;
   font-size: calc(1.5 * 1rem);
 }
 
-h2.sectionTitleCentered {
+h2.section-title-centered {
   color: #484848;
   font-size: calc(1.5 * 1rem);
   text-align: center;
   font-family: "Roboto", sans-serif;
 }
 
-.editorsPick {
+.editors-pick {
   background-color: #ffffff;
 }
-.editorsPick .mixcloud-link {
+.editors-pick .mixcloud-link {
   width: 100px;
   text-decoration: none;
   color: #242424;
 }
-.editorsPick .mixcloud-link img,
-.editorsPick .mixcloud-link p {
+.editors-pick .mixcloud-link img,
+.editors-pick .mixcloud-link p {
   width: 100%;
 }
-.editorsPick .mixcloud-link:hover {
+.editors-pick .mixcloud-link:hover {
   text-decoration: underline;
 }
-.editorsPick .mixcloud-link img {
+.editors-pick .mixcloud-link img {
   object-fit: cover;
 }
-.editorsPick .mixcloud-link p {
+.editors-pick .mixcloud-link p {
   font-size: calc(0.85 * 1rem);
   padding-top: calc(1rem / 2);
   font-weight: 400;
@@ -592,7 +581,7 @@ h2.sectionTitleCentered {
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
 }
-.editorsPick .herbeluister {
+.editors-pick .herbeluister {
   display: inline-block;
   background-color: #3ed8a0;
   /* fixed responsive square: code gevonden op https://stackoverflow.com/questions/19068070/how-to-style-a-div-to-be-a-responsive-square*/
@@ -641,7 +630,7 @@ h2.sectionTitleCentered {
   font-size: larger;
 }
 
-.programmanieuws {
+.radio-show-news {
   padding: calc(1 * 1rem);
   background-color: #ffffff;
 }
@@ -680,24 +669,6 @@ h2.sectionTitleCentered {
   border-color: transparent;
 }
 
-.prgLogo {
-  width: 12rem;
-  height: 12rem;
-  background-color: #005cbf;
-}
-
-.prgInfo p {
-  margin: 0;
-}
-
-.prgNwsCategory {
-  color: black;
-}
-.prgNwsCategory:hover {
-  text-decoration: none;
-  color: gray;
-}
-
 .pagination-prev-page,
 .pagination-next-page,
 .pagination-change-page {
@@ -712,21 +683,6 @@ h2.sectionTitleCentered {
   height: 2em;
   width: 2em;
   line-height: 2em;
-  display: inline-block;
-}
-
-.accordion-header button.accordion-button:not(.collapsed) {
-  border: none;
-  background-color: #ffffff;
-  box-shadow: none !important;
-  color: #919191;
-}
-
-.accordion-header .accordion-button::after {
-  background-image: url("../images/icons/down-arrow-of-angle-svgrepo-com.svg");
-}
-
-.slot-title {
   display: inline-block;
 }
 
@@ -759,62 +715,26 @@ h2.sectionTitleCentered {
   margin-bottom: 0;
 }
 
-/* Nieuwsoverzicht listing */
-.nwsOverzicht h2 {
-  color: black;
-}
-
-.nwsOverzicht a:hover {
-  text-decoration: none;
-  color: #777777;
-}
-
-.nwsOverzicht h2:hover {
-  color: #777777;
-}
-
-.listingCategory {
-  display: inline-block;
-  background-color: rgb(172, 155, 155);
-  border-radius: 10px;
-  padding: 2px 10px;
-}
-
-.listingCategory a {
-  color: white;
-  text-decoration: none;
-}
-
 /* programmaschema styling */
-.progschema-navbar-container {
+.programmaschema-navbar-container {
   border-bottom: solid black 1px;
 }
-
-.progSchema-navbar li {
+.programmaschema-navbar-container li {
   display: inline;
   margin-right: 5px;
 }
-
-.tabs {
-  border: 1px solid #cccccc;
-  display: flex;
-}
-
-.tabs-button {
+.programmaschema-navbar-container li .tabs-button {
   background: none;
   border: none;
 }
-
-.tabs-button:active {
+.programmaschema-navbar-container li .tabs-button:active {
   color: lightgray;
 }
-
-.tabs-button:not(.tabs-button-active):hover {
+.programmaschema-navbar-container li .tabs-button:not(.tabs-button-active):hover {
   color: gray;
   font-weight: bolder;
 }
-
-.tabs-button-active {
+.programmaschema-navbar-container li .tabs-button-active {
   font-weight: bold;
   border-bottom: 3px solid black;
 }
