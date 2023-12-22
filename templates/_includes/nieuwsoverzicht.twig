@@ -46,13 +46,11 @@
 							<p>{{ item.intro|nl2br }}</p>
 						{% else %}
 							{% set break = 0 %}
-							{% for block in item.nieuwsInhoud.all() if break == 0 %}
-								{% if block.type == "tekst" %}
-									{% set paragraphs = block.tekst|split("</p>") %}
+
+									{% set paragraphs = item.nieuwsInhoud|split("</p>") %}
 									<p>{{ paragraphs|first|striptags|raw }}</p>
 									{% set break = 1 %}
-								{% endif %}
-							{% endfor %}
+
 						{% endif %}
 					</a>
 				</div>
@@ -106,13 +104,10 @@
 							<p>{{ item.intro|nl2br }}</p>
 						{% else %}
 							{% set break = 0 %}
-							{% for block in item.nieuwsInhoud.all() if break == 0 %}
-								{% if block.type == "tekst" %}
-									{% set paragraphs = block.tekst|split("</p>") %}
+
+									{% set paragraphs = item.nieuwsInhoud|split("</p>") %}
 									<p>{{ paragraphs|first|striptags|raw }}</p>
 									{% set break = 1 %}
-								{% endif %}
-							{% endfor %}
 						{% endif %}
 					</a>
 				</div>

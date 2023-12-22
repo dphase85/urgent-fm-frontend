@@ -4,20 +4,17 @@
 	{% set queryValue = "" %}
 {% endif %}
 
-<div class="modal-search container">
-	<div class="d-flex flex-column align-items-center justify-content-center h-100">
-		<div class="w-100">
-			<form class="modal-search-form flex-column d-flex" action="{{ url('zoek/resultaten') }}">
-				{% embed '_includes/zoek/searchbar' %}
-					{% block label %}
-							<label for="input-search" class="form-label mb-0">Zoeken op urgent.fm:</label>
-					{% endblock %}
-					{% block closeButton %}
-						<div class="me-2 mb-2 close">&times;</div>
-					{% endblock %}
-				{% endembed %}
-			</form>
-		</div>
-	</div>
+<div class="modal-container">
+    <div class="modal-search-content container">
+		<form class="modal-search-form flex-column d-flex" action="{{ url('zoek/resultaten') }}">
+			{% embed '_includes/zoek/searchbar' %}
+				{% block label %}
+						<label for="input-search" class="form-label mb-0">Zoeken op urgent.fm:</label>
+				{% endblock %}
+				{% block closeButton %}
+					<div class="me-2 mb-2 close" id="closeModalBtn">&times;</div>
+				{% endblock %}
+			{% endembed %}
+		</form>
+    </div>
 </div>
-<div class="overlay"></div>

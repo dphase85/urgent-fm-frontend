@@ -2,7 +2,6 @@
 {% set title = entry.title %}
 
 {% block content %}
-
 	{# import macro's #}
 	{% import "_macros/_ui" as ui %}
 	{% set image = null %}
@@ -16,7 +15,7 @@
 		{% set backgroundImageLarge = image.getUrl('bannerImageL1600w') %}
 		{% set backgroundImageExtraLarge = image.getUrl('bannerImageXl2560w') %}
 	{% endif %}
-	
+
 	{% set rootCategory = entry.programmaStijl
 		.level('1')
 		.one() %}
@@ -34,7 +33,6 @@
 				<div class="col col-md-auto d-flex flex-column justify-content-center justify-content-md-end">
 
 					{# Haal de programma dag, begin en einduur op uit programScheme matrix (voorlopig ideale workflow) #}
-					{# TODO: Deze code is (nog) niet efficient! (zie hiervoor craft docs: eager-loading) #}
 
 					{# Eerst checken voor listen up. Indien ja: genereer een unieke uurmelding, anders: zoek per weekdag de timeslots op in het weekdag matrixveld, die gerelateerd zijn aan entry #}
 						{% if entry.title == 'Listen Up' %}
@@ -61,14 +59,14 @@
 								{% set dagString = "#{dagString}, #{dagCropped}" %}
 							{% endif %}
 								{# Als alle dagen in de dagString geprint zijn, afsluiten met 'van' #}
-								{# {% set dagString = "#{dagString} van " %} 
+								{# {% set dagString = "#{dagString} van " %}
 								{# Hier gaan we ervan uit dat een programma, herhalend over meerdere dagen, steeds op het zelfde uur   geprogrammeerd staat 	#}
 							{% if dag is same as(weekdagen|last) %}
 								{% set timeslot = dag.weekdag.relatedTo({
                         	    	targetElement: entry,
                         	    	field: 'programma'
                         	    	})
-									.one() 
+									.one()
 								%}
 
 								{% set timing = "#{timeslot.beginuur|time('short')} tot #{timeslot.einduur|time('short')}" %}
@@ -130,11 +128,25 @@
 				{% endif %}
 
 				{% if entry.cloudmix.embed is not null %}
+				{# TODO: extend this part as soon as there is a solution offered from Termsfeed #}
+					{# {% set cloudmixUrl = entry.cloudmix.url %}
+
 					<section>
 						<h2 class="mt-5 mb-3">Herbeluister</h2>
-						<div class="mix-sound-cloud">
+						{% if 'soundcloud'in cloudmixUrl %}
+							<div class="mix-sound-cloud" id="termsfeed-6a4fc2a3-2857" data-termsfeed-vendor-name="Soundcloud">
+						{% elseif 'mixcloud'in cloudmixUrl %}
+							<div class="mix-sound-cloud" id="termsfeed-4d011d4e-2afe" data-termsfeed-vendor-name="Mixcloud">
+						{% else %}
+							<div class="mix-sound-cloud">
+						{% endif %}
 							{{ entry.cloudmix.render() }}
 						</div>
+					</section> #}
+
+					<section>
+						<h2 class="mt-5 mb-3">Herbeluister</h2>
+						{{ entry.cloudmix.render() }}
 					</section>
 				{% endif %}
 

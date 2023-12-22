@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>
+            {{siteName}}
+        </title>
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-HX344PH9HS"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+        
+          gtag('config', 'G-HX344PH9HS');
+        </script>
+
+        {% css "../dist/bootstrap/css/bootstrap.min.css" %} 
+        {% css "../css/urgent.css" %}
+    </head>
+    <body>
+        <div class="d-flex flex-column align-items-center justify-content-center p-3" style="min-height: 100vh;">
+            <div>
+                <img src="images/offline/Logo.svg" alt="urgent.fm logo">
+            </div>
+            <h1 class="mt-5">Down for maintenance</h1>
+            <p>De urgent.fm website is dit weekend even offline voor een onderhoud, Hou onze socials in de gaten voor updates:</p>
+            <div class="p-0 d-flex gap-4">
+                <a
+                    class="social-media-link"
+                    href="https://www.facebook.com/urgent.fm"
+                    target="_blank"
+                >
+                    <img
+                        src="../images/icons/facebook.svg"
+                        alt="facebook"
+                    />
+                </a>
+                <a
+                    class="social-media-link"
+                    href="https://www.instagram.com/urgent.fm/"
+                    target="_blank"
+                >
+                    <img
+                        src="../images/icons/instagram.svg"
+                        alt="instagram"
+                    />
+                </a>
+            </div>
+            <p class="mt-5">De livestream kan je blijven beluisteren via <a href="https://mytuner-radio.com/nl/radio/urgentfm-408719/
+" target="_blank">mytuner-radio.com</a></p>
+        </div>
+
+        {% js "../dist/bootstrap/js/bootstrap.bundle.min.js" %}
+    </body>
+</html>

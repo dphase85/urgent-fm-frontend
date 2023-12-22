@@ -11,10 +11,20 @@
 
             {{siteName}}
         </title>
-        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 
         {% css "../dist/bootstrap/css/bootstrap.min.css" %} 
         {% css "../css/urgent.css" %}
+
+        <!-- TODO: refactor google tag to script.js, just as the Termsfeed tag-->
+        <!-- Google tag (gtag.js) -->
+        {# <script async src="https://www.googletagmanager.com/gtag/js?id=G-HX344PH9HS"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+        
+          gtag('config', 'G-HX344PH9HS');
+        </script> #}
     </head>
     <body>
         <header>
@@ -83,6 +93,7 @@
                             >
                         </div>
                     </div>
+
                     <a
                         href="/zoek"
                         class="search toggle-search d-none d-lg-inline"
@@ -206,68 +217,74 @@
                             >
                         </div>
                     </div>
-                    <div class="social-media d-none d-md-inline-block">
-                        <ul class="p-0">
-                            <li>
-                                <a
-                                    class="social-media-link"
-                                    href="https://www.facebook.com/urgent.fm"
-                                    target="_blank"
-                                >
-                                    <img
-                                        src="../images/icons/facebook.svg"
-                                        alt="facebook"
-                                    />
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    class="social-media-link"
-                                    href="https://www.youtube.com/@urgentfm"
-                                    target="_blank"
-                                >
-                                    <img
-                                        src="../images/icons/youtube.svg"
-                                        alt="youtube"
-                                    />
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    class="social-media-link"
-                                    href="https://www.instagram.com/urgent.fm/"
-                                    target="_blank"
-                                >
-                                    <img
-                                        src="../images/icons/instagram.svg"
-                                        alt="instagram"
-                                    />
-                                </a>
-                            </li>
-                            <li>
-                                <a 
-                                    class="social-media-link" 
-                                    href="https://www.twitter.com/UrgentFM" 
-                                    target="_blank"
-                                >
-                                    <img 
-                                        src="../images/icons/X.svg"    
-                                        alt="X"
-                                    />
-                                </a>
-                            </li>
-                        </ul>
+                    <div class="d-flex gap-5 align-items-center">
+                         {# TODO: enable privacy settings page as soon as termsfeed came up with a solution #}
+                        <!--<a href="#" class="btn-privacy-settings" id="open_privacy_preferences_element">
+                            privacy settings
+                        </a>-->
+                        <div class="social-media d-none d-md-inline-block">
+                            <ul class="list-unstyled p-0">
+                                <li>
+                                    <a
+                                        class="social-media-link"
+                                        href="https://www.facebook.com/urgent.fm"
+                                        target="_blank"
+                                    >
+                                        <img
+                                            src="../images/icons/facebook.svg"
+                                            alt="facebook"
+                                        />
+                                    </a>
+                                </li>
+                                <li>
+                                    <a
+                                        class="social-media-link"
+                                        href="https://www.youtube.com/@urgentfm"
+                                        target="_blank"
+                                    >
+                                        <img
+                                            src="../images/icons/youtube.svg"
+                                            alt="youtube"
+                                        />
+                                    </a>
+                                </li>
+                                <li>
+                                    <a
+                                        class="social-media-link"
+                                        href="https://www.instagram.com/urgent.fm/"
+                                        target="_blank"
+                                    >
+                                        <img
+                                            src="../images/icons/instagram.svg"
+                                            alt="instagram"
+                                        />
+                                    </a>
+                                </li>
+                                <li>
+                                    <a 
+                                        class="social-media-link" 
+                                        href="https://www.twitter.com/UrgentFM" 
+                                        target="_blank"
+                                    >
+                                        <img 
+                                            src="../images/icons/X.svg"    
+                                            alt="X"
+                                        />
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
+
                 </div>
             </div>
         </footer>
 
         {% include "_includes/searchModal" %} 
 
-        {% js
-        "../dist/bootstrap/js/bootstrap.bundle.min.js" %} {% js
-        "../js/programmaSchema.js" %} {% js "../js/nieuwsoverzicht.js" %} {% js
-        "../js/script.js" %} {% do
+        {% js "../dist/bootstrap/js/bootstrap.bundle.min.js" %} 
+        {% js "../js/script.js" %} 
+        {% do
         view.registerJsFile("https://cdn.jsdelivr.net/npm/swiffy-slider@1.5.3/dist/js/swiffy-slider.min.js",
         {"crossorigin":"anonymous", "defer":"defer"}) %} {% do
         view.registerCssFile("https://cdn.jsdelivr.net/npm/swiffy-slider@1.5.3/dist/css/swiffy-slider.min.css",

@@ -218,6 +218,11 @@ a {
     color: $color-accent;
 }
 
+.btn-privacy-settings {
+    color: $color-greyscale-3;
+    font-size: $font-size-sm;
+}
+
 .social-media-links {
     margin-left: 0;
     padding-left: 0;
@@ -247,6 +252,10 @@ a {
                 width: unset !important;
             }
         }
+    }
+
+    .programmaschema-navbar-container {
+        max-width: 100%;
     }
 }
 
@@ -500,46 +509,9 @@ header {
 }
 
 // Search Overlay
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: white;
-    opacity: 0.9;
-    z-index: 8999;
-    display: none;
-}
-
 .btn-search {
     background-color: $color-accent;
     border: none;
-}
-
-.modal-search {
-    z-index: 9002;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    position: fixed;
-    display: none;
-
-    .form-search {
-        align-content: center;
-    }
-
-    .close {
-        cursor: pointer;
-        font-size: 2rem;
-        border: none;
-        color: $color-white;
-        width: 3rem;
-        text-align: center;
-        background-color: $color-black;
-        @include rounded_all(50%);
-    }
 }
 
 // Buttons
@@ -899,27 +871,33 @@ h2.section-title-centered {
 .programmaschema-navbar-container {
     border-bottom: solid black 1px;
 
-    li {
-        display: inline;
-        margin-right: 5px;
+    .programmaschema-navbar {
+        li {
+            display: inline;
+            margin-right: 5px;
 
-        .tabs-button {
-            background: none;
-            border: none;
-        }
+            .tabs-button {
+                background: none;
+                border: none;
+                color: $color-black !important;
+                width: fit-content;
+                padding-left: 0;
+                padding-right: 0;
+            }
 
-        .tabs-button:active {
-            color: lightgray;
-        }
+            .tabs-button:active {
+                color: lightgray;
+            }
 
-        .tabs-button:not(.tabs-button-active):hover {
-            color: gray;
-            font-weight: bolder;
-        }
+            .tabs-button:not(.tabs-button-active):hover {
+                color: gray !important;
+                font-weight: bolder;
+            }
 
-        .tabs-button-active {
-            font-weight: bold;
-            border-bottom: 3px solid black;
+            .tabs-button-active {
+                font-weight: bold;
+                border-bottom: 3px solid black;
+            }
         }
     }
 }
@@ -973,4 +951,36 @@ h2.section-title-centered {
 .header {
     margin-top: 5rem;
     margin-bottom: 5rem;
+}
+
+.modal-container {
+    background-color: rgba(255, 255, 255, 0.9);
+    z-index: 8999;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+
+    display: none;
+
+    .modal-search-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: revert;
+        text-align: center;
+
+        .close {
+            cursor: pointer;
+            font-size: 2rem;
+            border: none;
+            color: $color-white;
+            width: 3rem;
+            text-align: center;
+            background-color: $color-black;
+            @include rounded_all(50%);
+        }
+    }
 }

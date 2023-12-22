@@ -64,6 +64,53 @@ const pageUpdate = (responseText) => {
 
         clearParentNode(parentNode);
 
+        // TODO: enable TS as soon as Termsfeed came up with a solution
+        // Remove existing TF scripts
+        // const headScripts = document
+        //     .querySelector('head')
+        //     .getElementsByTagName('script');
+
+        // const termsFeedHeadTagNode = Array.from(headScripts).find(
+        //     (script) =>
+        //         script.src ===
+        //         'https://cdn.termsfeedtag.com/plugins/pc/v1/0dbcd9cc948b493bbe05e1c7338a4e09/plugin.js'
+        // );
+
+        // if (termsFeedHeadTagNode) {
+        //     termsFeedHeadTagNode.parentNode.removeChild(termsFeedHeadTagNode);
+        // }
+
+        // const bodyScripts = document
+        //     .querySelector('body')
+        //     .getElementsByTagName('script');
+
+        // const termsFeedBodyCdnTagNodes = Array.from(bodyScripts).filter(
+        //     (script) => {
+        //         return script.src.includes('termsfeedtag');
+        //     }
+        // );
+
+        // termsFeedBodyCdnTagNodes.forEach((node) => {
+        //     node.parentNode.removeChild(node);
+        // });
+
+        // const termsFeedBodyScriptNodes = document.querySelectorAll(
+        //     '.termsfeed-pc1-ec-wrapper'
+        // );
+
+        // Array.from(termsFeedBodyScriptNodes).forEach((node) => {
+        //     node.parentNode.removeChild(node);
+        // });
+
+        // // Add TF scripts
+        // const script = document.createElement('script');
+        // script.src =
+        //     'https://cdn.termsfeedtag.com/plugins/pc/v1/0dbcd9cc948b493bbe05e1c7338a4e09/plugin.js';
+        // script.async = true;
+        // script.type = 'text/javascript';
+        // document.head.appendChild(script);
+
+        // Append new content
         newChildNodes.forEach((n) => parentNode.appendChild(n));
 
         processPageUrl(location);
@@ -163,7 +210,7 @@ const processPageUrl = (url) => {
 
             break;
         case 'programma': {
-            if (pathSegments.length > 1) {
+            if (document.querySelector('#title')) {
                 setBrowserTabTitle(
                     `${
                         document.querySelector('#title').dataset.title
@@ -362,10 +409,9 @@ const setDisplay = () => {
 
 // Set internal anchorlinks.
 const setAnchors = () => {
-    // TODO: efficientere toepassing vinden (bv. pas bij click op juise anchor actie ondernemen, ipv telkens ankers te moeten toewijzen)
     const anchors = document.querySelectorAll(
-        "a:not(#yii-debug-toolbar a, .social-media-link, a[href^='mailto:'], .mixcloud-link), .btn-search"
-    ); // DEV: not statement enkel in DEV mode!
+        "a:not(#yii-debug-toolbar a, .social-media-link, a[href^='mailto:'], .mixcloud-link, .cc-btn), .btn-search"
+    );
 
     anchors.forEach((a) => a.addEventListener('click', navigate));
 };
@@ -373,22 +419,18 @@ const setAnchors = () => {
 const openSearchModal = (e) => {
     e.preventDefault();
 
-    const modal = document.querySelector('.modal-search');
-    const overlay = document.querySelector('.overlay');
+    const modal = document.querySelector('.modal-container');
     const body = document.querySelector('body');
 
     modal.style.display = 'block';
-    overlay.style.display = 'block';
     body.style.overflow = 'hidden';
 };
 
 const closeSearchModal = () => {
-    const overlay = document.querySelector('.overlay');
-    const searchbar = document.querySelector('.modal-search');
+    const modal = document.querySelector('.modal-container');
     const body = document.querySelector('body');
 
-    overlay.style.display = 'none';
-    searchbar.style.display = 'none';
+    modal.style.display = 'none';
     body.style.overflow = 'auto';
 };
 
@@ -622,6 +664,14 @@ const checkCurrentTime = () => {
 
 // eslint-disable-next-line no-redeclare
 const onload = () => {
+    // Termsfeed setup
+    // TODO: enable TS as soon as Termsfeed came up with a solution
+    // const script = document.createElement('script');
+    // script.src =
+    //     'https://cdn.termsfeedtag.com/plugins/pc/v1/0dbcd9cc948b493bbe05e1c7338a4e09/plugin.js';
+    // script.async = true;
+    // document.head.appendChild(script);
+
     // Ajax navigation setup
     const url = location.pathname + location.search + location.hash;
 
@@ -635,20 +685,27 @@ const onload = () => {
         url
     );
 
-    // Searchform overlay
+    // Initialize search modal
+    const modal = document.querySelector('.modal-container');
     const searchIcons = document.querySelectorAll('.toggle-search');
-    const close = document.querySelector('.close');
-    const searchModal = document.querySelector('.overlay');
+    const closeModalBtn = document.getElementById('closeModalBtn');
 
     searchIcons.forEach((searchIcon) =>
         searchIcon.addEventListener('click', openSearchModal)
     );
 
-    close.addEventListener('click', closeSearchModal);
+    closeModalBtn.addEventListener(
+        'click',
+        () => (modal.style.display = 'none')
+    );
 
-    searchModal.addEventListener('click', closeSearchModal);
+    window.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            closeSearchModal();
+        }
+    });
 
-    // Audio player
+    // Initialise audio player
     const liveAudio = document.querySelector('.live-audio');
     const audioControl = document.querySelector('.audio-control');
 
@@ -757,6 +814,84 @@ const hidePageLoading = () => {
     } else {
         content.style.visibility = 'visible';
     }
+};
+
+const setSchema = (e) => {
+    let navbar = document.querySelector('.programmaschema-navbar');
+    let tabsContainer = document.querySelector(
+        '.programmaschema-tabs-container'
+    );
+    let tabNumber = e.target.dataset.forTab;
+    let tabToActivate = document.querySelector(
+        `.tabs-content[data-tab="${tabNumber}"]`
+    );
+
+    // code om tabs in standaardmenu in te stellen
+    navbar.querySelectorAll('.tabs-button').forEach((button) => {
+        button.classList.remove('tabs-button-active');
+        if (button.dataset.forTab == tabNumber) {
+            button.classList.add('tabs-button-active');
+        }
+    });
+    tabsContainer.querySelectorAll('.tabs-content').forEach((tab) => {
+        tab.classList.remove('tabs-content-active');
+    });
+    tabToActivate.classList.add('tabs-content-active');
+
+    // code om dropdownmenu in te stellen (enkel zichtbaar op kleine schermen)
+    let txtDay = e.target.innerHTML;
+    let weekdagSelected = document.getElementById('weekdag-selected');
+    weekdagSelected.innerText = txtDay;
+    let scrollY = history.state.scrollY;
+    history.pushState(
+        { scrollY: scrollY, filters: null },
+        '',
+        '/programma#' + txtDay.toLowerCase()
+    );
+};
+
+/* populate programmaschema, met dagnummer als parameter. Aan de hand van parameter wordt de gewenste dag actief gemaakt */
+// eslint-disable-next-line no-unused-vars
+const populateProgramSchema = (tabDay) => {
+    let buttons = document.querySelectorAll('.tabs-button');
+    buttons.forEach((button) => button.addEventListener('click', setSchema));
+
+    // // Zondag = 0, maandag 1 enz. Tabday is de 'juiste' dagnummer die door JS gebruikt wordt.
+    let btnDay = tabDay - 1;
+    // Maandag is eerste dag (array[0] in schema), zondag is laatste dag in programmaschema.
+    // Na aftrek is zondag == -1, zet deze om naar 6 (laatste positie in schema).
+    if (btnDay == -1) {
+        btnDay = 6;
+    }
+    buttons[btnDay].classList.add('tabs-button-active');
+    // selecteer eerst alle tabs
+    let tabs = document.querySelectorAll('.tab');
+    // verwijder de tab weekday titel, verander slot-intro-active en slot-logo-active naar slot intro en slot-logo (enkel nodig bij niet-JS versie van site)
+    // let weekdays = document.getElementsByClassName
+    // vervolgens classlist aanpassen, ifv JS functionaliteit: eerst .tab classname verwijderen (deze is enkel nuttig wanneer JS uitgeschakeld is), daarna voor alle niet-actieve tabs content verbergen
+    tabs.forEach((tab) => {
+        let weekday = document.querySelector('.tab .weekday');
+        tab.removeChild(weekday);
+        tab.classList.remove('tab');
+        tab.classList.add('tabs-content');
+    });
+
+    let slotIntros = document.querySelectorAll('.slot-row-active');
+    slotIntros.forEach((slotIntro) => {
+        slotIntro.classList.remove('slot-row-active');
+        slotIntro.classList.add('slot-row');
+    });
+
+    // toon content van actieve tab
+    tabs[tabDay].classList.add('tabs-content-active');
+    let txtDay = buttons[btnDay].innerHTML;
+    let weekdagSelected = document.getElementById('weekdag-selected');
+    weekdagSelected.innerText = txtDay;
+    history.replaceState(
+        { scrollY: history.state ? history.state.scrollY : 0, filters: null },
+        '',
+        '/programma#' + txtDay.toLowerCase()
+    );
 };
 
 // return to page when clicking on browser's "back" or "forward" button

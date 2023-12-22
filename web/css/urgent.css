@@ -92,6 +92,11 @@ a:hover {
   color: #3ed8a0;
 }
 
+.btn-privacy-settings {
+  color: #919191;
+  font-size: calc(1 * 1rem);
+}
+
 .social-media-links {
   margin-left: 0;
   padding-left: 0;
@@ -113,6 +118,9 @@ a:hover {
 @media (min-width: 992px) {
   header .navbar .logo {
     width: unset !important;
+  }
+  .programmaschema-navbar-container {
+    max-width: 100%;
   }
 }
 @media (min-width: 1200px) {
@@ -338,46 +346,9 @@ header .search::before {
   margin-left: 0.5rem;
 }
 
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: white;
-  opacity: 0.9;
-  z-index: 8999;
-  display: none;
-}
-
 .btn-search {
   background-color: #3ed8a0;
   border: none;
-}
-
-.modal-search {
-  z-index: 9002;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  position: fixed;
-  display: none;
-}
-.modal-search .form-search {
-  align-content: center;
-}
-.modal-search .close {
-  cursor: pointer;
-  font-size: 2rem;
-  border: none;
-  color: #ffffff;
-  width: 3rem;
-  text-align: center;
-  background-color: #242424;
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  border-radius: 50%;
 }
 
 .btn-light {
@@ -719,22 +690,26 @@ h2.section-title-centered {
 .programmaschema-navbar-container {
   border-bottom: solid black 1px;
 }
-.programmaschema-navbar-container li {
+.programmaschema-navbar-container .programmaschema-navbar li {
   display: inline;
   margin-right: 5px;
 }
-.programmaschema-navbar-container li .tabs-button {
+.programmaschema-navbar-container .programmaschema-navbar li .tabs-button {
   background: none;
   border: none;
+  color: #242424 !important;
+  width: fit-content;
+  padding-left: 0;
+  padding-right: 0;
 }
-.programmaschema-navbar-container li .tabs-button:active {
+.programmaschema-navbar-container .programmaschema-navbar li .tabs-button:active {
   color: lightgray;
 }
-.programmaschema-navbar-container li .tabs-button:not(.tabs-button-active):hover {
-  color: gray;
+.programmaschema-navbar-container .programmaschema-navbar li .tabs-button:not(.tabs-button-active):hover {
+  color: gray !important;
   font-weight: bolder;
 }
-.programmaschema-navbar-container li .tabs-button-active {
+.programmaschema-navbar-container .programmaschema-navbar li .tabs-button-active {
   font-weight: bold;
   border-bottom: 3px solid black;
 }
@@ -784,4 +759,35 @@ h2.section-title-centered {
 .header {
   margin-top: 5rem;
   margin-bottom: 5rem;
+}
+
+.modal-container {
+  background-color: rgba(255, 255, 255, 0.9);
+  z-index: 8999;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: fixed;
+  display: none;
+}
+.modal-container .modal-search-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: revert;
+  text-align: center;
+}
+.modal-container .modal-search-content .close {
+  cursor: pointer;
+  font-size: 2rem;
+  border: none;
+  color: #ffffff;
+  width: 3rem;
+  text-align: center;
+  background-color: #242424;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
 }

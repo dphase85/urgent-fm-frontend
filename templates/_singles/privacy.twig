@@ -1,5 +1,16 @@
 {% extends craft.app.request.isAjax and not craft.app.request.isLivePreview ? "_ajax" : "_layout" %}
 
 {% block content %}
-	{{ entry.privacyInhoud }}
+    <div class="main container">
+        <div class="row">
+            <div class="col">
+				
+				<h1 id="title" data-title="Algemene voorwaarden en privacybeleid">Algemene voorwaarden en privacybeleid</h1>
+            
+                <article>
+                    {{ entry.privacyInhoud }}
+                </article>
+            </div>
+        </div>
+    </div>
 {% endblock %}
