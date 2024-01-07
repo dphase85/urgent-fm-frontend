@@ -93,8 +93,12 @@ a:hover {
 }
 
 .btn-privacy-settings {
+  all: unset;
   color: #919191;
   font-size: calc(1 * 1rem);
+}
+.btn-privacy-settings:hover {
+  text-decoration: underline;
 }
 
 .social-media-links {

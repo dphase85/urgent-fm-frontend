@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="nl">
     <head>
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -14,17 +14,19 @@
 
         {% css "../dist/bootstrap/css/bootstrap.min.css" %} 
         {% css "../css/urgent.css" %}
-
-        <!-- TODO: refactor google tag to script.js, just as the Termsfeed tag-->
-        <!-- Google tag (gtag.js) -->
-        {# <script async src="https://www.googletagmanager.com/gtag/js?id=G-HX344PH9HS"></script>
-        <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
         
-          gtag('config', 'G-HX344PH9HS');
-        </script> #}
+        {% if craft.app.request.hostName == 'urgent.fm' %}
+            <!-- Google tag (gtag.js) -->
+            <script async src="https://www.googletagmanager.com/gtag/js?id=G-HX344PH9HS"></script>
+            <script>
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+
+              gtag('config', 'G-HX344PH9HS');
+            </script>
+        {% endif %}
+
     </head>
     <body>
         <header>
@@ -93,7 +95,7 @@
                             >
                         </div>
                     </div>
-
+                    
                     <a
                         href="/zoek"
                         class="search toggle-search d-none d-lg-inline"
@@ -218,10 +220,9 @@
                         </div>
                     </div>
                     <div class="d-flex gap-5 align-items-center">
-                         {# TODO: enable privacy settings page as soon as termsfeed came up with a solution #}
-                        <!--<a href="#" class="btn-privacy-settings" id="open_privacy_preferences_element">
-                            privacy settings
-                        </a>-->
+                        <button type="button" class="btn-privacy-settings" id="open_privacy_preferences_element">
+                            privacy voorkeuren
+                        </button>
                         <div class="social-media d-none d-md-inline-block">
                             <ul class="list-unstyled p-0">
                                 <li>
@@ -275,7 +276,6 @@
                             </ul>
                         </div>
                     </div>
-
                 </div>
             </div>
         </footer>

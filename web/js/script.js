@@ -52,7 +52,7 @@ const parseData = (text) => {
 };
 
 const printErrorMessage = (error) => {
-    console.log(error);
+    console.error(error);
 };
 
 const pageUpdate = (responseText) => {
@@ -64,51 +64,53 @@ const pageUpdate = (responseText) => {
 
         clearParentNode(parentNode);
 
-        // TODO: enable TS as soon as Termsfeed came up with a solution
-        // Remove existing TF scripts
-        // const headScripts = document
-        //     .querySelector('head')
-        //     .getElementsByTagName('script');
+        // In order to function correctly, The Termsfeed script needs to be added to the head section each time the user navigates to a new URL.
 
-        // const termsFeedHeadTagNode = Array.from(headScripts).find(
-        //     (script) =>
-        //         script.src ===
-        //         'https://cdn.termsfeedtag.com/plugins/pc/v1/0dbcd9cc948b493bbe05e1c7338a4e09/plugin.js'
-        // );
+        // Remove existing Termsfeed scripts
+        const headScripts = document
+            .querySelector('head')
+            .getElementsByTagName('script');
 
-        // if (termsFeedHeadTagNode) {
-        //     termsFeedHeadTagNode.parentNode.removeChild(termsFeedHeadTagNode);
-        // }
+        const termsFeedHeadScriptNode = Array.from(headScripts).find(
+            (script) =>
+                script.src ===
+                'https://cdn.termsfeedtag.com/plugins/pc/v1/0dbcd9cc948b493bbe05e1c7338a4e09/plugin.js'
+        );
 
-        // const bodyScripts = document
-        //     .querySelector('body')
-        //     .getElementsByTagName('script');
+        termsFeedHeadScriptNode &&
+            termsFeedHeadScriptNode.parentNode.removeChild(
+                termsFeedHeadScriptNode
+            );
 
-        // const termsFeedBodyCdnTagNodes = Array.from(bodyScripts).filter(
-        //     (script) => {
-        //         return script.src.includes('termsfeedtag');
-        //     }
-        // );
+        const bodyScripts = document
+            .querySelector('body')
+            .getElementsByTagName('script');
 
-        // termsFeedBodyCdnTagNodes.forEach((node) => {
-        //     node.parentNode.removeChild(node);
-        // });
+        const termsFeedBodyCdnScriptNodes = Array.from(bodyScripts).filter(
+            (script) => script.src.includes('termsfeedtag')
+        );
 
-        // const termsFeedBodyScriptNodes = document.querySelectorAll(
-        //     '.termsfeed-pc1-ec-wrapper'
-        // );
+        termsFeedBodyCdnScriptNodes.forEach((node) =>
+            node.parentNode.removeChild(node)
+        );
 
-        // Array.from(termsFeedBodyScriptNodes).forEach((node) => {
-        //     node.parentNode.removeChild(node);
-        // });
+        const termsFeedBodyNodes = document.querySelectorAll(
+            '.termsfeed-pc1-ec-wrapper'
+        );
 
-        // // Add TF scripts
-        // const script = document.createElement('script');
-        // script.src =
-        //     'https://cdn.termsfeedtag.com/plugins/pc/v1/0dbcd9cc948b493bbe05e1c7338a4e09/plugin.js';
-        // script.async = true;
-        // script.type = 'text/javascript';
-        // document.head.appendChild(script);
+        Array.from(termsFeedBodyNodes).forEach((node) =>
+            node.parentNode.removeChild(node)
+        );
+
+        // Attach Termsfeed scripts
+        const script = document.createElement('script');
+
+        script.src =
+            'https://cdn.termsfeedtag.com/plugins/pc/v1/0dbcd9cc948b493bbe05e1c7338a4e09/plugin.js';
+        script.async = true;
+        script.type = 'text/javascript';
+
+        document.head.appendChild(script);
 
         // Append new content
         newChildNodes.forEach((n) => parentNode.appendChild(n));
@@ -324,7 +326,7 @@ const navigate = (e) => {
 
     let destinationUrl;
     let currentUrl;
-    const filters = history.state.filters;
+    const filters = history.state?.filters;
 
     // If there are filters on paginated pages, set filter state for current page (when navigating back, filter state can be restored)
     currentUrl = location.pathname + location.search + location.hash;
@@ -403,6 +405,10 @@ const clearParentNode = (parentNode) => {
 
 // Set display on initial or last position
 const setDisplay = () => {
+    if (!history.state) {
+        return;
+    }
+
     const scrollBackTo = history.state.scrollY;
     window.scroll(0, scrollBackTo);
 };
@@ -410,7 +416,7 @@ const setDisplay = () => {
 // Set internal anchorlinks.
 const setAnchors = () => {
     const anchors = document.querySelectorAll(
-        "a:not(#yii-debug-toolbar a, .social-media-link, a[href^='mailto:'], .mixcloud-link, .cc-btn), .btn-search"
+        "a:not(#yii-debug-toolbar a, .social-media-link, a[href^='mailto:'], .mixcloud-link, .cc-btn, #open_privacy_preferences_element, .termsfeed-pc1-open-privacy-preferences), .btn-search"
     );
 
     anchors.forEach((a) => a.addEventListener('click', navigate));
@@ -664,13 +670,14 @@ const checkCurrentTime = () => {
 
 // eslint-disable-next-line no-redeclare
 const onload = () => {
-    // Termsfeed setup
-    // TODO: enable TS as soon as Termsfeed came up with a solution
-    // const script = document.createElement('script');
-    // script.src =
-    //     'https://cdn.termsfeedtag.com/plugins/pc/v1/0dbcd9cc948b493bbe05e1c7338a4e09/plugin.js';
-    // script.async = true;
-    // document.head.appendChild(script);
+    // Initialize Termsfeed
+    const script = document.createElement('script');
+
+    script.src =
+        'https://cdn.termsfeedtag.com/plugins/pc/v1/0dbcd9cc948b493bbe05e1c7338a4e09/plugin.js';
+    script.async = true;
+
+    document.head.appendChild(script);
 
     // Ajax navigation setup
     const url = location.pathname + location.search + location.hash;
@@ -799,7 +806,7 @@ const onload = () => {
 };
 
 const saveLastState = () => {
-    const lastState = history.state.filters;
+    const lastState = history.state?.filters;
 
     if (lastState) {
         sessionStorage.setItem('urgentfm.laststate', lastState.toString());
@@ -906,3 +913,20 @@ window.addEventListener('load', onload);
 window.addEventListener('pagehide', saveLastState);
 
 document.addEventListener('readystatechange', hidePageLoading);
+
+// This logic is provided by Termsfeed in order to reload the page after accepting or rejecting consent in the Privacy Settings menu
+document.addEventListener('DOMContentLoaded', function () {
+    setTimeout(() => {
+        window.termsfeed_privacy_consent.callbacks({
+            acceptedAll: () => {
+                this.location.reload();
+            },
+            rejectedAll: () => {
+                this.location.reload();
+            },
+            acceptedSome: () => {
+                this.location.reload();
+            }
+        });
+    }, 750);
+});

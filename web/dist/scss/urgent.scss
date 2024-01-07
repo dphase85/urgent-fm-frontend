@@ -219,8 +219,13 @@ a {
 }
 
 .btn-privacy-settings {
+    all: unset;
     color: $color-greyscale-3;
     font-size: $font-size-sm;
+
+    &:hover {
+        text-decoration: underline;
+    }
 }
 
 .social-media-links {

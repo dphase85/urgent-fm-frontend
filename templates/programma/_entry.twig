@@ -119,34 +119,51 @@
 						</picture>
 					</div>
 				{% endif %}
-
 					{{ entry.programmaInhoud }}
 				</section>
-				{# Bouw hier de sociale media links met bijhorende iconen op, indien deze velden ingevuld zijn #}
+
 				{% if entry.socialMediaLinks|length %}
 					{% include "_includes/programma/socialMediaLinksList"  %}
 				{% endif %}
 
+				{# The embedded audio player is wrapped around a custom Termsfeed tag. This tag is needed for rendering the Termsfeed consent banner. #}
+				{# If no consent is given, or consent is rejected, this tag will render a consent placeholder banner. #}
+				{# See https://www.termsfeed.com/ for more information #}
 				{% if entry.cloudmix.embed is not null %}
-				{# TODO: extend this part as soon as there is a solution offered from Termsfeed #}
-					{# {% set cloudmixUrl = entry.cloudmix.url %}
+					{# Get the iframe url from the OEmbed field object. This url is needed for dynamically rendering the custom Termsfeed tag #}
+					{% set iframeParts = entry.cloudmix.media.code|split(' ') %}
+					{% set iframeSrcPart = iframeParts|filter(part => part starts with 'src')|first %}
+					{% set src = iframeSrcPart|split('"')|length > 1 ? iframeSrcPart|split('"')[1] : '' %}
+					{% set src = src|replace({'&amp;': '&'}) %}
+
+					{# Each streaming platform gets it's own vendor id. This id is generated in the Termsfeed settings console  #}
+					{% set vendorId = null %}
+
+					{# Add here each specific generated platform vendor id #}
+					{% if 'soundcloud' in src %}
+						{% set vendorId = 'termsfeed-6a4fc2a3-2857'  %}
+					{% elseif 'mixcloud' in src %}
+						{% set vendorId = 'termsfeed-4d011d4e-2afe'  %}
+					{% endif %}
 
 					<section>
 						<h2 class="mt-5 mb-3">Herbeluister</h2>
-						{% if 'soundcloud'in cloudmixUrl %}
-							<div class="mix-sound-cloud" id="termsfeed-6a4fc2a3-2857" data-termsfeed-vendor-name="Soundcloud">
-						{% elseif 'mixcloud'in cloudmixUrl %}
-							<div class="mix-sound-cloud" id="termsfeed-4d011d4e-2afe" data-termsfeed-vendor-name="Mixcloud">
+						
+						{# Render here the custom Termsfeed iframe tag, provided with attributes #}
+						{# If there is no vendor generated yet at the Termsfeed user console, then render an alert message. #}
+						{% if vendorId is not null %}
+							{% tag 'termsfeed-privacy-consent-tag-iframe' with {
+								"data-termsfeed-privacy-consent-vendor-id": vendorId,
+								width: entry.cloudmix.media.width,
+								height: entry.cloudmix.media.height,
+								src: src,
+								frameborder: 0,
+							} %}
+							{% endtag %}
 						{% else %}
-							<div class="mix-sound-cloud">
+							<div class="alert alert-light" role="alert">
+								<p class="mb-0 text-center">Niets zichtbaar? Meld het <strong><a href="mailto:website@urgent.fm">hier</a></strong> aan ons development team!</p></div>
 						{% endif %}
-							{{ entry.cloudmix.render() }}
-						</div>
-					</section> #}
-
-					<section>
-						<h2 class="mt-5 mb-3">Herbeluister</h2>
-						{{ entry.cloudmix.render() }}
 					</section>
 				{% endif %}
 
