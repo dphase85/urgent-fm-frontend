@@ -43,17 +43,25 @@
 
 					{% if entry.image is not empty %}
 						<picture class="hero-background-picture">
-							<source srcset="{{ backgroundImageExtraLarge }}			" media="(min-width: 1920px)">
-							<source srcset="{{ backgroundImageLarge }}" 			media="(min-width: 1600px)">
-							<source srcset="{{ backgroundImageMedium }}" 			media="(min-width: 1280px)">
-							<source srcset="{{ backgroundImageSmall }}" 			media="(max-width: 1279px)">
-							<img src="{{ backgroundImageMedium }}" 			alt="picture of {{title}}"/>
+							<source srcset="{{ backgroundImageExtraLarge }}" media="(min-width: 1920px)">
+							<source srcset="{{ backgroundImageLarge }}" media="(min-width: 1600px)">
+							<source srcset="{{ backgroundImageMedium }}" media="(min-width: 1280px)">
+							<source srcset="{{ backgroundImageSmall }}" media="(max-width: 1279px)">
+							<img src="{{ backgroundImageMedium }}" alt="picture of {{title}}"/>
 						</picture>
 					{% endif %}
 			
 					<div class="nieuws-tekst">
 						{{ entry.nieuwsInhoud }}
 					</div>
+
+					{% if entry.cloudmix.embed is not null %}
+						<section>
+							<h2 class="mt-5 mb-3">Herbeluister</h2>
+
+							{% include "_includes/oEmbed" with { cloudmix: entry.cloudmix } %}
+						</section>
+					{% endif %}
 
 					{% set nieuws = craft.entries()
     	  				.section('nieuws')

@@ -126,44 +126,11 @@
 					{% include "_includes/programma/socialMediaLinksList"  %}
 				{% endif %}
 
-				{# The embedded audio player is wrapped around a custom Termsfeed tag. This tag is needed for rendering the Termsfeed consent banner. #}
-				{# If no consent is given, or consent is rejected, this tag will render a consent placeholder banner. #}
-				{# See https://www.termsfeed.com/ for more information #}
 				{% if entry.cloudmix.embed is not null %}
-					{# Get the iframe url from the OEmbed field object. This url is needed for dynamically rendering the custom Termsfeed tag #}
-					{% set iframeParts = entry.cloudmix.media.code|split(' ') %}
-					{% set iframeSrcPart = iframeParts|filter(part => part starts with 'src')|first %}
-					{% set src = iframeSrcPart|split('"')|length > 1 ? iframeSrcPart|split('"')[1] : '' %}
-					{% set src = src|replace({'&amp;': '&'}) %}
-
-					{# Each streaming platform gets it's own vendor id. This id is generated in the Termsfeed settings console  #}
-					{% set vendorId = null %}
-
-					{# Add here each specific generated platform vendor id #}
-					{% if 'soundcloud' in src %}
-						{% set vendorId = 'termsfeed-6a4fc2a3-2857'  %}
-					{% elseif 'mixcloud' in src %}
-						{% set vendorId = 'termsfeed-4d011d4e-2afe'  %}
-					{% endif %}
-
 					<section>
 						<h2 class="mt-5 mb-3">Herbeluister</h2>
-						
-						{# Render here the custom Termsfeed iframe tag, provided with attributes #}
-						{# If there is no vendor generated yet at the Termsfeed user console, then render an alert message. #}
-						{% if vendorId is not null %}
-							{% tag 'termsfeed-privacy-consent-tag-iframe' with {
-								"data-termsfeed-privacy-consent-vendor-id": vendorId,
-								width: entry.cloudmix.media.width,
-								height: entry.cloudmix.media.height,
-								src: src,
-								frameborder: 0,
-							} %}
-							{% endtag %}
-						{% else %}
-							<div class="alert alert-light" role="alert">
-								<p class="mb-0 text-center">Niets zichtbaar? Meld het <strong><a href="mailto:website@urgent.fm">hier</a></strong> aan ons development team!</p></div>
-						{% endif %}
+
+						{% include "_includes/oEmbed" with { cloudmix: entry.cloudmix } %}
 					</section>
 				{% endif %}
 
@@ -182,29 +149,32 @@
 
 						{{ ui.setPagination(pageInfo) }}
 					</section>
-
 				{% endif %}
 
-				{# Zoek eerst naar gelateerde stijlen op een hoger categorieniveau dan 2 #}
+				{# First, search for related styles at a higher category level than level 2 #}
 				{% set stijlen = entry.programmaStijl
 					.level('3')
 					.all() %}
-				{# Indien geen matches, zoek dan op volgende categorieniveaus #}
+
+				{# If there are no matches, search at higher category levels #}
 				{% if stijlen == null %}
 					{% set stijlen = entry.programmaStijl
 						.level('2')
 						.all() %}
-							{% endif %}
-							{% if stijlen == null %}
-								{% set stijlen = entry.programmaStijl
+				{% endif %}
+
+				{% if stijlen == null %}
+					{% set stijlen = entry.programmaStijl
 						.level('1')
 						.all() %}
 				{% endif %}
+
 				{% set entries = craft.entries()
 					.relatedTo(stijlen)
 					.id('not ' ~ entry.id)
 					.limit(4)
 					.all() %}
+					
 				{% if entries|length %}
 					<aside>
 						<h2 class="mt-5 mb-3">Misschien vind je deze programma's ook leuk:</h2>
