@@ -109,7 +109,7 @@
 					</h2>
 
 				{% if entry.programmaBanner is not empty %}
-					<div class="my-3">
+					<div class="my-4">
 						<picture class="hero-background-picture">
 							<source srcset="{{ backgroundImageExtraLarge }}" media="(min-width: 1920px)">
 							<source srcset="{{ backgroundImageLarge }}" media="(min-width: 1600px)">
@@ -174,7 +174,7 @@
 					.id('not ' ~ entry.id)
 					.limit(4)
 					.all() %}
-					
+
 				{% if entries|length %}
 					<aside>
 						<h2 class="mt-5 mb-3">Misschien vind je deze programma's ook leuk:</h2>

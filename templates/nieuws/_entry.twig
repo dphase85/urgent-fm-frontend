@@ -2,7 +2,6 @@
 {% set title = entry.title %}
 
 {% block content %}
-
 	{% if entry.image is not empty %}
 		{% set image = entry.image.one() %}
 		{% set backgroundImageExtraSmall = image.getUrl('bannerImageXs') %}
@@ -16,39 +15,35 @@
 		.level('1')
 		.one() %}
 
-	<div class="hero d-flex">
-
-		<div class="header container align-self-end">
-			<div class="row">
-				<div class="col">
-					<h1 class="m-0" id="title" data-title="{{ entry.title }}">
-						{{ entry.title }}
-					</h1>
-
-					{% import "_macros/_ui" as ui %}
-					{{ ui.setCategory(rootCategory, 'nieuws') }}
-					
-				</div>
+	<div class="header container align-self-end">
+		<div class="row">
+			<div class="col">
+				<h1 class="m-0" id="title" data-title="{{ entry.title }}">
+					{{ entry.title }}
+				</h1>
+				{% import "_macros/_ui" as ui %}
+				{{ ui.setCategory(rootCategory, 'nieuws') }}
 			</div>
 		</div>
 	</div>
-
 	<div role="main" class="main container">
 		<div class="row">
 			<div class="col">
 				<article>
-					<p class="intro">
+					<p class="intro mb-4">
 						<strong>{{ entry.intro }}</strong>
 					</p>
 
 					{% if entry.image is not empty %}
-						<picture class="hero-background-picture">
-							<source srcset="{{ backgroundImageExtraLarge }}" media="(min-width: 1920px)">
-							<source srcset="{{ backgroundImageLarge }}" media="(min-width: 1600px)">
-							<source srcset="{{ backgroundImageMedium }}" media="(min-width: 1280px)">
-							<source srcset="{{ backgroundImageSmall }}" media="(max-width: 1279px)">
-							<img src="{{ backgroundImageMedium }}" alt="picture of {{title}}"/>
-						</picture>
+						<div class="mb-4">
+							<picture class="hero-background-picture">
+								<source srcset="{{ backgroundImageExtraLarge }}" media="(min-width: 1920px)">
+								<source srcset="{{ backgroundImageLarge }}" media="(min-width: 1600px)">
+								<source srcset="{{ backgroundImageMedium }}" media="(min-width: 1280px)">
+								<source srcset="{{ backgroundImageSmall }}" media="(max-width: 1279px)">
+								<img src="{{ backgroundImageMedium }}" alt="picture of {{title}}"/>
+							</picture>
+						</div>
 					{% endif %}
 			
 					<div class="nieuws-tekst">
