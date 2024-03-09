@@ -1,20 +1,23 @@
 {% extends craft.app.request.isAjax and not craft.app.request.isLivePreview ? "_ajax" : "_layout" %}
 {% set title = entry.title %}
 
+{% if entry.programmaBanner is not empty %}
+	{% set image = entry.programmaBanner.one() %}
+	{% set backgroundImageExtraSmall = image.getUrl('bannerImageXs') %}
+	{% set backgroundImageSmall = image.getUrl('bannerImageS640w') %}
+	{% set backgroundImageMedium = image.getUrl('bannerImageM1280w') %}
+	{% set backgroundImageLarge = image.getUrl('bannerImageL1600w') %}
+	{% set backgroundImageExtraLarge = image.getUrl('bannerImageXl2560w') %}
+{% endif %}
+
+{% block metaData %}
+	{% include '_includes/_metadata' with { title: title, description: entry.intro|nl2br } %}
+{% endblock %}
+
 {% block content %}
 	{# import macro's #}
 	{% import "_macros/_ui" as ui %}
-	{% set image = null %}
 	{# Banner #}
-	{% if entry.programmaBanner is not empty %}
-		{% set image = entry.programmaBanner.one() %}
-
-		{% set backgroundImageExtraSmall = image.getUrl('bannerImageXs') %}
-		{% set backgroundImageSmall = image.getUrl('bannerImageS640w') %}
-		{% set backgroundImageMedium = image.getUrl('bannerImageM1280w') %}
-		{% set backgroundImageLarge = image.getUrl('bannerImageL1600w') %}
-		{% set backgroundImageExtraLarge = image.getUrl('bannerImageXl2560w') %}
-	{% endif %}
 
 	{% set rootCategory = entry.programmaStijl
 		.level('1')

@@ -61,9 +61,41 @@ const pageUpdate = (responseText) => {
         const parser = new DOMParser();
         const doc = parser.parseFromString(responseText, 'text/html');
         const newChildNodes = doc.body.childNodes;
+        const head = document.head;
+        const documentMetaTags = head.getElementsByTagName('meta');
+        const responseTextHead = doc.head;
+        const metaTags = responseTextHead.getElementsByTagName('meta');
 
-        clearParentNode(parentNode);
+        const setMetaTag = (propertyName) => {
+            const tag = Array.from(metaTags).find((node) => {
+                return node.attributes['property'].value === propertyName;
+            });
 
+            const documentTag = Array.from(documentMetaTags).find((node) => {
+                return node.attributes['property']?.value === propertyName;
+            });
+
+            documentTag && head.removeChild(documentTag);
+            tag && head.appendChild(tag);
+        };
+
+        // Update meta tags
+        const ogMetaTagPropertyNames = [
+            'og:title',
+            'og:url',
+            'og:type ',
+            'og:locale',
+            'og:image',
+            'og:image:width',
+            'og:image:height',
+            'og:description'
+        ];
+
+        ogMetaTagPropertyNames.forEach((ogMetaTagPropertyName) => {
+            setMetaTag(ogMetaTagPropertyName);
+        });
+
+        // Update Termsfeed
         // In order to function correctly, The Termsfeed script needs to be added to the head section each time the user navigates to a new URL.
 
         // Remove existing Termsfeed scripts
@@ -112,7 +144,8 @@ const pageUpdate = (responseText) => {
 
         document.head.appendChild(script);
 
-        // Append new content
+        // Update content
+        clearParentNode(parentNode);
         newChildNodes.forEach((n) => parentNode.appendChild(n));
 
         processPageUrl(location);

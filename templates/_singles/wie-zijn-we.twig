@@ -2,6 +2,10 @@
 {% set title = entry.title %}
 {% set heroHeight = 75 %}
 
+{% block metaData %}
+	{% include '_includes/_metadata' with { title: title, description: entry.intro|nl2br } %}
+{% endblock %}
+
 {% block content %}
     {% set image = entry.singlesBannerImage.one() %}
     {% set backgroundImageExtraSmall = image.getUrl('bannerImageXs') %}

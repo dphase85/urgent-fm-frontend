@@ -1,11 +1,16 @@
 {% extends craft.app.request.isAjax and not craft.app.request.isLivePreview ? "_ajax" : "_layout" %}
 
+{% set image = entry.homepageBannerfoto.one() %}
+
+{% block metaData %}
+	{% include '_includes/_metadata' with { title: 'Urgent.fm | 105.3', description: '' } %}
+{% endblock %}
+
 {% block content %}
 	{% set weekdagen = craft.entries()
             .section('programScheme')
             .orderBy('title')
             .all() %}
-	{% set image = entry.homepageBannerfoto.one() %}
 
 	<section class="hero d-flex align-items-center justify-content-center">
 
