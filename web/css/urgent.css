@@ -609,6 +609,10 @@ h2.section-title-centered {
   background-color: #ffffff;
 }
 
+.cards-grid {
+  margin-bottom: 48px;
+}
+
 .card p {
   font-size: calc(1 * 1rem);
 }

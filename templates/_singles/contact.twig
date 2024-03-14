@@ -25,7 +25,6 @@
 		</picture>
 
 		<div class="hero-content container align-self-end">
-
 			<h1 id="title" data-title="{{ entry.title }}">
 				<span>Contact</span>
 			</h1>
@@ -35,147 +34,73 @@
 	<div class="main container">
 		<div class="row">
 			<div class="col">
-				<h2>Hoe kan je ons bereiken?</h2>
-				<h3>Urgent.fm @ De Krook Gent</h3>
+				{% set blocks = entry.contactContent.all() %}
 
-				<p>
-					<strong>Urgent.fm vzw
-						<br>
-						Miriam Makebaplein 1<br>
-						9000 Gent<br>
-						<a href="mailto:contact@urgent.fm">contact@urgent.fm</a>
-						<br>+32 9 395 39 60
-					</strong>
-				</p>
+				{% if blocks|length %}
+					{% for block in blocks %}
+						{% if block.type == 'textBlock' %}
+							{{ block.textContent }}
+						{% elseif block.type == 'cardGrid3Columns' %}
+							{% set grid = block.grid[0] %}
 
-				<p>
-					<strong>Algemene coördinatie:
-						<a href="mailto:tania.selleslags@urgent.fm">Tania Selleslags</a>
-					</strong>
-				</p>
-
-				<p>
-					De Urgent.fm redactie en studio&#39;s bevinden zich op het -1 niveau van het Krookgebouw, eenvoudig te bereiken wanneer je op het Miriam Makebaplein - aan de zijde van het Wintercircus - de trap naar beneden neemt. Je kan ons ook vinden via de Platteberg Gent.
-				</p>
-				<p>
-					Je ziet de radiostudio en redactieruimte vanuit de overdekte fietsstalling, onder de hoofdingang, waar ook onze (dienst-)ingang zich bevindt. Urgent.fm heeft geen deurbel maar wuif gerust even aan het venster.
-				</p>
-
-				<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
-					<div class="col">
-						<div class="card-contact card w-100 h-100">
-							<div class="card-body">
-								<h4 class="card-title">Leveringsadres:</h4>
-								<div class="card-text">Urgent.fm<br>Platteberg 11<br>9000 Gent</div>
+							<div class="cards-grid row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+								{% for block in grid.cards.all() %}
+									{% if block.type == 'card' %}
+										<div class="col d-flex align-items-stretch">
+											<div class="card-contact card w-100 h-100">
+												<div class="card-body">
+													<h4 class="card-title">{{ block.cardTitle }}</h4>
+													<div class="card-text">
+														{{ block.cardContent }}
+													</div>
+												</div>
+											</div>
+										</div>
+									{% endif %}
+								{% endfor %}
 							</div>
-						</div>
-					</div>
-					<div class="col">
-						<div class="card-contact card w-100 h-100">
-							<div class="card-body">
-								<h4 class="card-title">Postadres:</h4>
-								<div class="card-text">Urgent.fm<br>Miriam Makebaplein 1<br>9000 Gent</div>
-							</div>
-						</div>
-					</div>
-					<div class="col">
-						<div class="card-contact card w-100 h-100">
-							<div class="card-body">
-								<h4 class="card-title">Facturatie:</h4>
-								<div class="card-text">Urgent.fm vzw<br>Miriam Makebaplein 1<br>9000 Gent<br>Btw.nr. 0457 048 162</div>
-							</div>
-						</div>
-					</div>
-				</div>
+						{% elseif block.type == 'cardGrid2Columns' %}
+							{% set grid = block.grid[0] %}
 
-				<h2 class="mt-5">Meewerken of stage?</h2>
-				<p>
-					Richt je mail aan:
-					<a href="mailto:contact@urgent.fm">Tania Selleslags</a>
-				</p>
-
-				<div class="row row-cols-1 row-cols-md-2 g-3">
-					<div class="col">
-						<div class="card-contact card w-100 h-100">
-							<div class="card-body">
-								<h4>Coördinatie medialab- en studentenwerking</h4>
-								<div class="card-text">
-									via coördinator Urgent.fm,
-									<a href="mailto:tania.selleslags@urgent.fm">Tania Selleslags</a>
-								</div>
+							<div class="cards-grid row row-cols-1 row-cols-md-2 g-3">
+								{% for block in grid.cards.all() %}
+									{% if block.type == 'card' %}
+										<div class="col d-flex align-items-stretch">
+											<div class="card-contact card w-100 h-100">
+												<div class="card-body">
+													<h4 class="card-title">{{ block.cardTitle }}</h4>
+													<div class="card-text">
+														{{ block.cardContent }}
+													</div>
+												</div>
+											</div>
+										</div>
+									{% endif %}
+								{% endfor %}
 							</div>
-						</div>
-					</div>
+						{% elseif block.type == 'cardGrid1Column' %}
+							{% set grid = block.grid[0] %}
 
-					<div class="col">
-						<div class="card-contact card w-100 h-100">
-							<div class="card-body">
-								<div class="card-text">
-									<h4>Partner en publiciteit?</h4>
-									<a href="mailto:contact@urgent.fm">contact@urgent.fm</a>
-								</div>
+							<div class="cards-grid row row-cols-1 g-3">
+								{% for block in grid.cards.all() %}
+									{% if block.type == 'card' %}
+										<div class="col d-flex align-items-stretch">
+											<div class="card-contact card w-100 h-100">
+												<div class="card-body">
+													<h4 class="card-title">{{ block.cardTitle }}</h4>
+													<div class="card-text">
+														{{ block.cardContent }}
+													</div>
+												</div>
+											</div>
+										</div>
+									{% endif %}
+								{% endfor %}
 							</div>
-						</div>
-					</div>
-				</div>
-
-				<h2 class="mt-5 mb-3">Redacties</h2>
-
-				<div class="row row-cols-1 row-cols-md-2 g-3">
-					<div class="col d-flex align-items-stretch">
-						<div class="card-contact card w-100 h-100">
-							<div class="card-body">
-								<h4>Tumult</h4>
-								<p>
-									<a href="mailto:tumult@urgent.fm">tumult@urgent.fm</a><br>
-									<a href="mailto:timon.vandevoorde@urgent.fm">timon.vandevoorde@urgent.fm</a>
-								</p>
-								</p>
-							</div>
-						</div>
-					</div>
-					<div class="col d-flex align-items-stretch">
-						<div class="card-contact card w-100 h-100">
-							<div class="card-body">
-								<h4>Opname- en livestudio</h4>
-								<p>
-									<a href="mailto:opnamestudio@urgent.fm">opnamestudio@urgent.fm</a><br>
-									Coördinatoren: Chaitanya Bhagwat en Tom Van Haute
-								</p>
-							</div>
-						</div>
-					</div>
-					<div class="col d-flex align-items-stretch">
-						<div class="card-contact card w-100 h-100">
-							<div class="card-body">
-								<h4>Muziekredactie</h4>
-								<p>Info over playlisten of muziek doorsturen?</p>
-								<p>
-									<a href="mailto:muziek@urgent.fm">muziek@urgent.fm</a><br>
-									Coördinatoren: Simon Santens &amp; Megan Vansevenant
-								</p>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<h2 class="mt-5">Avond- en weekendprogramma's</h2>
-				<p>De contactgegevens van de verschillende programma's zijn te vinden onder de programmalink in het
-					<a href="/programma">uitzendschema</a>.
-				</p>
-				<p>
-					Algemene vragen over de avond en weekendprogramma's:
-					<a href="mailto:contact@urgent.fm">contact@urgent.fm</a>
-				</p>
-
-				<p>
-					<strong>Info over playlisten of muziek doorsturen?</strong><br>
-					<a href="mailto:muziek@urgent.fm">muziek@urgent.fm</a>
-				</p>
+						{% endif %}
+					{% endfor %}
+				{% endif %}
 			</div>
 		</div>
-
-		{#    {{ entry.programmaInhoud }}  #}
-
 	</div>
 {% endblock %}
