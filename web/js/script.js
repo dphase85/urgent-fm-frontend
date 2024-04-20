@@ -762,20 +762,23 @@ const onload = () => {
         isPlaying = false;
     });
 
-    audioControl.addEventListener('click', () => {
+    audioControl.addEventListener('click', (e) => {
+        e.preventDefault();
+
         const playAudio = async () => {
             if (liveAudio.paused && !isPlaying) {
                 audioControl.classList.remove('audio-control-play');
                 audioControl.classList.add('audio-control-pause');
 
-                // liveAudio.play() returns a Promise, put it into a variable to check if it is resolved or rejected
-                const playPromise = liveAudio.play();
-                // See https://developer.chrome.com/blog/play-request-was-interrupted/ for more info about follow code.
-                if (playPromise !== undefined) {
-                    playPromise.catch(() => {
-                        audioControl.classList.remove('audio-control-pause');
-                        audioControl.classList.add('audio-control-play');
-                    });
+                try {
+                    await liveAudio.play();
+                } catch (err) {
+                    audioControl.classList.remove('audio-control-pause');
+                    audioControl.classList.add('audio-control-play');
+
+                    console.error(
+                        `Error ${liveAudio.error.code}: details: ${liveAudio.error.message}`
+                    );
                 }
             }
         };
