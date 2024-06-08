@@ -767,6 +767,15 @@ const onload = () => {
 
         const playAudio = async () => {
             if (liveAudio.paused && !isPlaying) {
+                const audioControlContainer = document.querySelector(
+                    '.audio-control-container'
+                );
+                const errorContainer =
+                    document.querySelector('.error-container');
+
+                errorContainer &&
+                    audioControlContainer.removeChild(errorContainer);
+
                 audioControl.classList.remove('audio-control-play');
                 audioControl.classList.add('audio-control-pause');
 
@@ -776,9 +785,18 @@ const onload = () => {
                     audioControl.classList.remove('audio-control-pause');
                     audioControl.classList.add('audio-control-play');
 
-                    console.error(
-                        `Error ${liveAudio.error.code}: details: ${liveAudio.error.message}`
+                    const audioControlContainer = document.querySelector(
+                        '.audio-control-container'
                     );
+                    const errorContainer = document.createElement('div');
+                    errorContainer.classList.add('error-container');
+                    errorContainer.innerHTML = `
+                    <span style="color: red;">An error occured.</span>
+                    `;
+
+                    audioControlContainer.appendChild(errorContainer);
+
+                    console.error(`Error ${err.code}: details: ${err.message}`);
                 }
             }
         };

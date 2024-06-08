@@ -210,11 +210,13 @@
                                 type="audio/mpeg"
                             />
                         </audio>
-                        <button
-                            type="submit"
-                            class="audio-control audio-control-play"
-                            title="Play/Stop button"
-                        ></button>
+                        <div class="audio-control-container d-flex flex-column align-items-center">
+                            <button
+                                type="submit"
+                                class="audio-control audio-control-play"
+                                title="Play/Stop button"
+                            ></button>
+                        </div>
                         <div class="ms-4 p-0">
                             <span class="accent-green">luister nu:</span><br />
                             <a
@@ -223,6 +225,7 @@
                                 >{{ currentlyPlaying.title }}</a
                             >
                         </div>
+
                     </div>
                     <div class="d-flex gap-5 align-items-center">
                         <button type="button" class="btn-privacy-settings" id="open_privacy_preferences_element">
