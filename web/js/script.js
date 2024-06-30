@@ -1,3 +1,39 @@
+const attachGoogleTags = () => {
+    // Attach Google manager cdn script
+    const googleTagManagerScript = document.createElement('script');
+
+    googleTagManagerScript.src =
+        'https://www.googletagmanager.com/gtag/js?id=G-HX344PH9HS';
+    googleTagManagerScript.async = true;
+    googleTagManagerScript.id = 'ga-4-tag-manager';
+
+    document.head.appendChild(googleTagManagerScript);
+
+    // Attach Google gtag script
+    const googleGtagScript = document.createElement('script');
+
+    googleGtagScript.id = 'ga-4-gtag-script';
+    googleGtagScript.textContent = `
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+    
+                  gtag('config', 'G-HX344PH9HS');
+            `;
+
+    document.head.appendChild(googleGtagScript);
+};
+
+const attachTermsfeedTags = () => {
+    const script = document.createElement('script');
+
+    script.src =
+        'https://cdn.termsfeedtag.com/plugins/pc/v1/0dbcd9cc948b493bbe05e1c7338a4e09/plugin.js';
+    script.async = true;
+
+    document.head.appendChild(script);
+};
+
 const callMixcloud = () => {
     const request = new Request(
         'https://api.mixcloud.com/urgentfm/cloudcasts/?limit=15'
@@ -64,6 +100,8 @@ const pageUpdate = (responseText) => {
         const head = document.head;
         const documentMetaTags = head.getElementsByTagName('meta');
         const responseTextHead = doc.head;
+
+        // Meta tags
         const metaTags = responseTextHead.getElementsByTagName('meta');
 
         const setMetaTag = (propertyName) => {
@@ -94,6 +132,21 @@ const pageUpdate = (responseText) => {
         ogMetaTagPropertyNames.forEach((ogMetaTagPropertyName) => {
             setMetaTag(ogMetaTagPropertyName);
         });
+
+        // Update Google GA-4 tag
+        // In order to function correctly, The Google GA-4 scripts needs to be added to the head section each time the user navigates to a new URL.
+        const googleTagManagerHeadScriptNode =
+            document.querySelector('#ga-4-tag-manager');
+
+        googleTagManagerHeadScriptNode &&
+            document.head.removeChild(googleTagManagerHeadScriptNode);
+
+        const googleGtagScriptNode =
+            document.querySelector('#ga-4-gtag-script');
+
+        googleGtagScriptNode && document.head.removeChild(googleGtagScriptNode);
+
+        attachGoogleTags();
 
         // Update Termsfeed
         // In order to function correctly, The Termsfeed script needs to be added to the head section each time the user navigates to a new URL.
@@ -135,14 +188,7 @@ const pageUpdate = (responseText) => {
         );
 
         // Attach Termsfeed scripts
-        const script = document.createElement('script');
-
-        script.src =
-            'https://cdn.termsfeedtag.com/plugins/pc/v1/0dbcd9cc948b493bbe05e1c7338a4e09/plugin.js';
-        script.async = true;
-        script.type = 'text/javascript';
-
-        document.head.appendChild(script);
+        attachTermsfeedTags();
 
         // Update content
         clearParentNode(parentNode);
@@ -703,14 +749,11 @@ const checkCurrentTime = () => {
 
 // eslint-disable-next-line no-redeclare
 const onload = () => {
+    // Initialize Google tag
+    attachGoogleTags();
+
     // Initialize Termsfeed
-    const script = document.createElement('script');
-
-    script.src =
-        'https://cdn.termsfeedtag.com/plugins/pc/v1/0dbcd9cc948b493bbe05e1c7338a4e09/plugin.js';
-    script.async = true;
-
-    document.head.appendChild(script);
+    attachTermsfeedTags();
 
     // Ajax navigation setup
     const url = location.pathname + location.search + location.hash;

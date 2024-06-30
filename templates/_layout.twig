@@ -19,18 +19,6 @@
 
         {% css "../dist/bootstrap/css/bootstrap.min.css" %} 
         {% css "../css/urgent.css" %}
-        
-        {% if craft.app.request.hostName == 'urgent.fm' %}
-            <!-- Google tag (gtag.js) -->
-            <script async src="https://www.googletagmanager.com/gtag/js?id=G-HX344PH9HS"></script>
-            <script>
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-
-              gtag('config', 'G-HX344PH9HS');
-            </script>
-        {% endif %}
 
     </head>
     <body>
