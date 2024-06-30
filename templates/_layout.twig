@@ -19,18 +19,6 @@
 
         {% css "../dist/bootstrap/css/bootstrap.min.css" %} 
         {% css "../css/urgent.css" %}
-        
-        {% if craft.app.request.hostName == 'urgent.fm' %}
-            <!-- Google tag (gtag.js) -->
-            <script async src="https://www.googletagmanager.com/gtag/js?id=G-HX344PH9HS"></script>
-            <script>
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-
-              gtag('config', 'G-HX344PH9HS');
-            </script>
-        {% endif %}
 
     </head>
     <body>
@@ -210,11 +198,13 @@
                                 type="audio/mpeg"
                             />
                         </audio>
-                        <button
-                            type="submit"
-                            class="audio-control audio-control-play"
-                            title="Play/Stop button"
-                        ></button>
+                        <div class="audio-control-container d-flex flex-column align-items-center">
+                            <button
+                                type="submit"
+                                class="audio-control audio-control-play"
+                                title="Play/Stop button"
+                            ></button>
+                        </div>
                         <div class="ms-4 p-0">
                             <span class="accent-green">luister nu:</span><br />
                             <a
@@ -223,6 +213,7 @@
                                 >{{ currentlyPlaying.title }}</a
                             >
                         </div>
+
                     </div>
                     <div class="d-flex gap-5 align-items-center">
                         <button type="button" class="btn-privacy-settings" id="open_privacy_preferences_element">
