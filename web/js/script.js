@@ -121,7 +121,7 @@ const pageUpdate = (responseText) => {
         const ogMetaTagPropertyNames = [
             'og:title',
             'og:url',
-            'og:type ',
+            'og:type',
             'og:locale',
             'og:image',
             'og:image:width',

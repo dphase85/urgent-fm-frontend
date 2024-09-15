@@ -1,7 +1,7 @@
 {% extends craft.app.request.isAjax and not craft.app.request.isLivePreview ? "_ajax" : "_layout" %}
 
 {% block metaData %}
-	{% include '_includes/_metadata' with { title: 'Programma', description: 'Urgent.fm programmaschema' } %}
+	{% include '_includes/_metadata' with { type: 'website', title: 'Programma', description: 'Urgent.fm programmaschema' } %}
 {% endblock %}
 
 {% block content %}

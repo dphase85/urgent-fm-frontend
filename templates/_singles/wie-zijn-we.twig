@@ -3,7 +3,7 @@
 {% set heroHeight = 75 %}
 
 {% block metaData %}
-	{% include '_includes/_metadata' with { title: title, description: entry.intro|nl2br } %}
+	{% include '_includes/_metadata' with { type: 'website', title: title, description: entry.intro|nl2br } %}
 {% endblock %}
 
 {% block content %}

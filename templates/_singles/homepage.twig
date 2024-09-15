@@ -3,7 +3,7 @@
 {% set image = entry.homepageBannerfoto.one() %}
 
 {% block metaData %}
-	{% include '_includes/_metadata' with { title: 'Urgent.fm | 105.3', description: '' } %}
+	{% include '_includes/_metadata' with { type: 'website', title: 'Urgent.fm | 105.3', description: '' } %}
 {% endblock %}
 
 {% block content %}
